@@ -1,0 +1,103 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+import { Navigation } from '@/components/navigation';
+import { HeroSection } from '@/components/hero-section';
+import { GeneratorForm } from '@/components/generator-form';
+import { ResultsPanel } from '@/components/results-panel';
+import { FeaturesSection } from '@/components/features-section';
+import { PricingSection } from '@/components/pricing-section';
+import { Footer } from '@/components/footer';
+import { GeneratedContent, GeneratorFormData, GeneratorState } from '@/types/generator';
+import { toast } from 'sonner';
+import '@/lib/i18n';
+
+export default function Home() {
+  const [generatorState, setGeneratorState] = useState<GeneratorState>({
+    isGenerating: false,
+    content: null,
+    error: null,
+  });
+
+  const [lastFormData, setLastFormData] = useState<GeneratorFormData | null>(null);
+
+  const handleGenerate = async (formData: GeneratorFormData) => {
+    setGeneratorState(prev => ({ ...prev, isGenerating: true, error: null }));
+    setLastFormData(formData);
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate content');
+      }
+
+      const content: GeneratedContent = await response.json();
+      
+      setGeneratorState({
+        isGenerating: false,
+        content,
+        error: null,
+      });
+    } catch (error) {
+      console.error('Generation error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      
+      setGeneratorState({
+        isGenerating: false,
+        content: null,
+        error: errorMessage,
+      });
+      
+      toast.error(errorMessage);
+    }
+  };
+
+  const handleRegenerate = () => {
+    if (lastFormData) {
+      handleGenerate(lastFormData);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-background">
+      <Navigation />
+      
+      <HeroSection />
+      
+      {/* Generator Section */}
+      <section id="generator" className="py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div className="lg:sticky lg:top-24">
+              <GeneratorForm
+                onGenerate={handleGenerate}
+                isGenerating={generatorState.isGenerating}
+                generatedContent={generatorState.content}
+              />
+            </div>
+            
+            <div>
+              <ResultsPanel
+                content={generatorState.content}
+                isGenerating={generatorState.isGenerating}
+                onRegenerate={handleRegenerate}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <FeaturesSection />
+      <PricingSection />
+      <Footer />
+    </main>
+  );
+}
