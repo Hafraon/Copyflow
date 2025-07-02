@@ -1600,7 +1600,7 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     },
     results: {
       title: "结果",
-      empty: "填写表单并点击\"生成"来创建内容",
+      empty: "填写表单并点击\"生成\"来创建内容",
       regenerate: "重新生成",
       export: "导出",
       product: {
