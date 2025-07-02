@@ -170,7 +170,7 @@ export default function BillingPage() {
                         <span className="text-muted-foreground">
                           {t('dashboard.billing.nextBilling', 'Next billing:')}
                         </span>
-                        <span>{new Date(billingData.nextBillingDate).toLocaleDateString()}</span>
+                        <span>{billingData ? new Date(billingData.nextBillingDate).toLocaleDateString() : 'N/A'}</span>
                       </div>
                     </div>
                   )}
