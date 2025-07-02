@@ -4039,8 +4039,4 @@ export function initializeLanguage(): void {
 // Auto-initialize
 if (typeof window !== 'undefined') {
   initializeLanguage();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c945d32d8fb5f17c83fef39ce3c1817df54013a7
