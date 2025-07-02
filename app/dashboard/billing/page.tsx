@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Header } from '@/components/Header';
-import { translations, type Language } from '@/lib/translations';
-import type { LanguageCode } from '@/lib/languages';
+import { getCurrentLanguage, setLanguage, t } from '@/lib/translations';
+import type { LanguageCode } from '@/lib/translations';
 import { format } from 'date-fns';
 
 interface BillingData {
@@ -30,10 +30,9 @@ interface BillingData {
 export default function BillingPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [language, setLanguage] = useState<LanguageCode>('ua');
+  const [language, setLang] = useState<LanguageCode>('uk');
   const [billingData, setBillingData] = useState<BillingData | null>(null);
   const [loading, setLoading] = useState(true);
-  const t = translations[language as Language] || translations.en;
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -79,7 +78,7 @@ export default function BillingPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        <Header language={language} setLanguage={setLanguage} />
+        <Header language={language} setLanguage={setLang} />
         <div className="container mx-auto px-4 py-8">
           <div className="animate-pulse space-y-4">
             <div className="h-8 bg-muted rounded w-1/4"></div>
@@ -92,7 +91,7 @@ export default function BillingPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header language={language} setLanguage={setLanguage} />
+      <Header language={language} setLanguage={setLang} />
       
       <main className="container mx-auto px-4 py-8">
         <motion.div
@@ -102,7 +101,7 @@ export default function BillingPage() {
         >
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-3xl font-bold">
-              {language === 'ua' ? 'Білінг та підписка' : 'Billing & Subscription'}
+              {t(language, 'billing.title')}
             </h1>
           </div>
 
@@ -112,7 +111,7 @@ export default function BillingPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Crown className="h-5 w-5" />
-                  {language === 'ua' ? 'Поточний план' : 'Current Plan'}
+                  {t(language, 'billing.currentPlan')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -121,15 +120,15 @@ export default function BillingPage() {
                     <div className="flex items-center gap-2">
                       <h3 className="text-xl font-semibold">{billingData?.currentPlan || 'Free'}</h3>
                       <Badge variant="secondary">
-                        {language === 'ua' ? 'Активний' : 'Active'}
+                        {t(language, 'billing.active')}
                       </Badge>
                     </div>
                     <p className="text-muted-foreground">
-                      {language === 'ua' ? 'Безкоштовний план' : 'Free plan'}
+                      {t(language, 'billing.freePlan')}
                     </p>
                   </div>
                   <Button onClick={handleUpgrade}>
-                    {language === 'ua' ? 'Покращити план' : 'Upgrade Plan'}
+                    {t(language, 'billing.upgrade')}
                   </Button>
                 </div>
 
@@ -137,7 +136,7 @@ export default function BillingPage() {
                   <div className="pt-4 border-t">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">
-                        {language === 'ua' ? 'Наступний платіж:' : 'Next billing:'}
+                        {t(language, 'billing.nextBilling')}
                       </span>
                       <span>{format(new Date(billingData.nextBillingDate), 'dd.MM.yyyy')}</span>
                     </div>
@@ -151,7 +150,7 @@ export default function BillingPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <CreditCard className="h-5 w-5" />
-                  {language === 'ua' ? 'Спосіб оплати' : 'Payment Method'}
+                  {t(language, 'billing.paymentMethod')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -160,7 +159,7 @@ export default function BillingPage() {
                     {billingData?.paymentMethod || 'WayForPay'}
                   </p>
                   <Button variant="outline" className="mt-2" size="sm">
-                    {language === 'ua' ? 'Змінити' : 'Change'}
+                    {t(language, 'billing.change')}
                   </Button>
                 </div>
               </CardContent>
@@ -171,14 +170,14 @@ export default function BillingPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5" />
-                  {language === 'ua' ? 'Історія платежів' : 'Billing History'}
+                  {t(language, 'billing.billingHistory')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {!billingData || !billingData.invoices || billingData.invoices.length === 0 ? (
                   <div className="text-center py-8">
                     <p className="text-muted-foreground">
-                      {language === 'ua' ? 'Історія платежів порожня' : 'No billing history yet'}
+                      {t(language, 'billing.noHistory')}
                     </p>
                   </div>
                 ) : (
@@ -194,8 +193,8 @@ export default function BillingPage() {
                         <div className="flex items-center gap-2">
                           <Badge variant={invoice.status === 'paid' ? 'default' : 'secondary'}>
                             {invoice.status === 'paid' 
-                              ? (language === 'ua' ? 'Сплачено' : 'Paid')
-                              : (language === 'ua' ? 'Очікує' : 'Pending')
+                              ? t(language, 'billing.paid')
+                              : t(language, 'billing.pending')
                             }
                           </Badge>
                           <Button variant="ghost" size="sm">
