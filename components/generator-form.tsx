@@ -8,6 +8,8 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Slider } from '@/components/ui/slider';
 import {
   Select,
   SelectContent,
@@ -18,12 +20,16 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Sparkles, Trash2 } from 'lucide-react';
 import { GeneratedContent, GeneratorFormData, CATEGORIES, WRITING_STYLES } from '@/types/generator';
+import { getEmojiPreview } from '@/lib/emoji-config';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
   category: z.string().min(1, 'Category is required'),
   writingStyle: z.string().min(1, 'Writing style is required'),
+  useEmojis: z.boolean().optional(),
+  emojiIntensity: z.number().min(1).max(3).optional(),
 });
 
 interface GeneratorFormProps {
@@ -44,6 +50,10 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
     formState: { errors }
   } = useForm<GeneratorFormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      useEmojis: true,
+      emojiIntensity: 2,
+    }
   });
 
   const watchedValues = watch();
@@ -76,7 +86,14 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
 
   const onSubmit = async (data: GeneratorFormData) => {
     try {
-      await onGenerate(data);
+      // Ensure emoji settings have defaults
+      const formDataWithEmojis = {
+        ...data,
+        useEmojis: data.useEmojis ?? true,
+        emojiIntensity: data.emojiIntensity ?? 2,
+      };
+      
+      await onGenerate(formDataWithEmojis);
       toast.success(t('toast.success.generated'));
     } catch (error) {
       toast.error(t('toast.error.generation'));
@@ -84,7 +101,10 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
   };
 
   const handleClear = () => {
-    reset();
+    reset({
+      useEmojis: true,
+      emojiIntensity: 2,
+    });
     localStorage.removeItem('copyflow-form');
     toast.success('Form cleared');
   };
@@ -151,6 +171,67 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             {errors.writingStyle && (
               <p className="text-sm text-red-500">{errors.writingStyle.message}</p>
             )}
+          </div>
+
+          {/* Emoji Control System */}
+          <div className="space-y-4 p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <Label className="text-base font-medium flex items-center gap-2">
+                  ✨ Емодзі в описі
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  Додавати емодзі для візуального привернення уваги
+                </p>
+              </div>
+              <Switch
+                checked={watchedValues.useEmojis ?? true}
+                onCheckedChange={(checked) => setValue('useEmojis', checked)}
+                className="data-[state=checked]:bg-blue-600"
+              />
+            </div>
+            
+            {/* Intensity Slider with Animation */}
+            <AnimatePresence>
+              {watchedValues.useEmojis && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-600"
+                >
+                  <Label className="text-sm font-medium">
+                    Інтенсивність: {
+                      watchedValues.emojiIntensity === 1 ? 'Мінімум (3-5)' :
+                      watchedValues.emojiIntensity === 2 ? 'Стандарт (8-12)' : 'Максимум (15-20+)'
+                    }
+                  </Label>
+                  <Slider
+                    value={[watchedValues.emojiIntensity ?? 2]}
+                    onValueChange={([value]) => setValue('emojiIntensity', value)}
+                    min={1}
+                    max={3}
+                    step={1}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Мінімум</span>
+                    <span>Стандарт</span>
+                    <span>Максимум</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
+            {/* Live Preview */}
+            <div className="text-xs text-muted-foreground italic bg-white/50 dark:bg-gray-900/50 p-2 rounded">
+              <strong>Попередній перегляд:</strong> {getEmojiPreview(
+                watchedValues.useEmojis ?? true, 
+                watchedValues.emojiIntensity ?? 2, 
+                watchedValues.category || 'other'
+              )}
+            </div>
           </div>
 
           {/* Actions */}

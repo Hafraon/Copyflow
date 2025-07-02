@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { GeneratorFormData } from '@/types/generator';
+import { generateEmojiInstruction } from '@/lib/emoji-config';
 
 export const runtime = 'nodejs';
 
@@ -11,8 +12,22 @@ const openai = new OpenAI({
 
 export async function POST(request: NextRequest) {
   try {
-    const { productName, category, writingStyle } = await request.json() as GeneratorFormData;
+    const body = await request.json();
+    
+    // Extract form data with emoji settings
+    const { 
+      productName, 
+      category, 
+      writingStyle,
+      // NEW: Emoji control parameters
+      useEmojis = true,
+      emojiIntensity = 2
+    } = body as GeneratorFormData & {
+      useEmojis?: boolean;
+      emojiIntensity?: number;
+    };
 
+    // Existing validation (preserved)
     if (!productName || !category || !writingStyle) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -27,11 +42,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // NEW: Generate emoji instruction based on settings
+    const emojiInstruction = generateEmojiInstruction(useEmojis, emojiIntensity, category);
+
+    // Enhanced prompt with emoji control
     const prompt = `
 Generate professional e-commerce content for a product with the following details:
 - Product Name: ${productName}
 - Category: ${category}
 - Writing Style: ${writingStyle}
+
+${emojiInstruction}
 
 Please generate exactly 5 pieces of content in JSON format:
 
@@ -47,6 +68,7 @@ Requirements:
 - Include relevant keywords for ${category}
 - Make content compelling and conversion-focused
 - Ensure all content is unique and engaging
+${useEmojis ? `- Apply emoji strategy as specified above with intensity level ${emojiIntensity}` : '- NO emojis - use clean text only'}
 
 Return ONLY a valid JSON object with these exact keys:
 {
@@ -58,6 +80,7 @@ Return ONLY a valid JSON object with these exact keys:
 }
 `;
 
+    // Existing OpenAI call (preserved)
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
@@ -86,7 +109,7 @@ Return ONLY a valid JSON object with these exact keys:
     try {
       const parsedContent = JSON.parse(content);
       
-      // Validate required fields
+      // Validate required fields (preserved)
       const requiredFields = ['productTitle', 'productDescription', 'seoTitle', 'metaDescription', 'callToAction'];
       const missingFields = requiredFields.filter(field => !parsedContent[field]);
       
@@ -123,7 +146,7 @@ Return ONLY a valid JSON object with these exact keys:
   }
 }
 
-// Handle preflight requests
+// Handle preflight requests (preserved)
 export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, {
     status: 200,
