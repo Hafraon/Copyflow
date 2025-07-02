@@ -4040,5 +4040,3 @@ export function initializeLanguage(): void {
 if (typeof window !== 'undefined') {
   initializeLanguage();
 }
-
-export { initializeLanguage }
