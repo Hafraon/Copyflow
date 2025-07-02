@@ -1,68 +1,33 @@
 export type LanguageCode = 'uk' | 'en' | 'de' | 'es' | 'fr' | 'it' | 'pl' | 'pt' | 'zh' | 'ja' | 'ar';
 
-export interface Language {
+export interface TranslationKeys {
+  // Navigation
   nav: {
     dashboard: string;
     billing: string;
     settings: string;
     login: string;
     logout: string;
-    signup: string;
     features: string;
     pricing: string;
     about: string;
     contact: string;
+    signup: string;
   };
-  billing: {
+  
+  // Hero Section
+  hero: {
     title: string;
-    currentPlan: string;
-    upgrade: string;
-    paymentMethod: string;
-    billingHistory: string;
-    nextBilling: string;
-    active: string;
-    paid: string;
-    pending: string;
-    change: string;
-    noHistory: string;
-    freePlan: string;
+    subtitle: string;
+    description: string;
+    trusted: string;
+    cta: {
+      primary: string;
+      secondary: string;
+    };
   };
-  common: {
-    save: string;
-    cancel: string;
-    loading: string;
-    error: string;
-    success: string;
-    confirm: string;
-    delete: string;
-    edit: string;
-    view: string;
-    download: string;
-    upload: string;
-    search: string;
-    filter: string;
-    sort: string;
-    export: string;
-    import: string;
-    refresh: string;
-    back: string;
-    next: string;
-    previous: string;
-    close: string;
-    open: string;
-    yes: string;
-    no: string;
-  };
-  dashboard: {
-    title: string;
-    welcome: string;
-    overview: string;
-    analytics: string;
-    recent: string;
-    usage: string;
-    plan: string;
-    generations: string;
-  };
+  
+  // Form
   form: {
     title: string;
     product: {
@@ -70,11 +35,26 @@ export interface Language {
       placeholder: string;
     };
     category: string;
+    placeholder: string;
+    electronics: string;
+    clothing: string;
+    home: string;
+    beauty: string;
+    sports: string;
+    books: string;
+    automotive: string;
+    other: string;
     style: string;
+    professional: string;
+    casual: string;
+    luxury: string;
+    technical: string;
+    creative: string;
     generate: string;
     generating: string;
-    placeholder: string;
   };
+  
+  // Results
   results: {
     title: string;
     empty: string;
@@ -92,16 +72,8 @@ export interface Language {
     };
     cta: string;
   };
-  hero: {
-    title: string;
-    subtitle: string;
-    description: string;
-    cta: {
-      primary: string;
-      secondary: string;
-    };
-    trusted: string;
-  };
+  
+  // Features
   features: {
     title: string;
     subtitle: string;
@@ -130,6 +102,8 @@ export interface Language {
       description: string;
     };
   };
+  
+  // Pricing
   pricing: {
     title: string;
     subtitle: string;
@@ -162,32 +136,34 @@ export interface Language {
       feature4: string;
     };
   };
+  
+  // Billing
+  billing: {
+    title: string;
+    currentPlan: string;
+    upgrade: string;
+    active: string;
+    freePlan: string;
+    nextBilling: string;
+    paymentMethod: string;
+    change: string;
+    billingHistory: string;
+    noHistory: string;
+    paid: string;
+    pending: string;
+  };
+  
+  // Footer
   footer: {
+    description: string;
     product: string;
     company: string;
     support: string;
     legal: string;
-    description: string;
     rights: string;
   };
-  auth: {
-    modal: {
-      title: {
-        login: string;
-        signup: string;
-      };
-    };
-    providers: {
-      google: string;
-      linkedin: string;
-      facebook: string;
-    };
-    switch: {
-      login: string;
-      signup: string;
-      action: string;
-    };
-  };
+  
+  // Toast Messages
   toast: {
     success: {
       generated: string;
@@ -199,9 +175,21 @@ export interface Language {
       copy: string;
     };
   };
+  
+  // Common
+  common: {
+    save: string;
+    cancel: string;
+    loading: string;
+    close: string;
+    back: string;
+    next: string;
+    previous: string;
+    continue: string;
+  };
 }
 
-export const translations: Record<LanguageCode, Language> = {
+export const translations: Record<LanguageCode, TranslationKeys> = {
   uk: {
     nav: {
       dashboard: "Панель керування",
@@ -209,77 +197,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Налаштування",
       login: "Увійти",
       logout: "Вийти",
-      signup: "Реєстрація",
       features: "Можливості",
       pricing: "Тарифи",
       about: "Про нас",
-      contact: "Контакти"
+      contact: "Контакти",
+      signup: "Реєстрація"
     },
-    billing: {
-      title: "Білінг та підписка",
-      currentPlan: "Поточний тариф",
-      upgrade: "Оновити тариф",
-      paymentMethod: "Спосіб оплати",
-      billingHistory: "Історія платежів",
-      nextBilling: "Наступний платіж:",
-      active: "Активний",
-      paid: "Сплачено",
-      pending: "Очікує",
-      change: "Змінити",
-      noHistory: "Історія платежів порожня",
-      freePlan: "Безкоштовний план"
-    },
-    common: {
-      save: "Зберегти",
-      cancel: "Скасувати",
-      loading: "Завантаження...",
-      error: "Помилка",
-      success: "Успішно",
-      confirm: "Підтвердити",
-      delete: "Видалити",
-      edit: "Редагувати",
-      view: "Переглянути",
-      download: "Завантажити",
-      upload: "Завантажити",
-      search: "Пошук",
-      filter: "Фільтр",
-      sort: "Сортувати",
-      export: "Експорт",
-      import: "Імпорт",
-      refresh: "Оновити",
-      back: "Назад",
-      next: "Далі",
-      previous: "Попередній",
-      close: "Закрити",
-      open: "Відкрити",
-      yes: "Так",
-      no: "Ні"
-    },
-    dashboard: {
-      title: "Панель керування",
-      welcome: "Ласкаво просимо",
-      overview: "Огляд",
-      analytics: "Аналітика",
-      recent: "Останні",
-      usage: "Використання",
-      plan: "План",
-      generations: "генерацій"
+    hero: {
+      title: "AI Генератор Описів Товарів",
+      subtitle: "Створюйте SEO-оптимізовані описи за секунди",
+      description: "Потужний AI-інструмент для створення привабливих описів товарів, заголовків та CTA для вашого бізнесу",
+      trusted: "Довіряють понад 10,000+ компаній",
+      cta: {
+        primary: "Спробувати безкоштовно",
+        secondary: "Дивитися демо"
+      }
     },
     form: {
       title: "Генератор контенту",
       product: {
         name: "Назва товару",
-        placeholder: "Введіть назву товару..."
+        placeholder: "Введіть назву вашого товару"
       },
       category: "Категорія",
+      placeholder: "Оберіть категорію",
+      electronics: "Електроніка",
+      clothing: "Одяг",
+      home: "Дім і сад",
+      beauty: "Краса",
+      sports: "Спорт",
+      books: "Книги",
+      automotive: "Автомобілі",
+      other: "Інше",
       style: "Стиль написання",
+      professional: "Професійний",
+      casual: "Неформальний",
+      luxury: "Преміум",
+      technical: "Технічний",
+      creative: "Креативний",
       generate: "Згенерувати",
-      generating: "Генерація...",
-      placeholder: "Оберіть..."
+      generating: "Генерація..."
     },
     results: {
       title: "Результати",
-      empty: "Згенеруйте контент, щоб побачити результати",
+      empty: "Заповніть форму та натисніть 'Згенерувати' для створення контенту",
       regenerate: "Перегенерувати",
       export: "Експорт",
       product: {
@@ -294,22 +255,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Заклик до дії"
     },
-    hero: {
-      title: "AI Генератор Описів Товарів",
-      subtitle: "Створюйте переконливі описи товарів за секунди",
-      description: "Використовуйте силу штучного інтелекту для створення SEO-оптимізованих описів товарів, заголовків та закликів до дії, які конвертують відвідувачів у покупців.",
-      cta: {
-        primary: "Почати безкоштовно",
-        secondary: "Дивитися демо"
-      },
-      trusted: "Довіряють понад 10,000+ компаній"
-    },
     features: {
-      title: "Потужні можливості для вашого бізнесу",
-      subtitle: "Все, що потрібно для створення переконливого контенту",
+      title: "Потужні можливості",
+      subtitle: "Все що потрібно для створення ідеального контенту",
       ai: {
         title: "AI-генерація",
-        description: "Передові алгоритми штучного інтелекту для створення унікального контенту"
+        description: "Передова технологія штучного інтелекту для створення унікального контенту"
       },
       seo: {
         title: "SEO-оптимізація",
@@ -321,7 +272,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Експорт",
-        description: "Експорт у різних форматах"
+        description: "Зручне збереження у різних форматах"
       },
       templates: {
         title: "Шаблони",
@@ -329,12 +280,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "Аналітика",
-        description: "Детальна аналітика ефективності"
+        description: "Детальна статистика ефективності"
       }
     },
     pricing: {
-      title: "Прості та прозорі тарифи",
-      subtitle: "Оберіть план, який підходить вашому бізнесу",
+      title: "Прості тарифи",
+      subtitle: "Оберіть план що підходить вашому бізнесу",
       popular: "Популярний",
       cta: "Почати",
       free: {
@@ -352,7 +303,7 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "500 генерацій на місяць",
         feature2: "Всі шаблони",
         feature3: "Пріоритетна підтримка",
-        feature4: "Аналітика"
+        feature4: "Експорт у всі формати"
       },
       business: {
         title: "Бізнес",
@@ -364,31 +315,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "API доступ"
       }
     },
+    billing: {
+      title: "Білінг та підписка",
+      currentPlan: "Поточний тариф",
+      upgrade: "Оновити тариф",
+      active: "Активний",
+      freePlan: "Безкоштовний план",
+      nextBilling: "Наступний платіж:",
+      paymentMethod: "Спосіб оплати",
+      change: "Змінити",
+      billingHistory: "Історія платежів",
+      noHistory: "Історія платежів порожня",
+      paid: "Сплачено",
+      pending: "Очікує"
+    },
     footer: {
+      description: "AI-платформа для створення контенту нового покоління",
       product: "Продукт",
       company: "Компанія",
       support: "Підтримка",
       legal: "Правова інформація",
-      description: "AI-платформа для створення переконливого контенту",
       rights: "Всі права захищені."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Увійти в акаунт",
-          signup: "Створити акаунт"
-        }
-      },
-      providers: {
-        google: "Продовжити з Google",
-        linkedin: "Продовжити з LinkedIn",
-        facebook: "Продовжити з Facebook"
-      },
-      switch: {
-        login: "Вже маєте акаунт?",
-        signup: "Немає акаунта?",
-        action: "Увійти"
-      }
     },
     toast: {
       success: {
@@ -400,8 +347,19 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "Помилка генерації контенту",
         copy: "Помилка копіювання"
       }
+    },
+    common: {
+      save: "Зберегти",
+      cancel: "Скасувати",
+      loading: "Завантаження...",
+      close: "Закрити",
+      back: "Назад",
+      next: "Далі",
+      previous: "Попередній",
+      continue: "Продовжити"
     }
   },
+  
   en: {
     nav: {
       dashboard: "Dashboard",
@@ -409,77 +367,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Settings",
       login: "Login",
       logout: "Logout",
-      signup: "Sign Up",
       features: "Features",
       pricing: "Pricing",
       about: "About",
-      contact: "Contact"
+      contact: "Contact",
+      signup: "Sign Up"
     },
-    billing: {
-      title: "Billing & Subscription",
-      currentPlan: "Current Plan",
-      upgrade: "Upgrade Plan",
-      paymentMethod: "Payment Method",
-      billingHistory: "Billing History",
-      nextBilling: "Next billing:",
-      active: "Active",
-      paid: "Paid",
-      pending: "Pending",
-      change: "Change",
-      noHistory: "No billing history yet",
-      freePlan: "Free plan"
-    },
-    common: {
-      save: "Save",
-      cancel: "Cancel",
-      loading: "Loading...",
-      error: "Error",
-      success: "Success",
-      confirm: "Confirm",
-      delete: "Delete",
-      edit: "Edit",
-      view: "View",
-      download: "Download",
-      upload: "Upload",
-      search: "Search",
-      filter: "Filter",
-      sort: "Sort",
-      export: "Export",
-      import: "Import",
-      refresh: "Refresh",
-      back: "Back",
-      next: "Next",
-      previous: "Previous",
-      close: "Close",
-      open: "Open",
-      yes: "Yes",
-      no: "No"
-    },
-    dashboard: {
-      title: "Dashboard",
-      welcome: "Welcome",
-      overview: "Overview",
-      analytics: "Analytics",
-      recent: "Recent",
-      usage: "Usage",
-      plan: "Plan",
-      generations: "generations"
+    hero: {
+      title: "AI Product Description Generator",
+      subtitle: "Create SEO-optimized descriptions in seconds",
+      description: "Powerful AI tool for creating compelling product descriptions, titles, and CTAs for your business",
+      trusted: "Trusted by 10,000+ companies",
+      cta: {
+        primary: "Try for free",
+        secondary: "Watch demo"
+      }
     },
     form: {
       title: "Content Generator",
       product: {
         name: "Product Name",
-        placeholder: "Enter product name..."
+        placeholder: "Enter your product name"
       },
       category: "Category",
+      placeholder: "Select category",
+      electronics: "Electronics",
+      clothing: "Clothing",
+      home: "Home & Garden",
+      beauty: "Beauty",
+      sports: "Sports",
+      books: "Books",
+      automotive: "Automotive",
+      other: "Other",
       style: "Writing Style",
+      professional: "Professional",
+      casual: "Casual",
+      luxury: "Luxury",
+      technical: "Technical",
+      creative: "Creative",
       generate: "Generate",
-      generating: "Generating...",
-      placeholder: "Select..."
+      generating: "Generating..."
     },
     results: {
       title: "Results",
-      empty: "Generate content to see results",
+      empty: "Fill out the form and click 'Generate' to create content",
       regenerate: "Regenerate",
       export: "Export",
       product: {
@@ -494,22 +425,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Call to Action"
     },
-    hero: {
-      title: "AI Product Description Generator",
-      subtitle: "Create compelling product descriptions in seconds",
-      description: "Harness the power of artificial intelligence to generate SEO-optimized product descriptions, titles, and CTAs that convert visitors into customers.",
-      cta: {
-        primary: "Start Free",
-        secondary: "Watch Demo"
-      },
-      trusted: "Trusted by 10,000+ companies"
-    },
     features: {
-      title: "Powerful features for your business",
-      subtitle: "Everything you need to create compelling content",
+      title: "Powerful Features",
+      subtitle: "Everything you need to create perfect content",
       ai: {
         title: "AI Generation",
-        description: "Advanced AI algorithms for unique content creation"
+        description: "Advanced artificial intelligence technology for creating unique content"
       },
       seo: {
         title: "SEO Optimization",
@@ -521,7 +442,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Export",
-        description: "Export in various formats"
+        description: "Convenient saving in various formats"
       },
       templates: {
         title: "Templates",
@@ -529,12 +450,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "Analytics",
-        description: "Detailed performance analytics"
+        description: "Detailed performance statistics"
       }
     },
     pricing: {
-      title: "Simple and transparent pricing",
-      subtitle: "Choose the plan that fits your business",
+      title: "Simple Pricing",
+      subtitle: "Choose a plan that fits your business",
       popular: "Popular",
       cta: "Get Started",
       free: {
@@ -552,11 +473,11 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "500 generations per month",
         feature2: "All templates",
         feature3: "Priority support",
-        feature4: "Analytics"
+        feature4: "Export to all formats"
       },
       business: {
         title: "Business",
-        price: "$49",
+        price: "$59",
         description: "For large teams",
         feature1: "Unlimited generations",
         feature2: "Custom templates",
@@ -564,31 +485,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "API access"
       }
     },
+    billing: {
+      title: "Billing & Subscription",
+      currentPlan: "Current Plan",
+      upgrade: "Upgrade Plan",
+      active: "Active",
+      freePlan: "Free plan",
+      nextBilling: "Next billing:",
+      paymentMethod: "Payment Method",
+      change: "Change",
+      billingHistory: "Billing History",
+      noHistory: "No billing history yet",
+      paid: "Paid",
+      pending: "Pending"
+    },
     footer: {
+      description: "Next-generation AI content creation platform",
       product: "Product",
       company: "Company",
       support: "Support",
       legal: "Legal",
-      description: "AI platform for creating compelling content",
       rights: "All rights reserved."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Sign in to your account",
-          signup: "Create your account"
-        }
-      },
-      providers: {
-        google: "Continue with Google",
-        linkedin: "Continue with LinkedIn",
-        facebook: "Continue with Facebook"
-      },
-      switch: {
-        login: "Already have an account?",
-        signup: "Don't have an account?",
-        action: "Sign in"
-      }
     },
     toast: {
       success: {
@@ -600,8 +517,19 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "Content generation error",
         copy: "Copy error"
       }
+    },
+    common: {
+      save: "Save",
+      cancel: "Cancel",
+      loading: "Loading...",
+      close: "Close",
+      back: "Back",
+      next: "Next",
+      previous: "Previous",
+      continue: "Continue"
     }
   },
+  
   de: {
     nav: {
       dashboard: "Dashboard",
@@ -609,77 +537,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Einstellungen",
       login: "Anmelden",
       logout: "Abmelden",
-      signup: "Registrieren",
       features: "Funktionen",
       pricing: "Preise",
       about: "Über uns",
-      contact: "Kontakt"
+      contact: "Kontakt",
+      signup: "Registrieren"
     },
-    billing: {
-      title: "Abrechnung & Abonnement",
-      currentPlan: "Aktueller Plan",
-      upgrade: "Plan upgraden",
-      paymentMethod: "Zahlungsmethode",
-      billingHistory: "Abrechnungshistorie",
-      nextBilling: "Nächste Abrechnung:",
-      active: "Aktiv",
-      paid: "Bezahlt",
-      pending: "Ausstehend",
-      change: "Ändern",
-      noHistory: "Noch keine Abrechnungshistorie",
-      freePlan: "Kostenloser Plan"
-    },
-    common: {
-      save: "Speichern",
-      cancel: "Abbrechen",
-      loading: "Laden...",
-      error: "Fehler",
-      success: "Erfolg",
-      confirm: "Bestätigen",
-      delete: "Löschen",
-      edit: "Bearbeiten",
-      view: "Anzeigen",
-      download: "Herunterladen",
-      upload: "Hochladen",
-      search: "Suchen",
-      filter: "Filter",
-      sort: "Sortieren",
-      export: "Exportieren",
-      import: "Importieren",
-      refresh: "Aktualisieren",
-      back: "Zurück",
-      next: "Weiter",
-      previous: "Vorherige",
-      close: "Schließen",
-      open: "Öffnen",
-      yes: "Ja",
-      no: "Nein"
-    },
-    dashboard: {
-      title: "Dashboard",
-      welcome: "Willkommen",
-      overview: "Übersicht",
-      analytics: "Analytik",
-      recent: "Kürzlich",
-      usage: "Nutzung",
-      plan: "Plan",
-      generations: "Generierungen"
+    hero: {
+      title: "KI-Produktbeschreibungs-Generator",
+      subtitle: "Erstellen Sie SEO-optimierte Beschreibungen in Sekunden",
+      description: "Leistungsstarkes KI-Tool zur Erstellung überzeugender Produktbeschreibungen, Titel und CTAs für Ihr Unternehmen",
+      trusted: "Vertraut von über 10.000 Unternehmen",
+      cta: {
+        primary: "Kostenlos testen",
+        secondary: "Demo ansehen"
+      }
     },
     form: {
-      title: "Content Generator",
+      title: "Content-Generator",
       product: {
         name: "Produktname",
-        placeholder: "Produktname eingeben..."
+        placeholder: "Geben Sie Ihren Produktnamen ein"
       },
       category: "Kategorie",
+      placeholder: "Kategorie auswählen",
+      electronics: "Elektronik",
+      clothing: "Kleidung",
+      home: "Haus & Garten",
+      beauty: "Schönheit",
+      sports: "Sport",
+      books: "Bücher",
+      automotive: "Automobil",
+      other: "Andere",
       style: "Schreibstil",
+      professional: "Professionell",
+      casual: "Lässig",
+      luxury: "Luxus",
+      technical: "Technisch",
+      creative: "Kreativ",
       generate: "Generieren",
-      generating: "Generiere...",
-      placeholder: "Auswählen..."
+      generating: "Generierung..."
     },
     results: {
       title: "Ergebnisse",
-      empty: "Generieren Sie Inhalte, um Ergebnisse zu sehen",
+      empty: "Füllen Sie das Formular aus und klicken Sie auf 'Generieren', um Inhalte zu erstellen",
       regenerate: "Neu generieren",
       export: "Exportieren",
       product: {
@@ -692,24 +593,14 @@ export const translations: Record<LanguageCode, Language> = {
       meta: {
         description: "Meta-Beschreibung"
       },
-      cta: "Call-to-Action"
-    },
-    hero: {
-      title: "KI-Produktbeschreibungs-Generator",
-      subtitle: "Erstellen Sie überzeugende Produktbeschreibungen in Sekunden",
-      description: "Nutzen Sie die Kraft der künstlichen Intelligenz, um SEO-optimierte Produktbeschreibungen, Titel und CTAs zu generieren, die Besucher in Kunden verwandeln.",
-      cta: {
-        primary: "Kostenlos starten",
-        secondary: "Demo ansehen"
-      },
-      trusted: "Vertraut von über 10.000 Unternehmen"
+      cta: "Handlungsaufforderung"
     },
     features: {
-      title: "Leistungsstarke Funktionen für Ihr Unternehmen",
-      subtitle: "Alles, was Sie brauchen, um überzeugende Inhalte zu erstellen",
+      title: "Leistungsstarke Funktionen",
+      subtitle: "Alles was Sie brauchen, um perfekte Inhalte zu erstellen",
       ai: {
         title: "KI-Generierung",
-        description: "Fortschrittliche KI-Algorithmen für einzigartige Inhaltserstellung"
+        description: "Fortschrittliche KI-Technologie zur Erstellung einzigartiger Inhalte"
       },
       seo: {
         title: "SEO-Optimierung",
@@ -721,7 +612,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Export",
-        description: "Export in verschiedenen Formaten"
+        description: "Bequemes Speichern in verschiedenen Formaten"
       },
       templates: {
         title: "Vorlagen",
@@ -729,12 +620,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "Analytik",
-        description: "Detaillierte Leistungsanalytik"
+        description: "Detaillierte Leistungsstatistiken"
       }
     },
     pricing: {
-      title: "Einfache und transparente Preise",
-      subtitle: "Wählen Sie den Plan, der zu Ihrem Unternehmen passt",
+      title: "Einfache Preise",
+      subtitle: "Wählen Sie einen Plan, der zu Ihrem Unternehmen passt",
       popular: "Beliebt",
       cta: "Loslegen",
       free: {
@@ -746,17 +637,17 @@ export const translations: Record<LanguageCode, Language> = {
         feature3: "E-Mail-Support"
       },
       pro: {
-        title: "Professional",
+        title: "Professionell",
         price: "19€",
         description: "Für kleine Unternehmen",
         feature1: "500 Generierungen pro Monat",
         feature2: "Alle Vorlagen",
         feature3: "Prioritäts-Support",
-        feature4: "Analytik"
+        feature4: "Export in alle Formate"
       },
       business: {
         title: "Business",
-        price: "49€",
+        price: "59€",
         description: "Für große Teams",
         feature1: "Unbegrenzte Generierungen",
         feature2: "Benutzerdefinierte Vorlagen",
@@ -764,44 +655,51 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "API-Zugang"
       }
     },
+    billing: {
+      title: "Abrechnung & Abonnement",
+      currentPlan: "Aktueller Plan",
+      upgrade: "Plan upgraden",
+      active: "Aktiv",
+      freePlan: "Kostenloser Plan",
+      nextBilling: "Nächste Abrechnung:",
+      paymentMethod: "Zahlungsmethode",
+      change: "Ändern",
+      billingHistory: "Abrechnungshistorie",
+      noHistory: "Noch keine Abrechnungshistorie",
+      paid: "Bezahlt",
+      pending: "Ausstehend"
+    },
     footer: {
+      description: "KI-Content-Erstellungsplattform der nächsten Generation",
       product: "Produkt",
       company: "Unternehmen",
       support: "Support",
       legal: "Rechtliches",
-      description: "KI-Plattform für überzeugende Inhalte",
       rights: "Alle Rechte vorbehalten."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "In Ihr Konto einloggen",
-          signup: "Ihr Konto erstellen"
-        }
-      },
-      providers: {
-        google: "Mit Google fortfahren",
-        linkedin: "Mit LinkedIn fortfahren",
-        facebook: "Mit Facebook fortfahren"
-      },
-      switch: {
-        login: "Haben Sie bereits ein Konto?",
-        signup: "Haben Sie kein Konto?",
-        action: "Anmelden"
-      }
     },
     toast: {
       success: {
         generated: "Inhalt erfolgreich generiert!",
-        copied: "In die Zwischenablage kopiert",
+        copied: "In Zwischenablage kopiert",
         exported: "Datei erfolgreich exportiert"
       },
       error: {
         generation: "Fehler bei der Inhaltsgenerierung",
         copy: "Kopierfehler"
       }
+    },
+    common: {
+      save: "Speichern",
+      cancel: "Abbrechen",
+      loading: "Laden...",
+      close: "Schließen",
+      back: "Zurück",
+      next: "Weiter",
+      previous: "Vorherige",
+      continue: "Fortfahren"
     }
   },
+  
   es: {
     nav: {
       dashboard: "Panel",
@@ -809,77 +707,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Configuración",
       login: "Iniciar sesión",
       logout: "Cerrar sesión",
-      signup: "Registrarse",
       features: "Características",
       pricing: "Precios",
       about: "Acerca de",
-      contact: "Contacto"
+      contact: "Contacto",
+      signup: "Registrarse"
     },
-    billing: {
-      title: "Facturación y Suscripción",
-      currentPlan: "Plan Actual",
-      upgrade: "Actualizar Plan",
-      paymentMethod: "Método de Pago",
-      billingHistory: "Historial de Facturación",
-      nextBilling: "Próxima facturación:",
-      active: "Activo",
-      paid: "Pagado",
-      pending: "Pendiente",
-      change: "Cambiar",
-      noHistory: "Aún no hay historial de facturación",
-      freePlan: "Plan gratuito"
-    },
-    common: {
-      save: "Guardar",
-      cancel: "Cancelar",
-      loading: "Cargando...",
-      error: "Error",
-      success: "Éxito",
-      confirm: "Confirmar",
-      delete: "Eliminar",
-      edit: "Editar",
-      view: "Ver",
-      download: "Descargar",
-      upload: "Subir",
-      search: "Buscar",
-      filter: "Filtrar",
-      sort: "Ordenar",
-      export: "Exportar",
-      import: "Importar",
-      refresh: "Actualizar",
-      back: "Atrás",
-      next: "Siguiente",
-      previous: "Anterior",
-      close: "Cerrar",
-      open: "Abrir",
-      yes: "Sí",
-      no: "No"
-    },
-    dashboard: {
-      title: "Panel",
-      welcome: "Bienvenido",
-      overview: "Resumen",
-      analytics: "Analíticas",
-      recent: "Reciente",
-      usage: "Uso",
-      plan: "Plan",
-      generations: "generaciones"
+    hero: {
+      title: "Generador de Descripciones de Productos IA",
+      subtitle: "Crea descripciones optimizadas para SEO en segundos",
+      description: "Herramienta de IA potente para crear descripciones de productos, títulos y CTAs convincentes para tu negocio",
+      trusted: "Confiado por más de 10,000 empresas",
+      cta: {
+        primary: "Probar gratis",
+        secondary: "Ver demo"
+      }
     },
     form: {
       title: "Generador de Contenido",
       product: {
         name: "Nombre del Producto",
-        placeholder: "Ingrese el nombre del producto..."
+        placeholder: "Ingresa el nombre de tu producto"
       },
       category: "Categoría",
+      placeholder: "Seleccionar categoría",
+      electronics: "Electrónicos",
+      clothing: "Ropa",
+      home: "Hogar y Jardín",
+      beauty: "Belleza",
+      sports: "Deportes",
+      books: "Libros",
+      automotive: "Automotriz",
+      other: "Otro",
       style: "Estilo de Escritura",
+      professional: "Profesional",
+      casual: "Casual",
+      luxury: "Lujo",
+      technical: "Técnico",
+      creative: "Creativo",
       generate: "Generar",
-      generating: "Generando...",
-      placeholder: "Seleccionar..."
+      generating: "Generando..."
     },
     results: {
       title: "Resultados",
-      empty: "Genere contenido para ver resultados",
+      empty: "Completa el formulario y haz clic en 'Generar' para crear contenido",
       regenerate: "Regenerar",
       export: "Exportar",
       product: {
@@ -894,22 +765,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Llamada a la Acción"
     },
-    hero: {
-      title: "Generador de Descripciones de Productos con IA",
-      subtitle: "Crea descripciones de productos convincentes en segundos",
-      description: "Aprovecha el poder de la inteligencia artificial para generar descripciones de productos, títulos y CTAs optimizados para SEO que convierten visitantes en clientes.",
-      cta: {
-        primary: "Comenzar Gratis",
-        secondary: "Ver Demo"
-      },
-      trusted: "Confiado por más de 10,000 empresas"
-    },
     features: {
-      title: "Características poderosas para su negocio",
-      subtitle: "Todo lo que necesita para crear contenido convincente",
+      title: "Características Potentes",
+      subtitle: "Todo lo que necesitas para crear contenido perfecto",
       ai: {
         title: "Generación IA",
-        description: "Algoritmos avanzados de IA para creación de contenido único"
+        description: "Tecnología avanzada de inteligencia artificial para crear contenido único"
       },
       seo: {
         title: "Optimización SEO",
@@ -921,7 +782,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Exportar",
-        description: "Exportar en varios formatos"
+        description: "Guardado conveniente en varios formatos"
       },
       templates: {
         title: "Plantillas",
@@ -929,12 +790,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "Analíticas",
-        description: "Analíticas detalladas de rendimiento"
+        description: "Estadísticas detalladas de rendimiento"
       }
     },
     pricing: {
-      title: "Precios simples y transparentes",
-      subtitle: "Elija el plan que se adapte a su negocio",
+      title: "Precios Simples",
+      subtitle: "Elige un plan que se adapte a tu negocio",
       popular: "Popular",
       cta: "Comenzar",
       free: {
@@ -952,11 +813,11 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "500 generaciones por mes",
         feature2: "Todas las plantillas",
         feature3: "Soporte prioritario",
-        feature4: "Analíticas"
+        feature4: "Exportar a todos los formatos"
       },
       business: {
         title: "Empresarial",
-        price: "$49",
+        price: "$59",
         description: "Para equipos grandes",
         feature1: "Generaciones ilimitadas",
         feature2: "Plantillas personalizadas",
@@ -964,31 +825,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "Acceso API"
       }
     },
+    billing: {
+      title: "Facturación y Suscripción",
+      currentPlan: "Plan Actual",
+      upgrade: "Actualizar Plan",
+      active: "Activo",
+      freePlan: "Plan gratuito",
+      nextBilling: "Próxima facturación:",
+      paymentMethod: "Método de Pago",
+      change: "Cambiar",
+      billingHistory: "Historial de Facturación",
+      noHistory: "Aún no hay historial de facturación",
+      paid: "Pagado",
+      pending: "Pendiente"
+    },
     footer: {
+      description: "Plataforma de creación de contenido IA de próxima generación",
       product: "Producto",
       company: "Empresa",
       support: "Soporte",
       legal: "Legal",
-      description: "Plataforma IA para crear contenido convincente",
       rights: "Todos los derechos reservados."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Iniciar sesión en su cuenta",
-          signup: "Crear su cuenta"
-        }
-      },
-      providers: {
-        google: "Continuar con Google",
-        linkedin: "Continuar con LinkedIn",
-        facebook: "Continuar con Facebook"
-      },
-      switch: {
-        login: "¿Ya tiene una cuenta?",
-        signup: "¿No tiene una cuenta?",
-        action: "Iniciar sesión"
-      }
     },
     toast: {
       success: {
@@ -998,10 +855,21 @@ export const translations: Record<LanguageCode, Language> = {
       },
       error: {
         generation: "Error en la generación de contenido",
-        copy: "Error al copiar"
+        copy: "Error de copia"
       }
+    },
+    common: {
+      save: "Guardar",
+      cancel: "Cancelar",
+      loading: "Cargando...",
+      close: "Cerrar",
+      back: "Atrás",
+      next: "Siguiente",
+      previous: "Anterior",
+      continue: "Continuar"
     }
   },
+  
   fr: {
     nav: {
       dashboard: "Tableau de bord",
@@ -1009,77 +877,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Paramètres",
       login: "Se connecter",
       logout: "Se déconnecter",
-      signup: "S'inscrire",
       features: "Fonctionnalités",
       pricing: "Tarifs",
       about: "À propos",
-      contact: "Contact"
+      contact: "Contact",
+      signup: "S'inscrire"
     },
-    billing: {
-      title: "Facturation et Abonnement",
-      currentPlan: "Plan Actuel",
-      upgrade: "Mettre à niveau",
-      paymentMethod: "Méthode de Paiement",
-      billingHistory: "Historique de Facturation",
-      nextBilling: "Prochaine facturation:",
-      active: "Actif",
-      paid: "Payé",
-      pending: "En attente",
-      change: "Changer",
-      noHistory: "Aucun historique de facturation pour le moment",
-      freePlan: "Plan gratuit"
-    },
-    common: {
-      save: "Enregistrer",
-      cancel: "Annuler",
-      loading: "Chargement...",
-      error: "Erreur",
-      success: "Succès",
-      confirm: "Confirmer",
-      delete: "Supprimer",
-      edit: "Modifier",
-      view: "Voir",
-      download: "Télécharger",
-      upload: "Téléverser",
-      search: "Rechercher",
-      filter: "Filtrer",
-      sort: "Trier",
-      export: "Exporter",
-      import: "Importer",
-      refresh: "Actualiser",
-      back: "Retour",
-      next: "Suivant",
-      previous: "Précédent",
-      close: "Fermer",
-      open: "Ouvrir",
-      yes: "Oui",
-      no: "Non"
-    },
-    dashboard: {
-      title: "Tableau de bord",
-      welcome: "Bienvenue",
-      overview: "Aperçu",
-      analytics: "Analytiques",
-      recent: "Récent",
-      usage: "Utilisation",
-      plan: "Plan",
-      generations: "générations"
+    hero: {
+      title: "Générateur de Descriptions de Produits IA",
+      subtitle: "Créez des descriptions optimisées SEO en secondes",
+      description: "Outil IA puissant pour créer des descriptions de produits, titres et CTA convaincants pour votre entreprise",
+      trusted: "Fait confiance par plus de 10 000 entreprises",
+      cta: {
+        primary: "Essayer gratuitement",
+        secondary: "Voir la démo"
+      }
     },
     form: {
       title: "Générateur de Contenu",
       product: {
         name: "Nom du Produit",
-        placeholder: "Entrez le nom du produit..."
+        placeholder: "Entrez le nom de votre produit"
       },
       category: "Catégorie",
+      placeholder: "Sélectionner une catégorie",
+      electronics: "Électronique",
+      clothing: "Vêtements",
+      home: "Maison et Jardin",
+      beauty: "Beauté",
+      sports: "Sports",
+      books: "Livres",
+      automotive: "Automobile",
+      other: "Autre",
       style: "Style d'Écriture",
+      professional: "Professionnel",
+      casual: "Décontracté",
+      luxury: "Luxe",
+      technical: "Technique",
+      creative: "Créatif",
       generate: "Générer",
-      generating: "Génération...",
-      placeholder: "Sélectionner..."
+      generating: "Génération..."
     },
     results: {
       title: "Résultats",
-      empty: "Générez du contenu pour voir les résultats",
+      empty: "Remplissez le formulaire et cliquez sur 'Générer' pour créer du contenu",
       regenerate: "Régénérer",
       export: "Exporter",
       product: {
@@ -1094,22 +935,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Appel à l'Action"
     },
-    hero: {
-      title: "Générateur de Descriptions de Produits IA",
-      subtitle: "Créez des descriptions de produits convaincantes en quelques secondes",
-      description: "Exploitez la puissance de l'intelligence artificielle pour générer des descriptions de produits, titres et CTA optimisés pour le SEO qui convertissent les visiteurs en clients.",
-      cta: {
-        primary: "Commencer Gratuitement",
-        secondary: "Voir la Démo"
-      },
-      trusted: "Fait confiance par plus de 10 000 entreprises"
-    },
     features: {
-      title: "Fonctionnalités puissantes pour votre entreprise",
-      subtitle: "Tout ce dont vous avez besoin pour créer du contenu convaincant",
+      title: "Fonctionnalités Puissantes",
+      subtitle: "Tout ce dont vous avez besoin pour créer un contenu parfait",
       ai: {
         title: "Génération IA",
-        description: "Algorithmes IA avancés pour la création de contenu unique"
+        description: "Technologie d'intelligence artificielle avancée pour créer du contenu unique"
       },
       seo: {
         title: "Optimisation SEO",
@@ -1121,7 +952,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Exporter",
-        description: "Exporter dans divers formats"
+        description: "Sauvegarde pratique dans divers formats"
       },
       templates: {
         title: "Modèles",
@@ -1129,12 +960,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "Analytiques",
-        description: "Analytiques de performance détaillées"
+        description: "Statistiques de performance détaillées"
       }
     },
     pricing: {
-      title: "Tarifs simples et transparents",
-      subtitle: "Choisissez le plan qui convient à votre entreprise",
+      title: "Tarifs Simples",
+      subtitle: "Choisissez un plan qui convient à votre entreprise",
       popular: "Populaire",
       cta: "Commencer",
       free: {
@@ -1152,11 +983,11 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "500 générations par mois",
         feature2: "Tous les modèles",
         feature3: "Support prioritaire",
-        feature4: "Analytiques"
+        feature4: "Export vers tous les formats"
       },
       business: {
         title: "Entreprise",
-        price: "49€",
+        price: "59€",
         description: "Pour les grandes équipes",
         feature1: "Générations illimitées",
         feature2: "Modèles personnalisés",
@@ -1164,31 +995,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "Accès API"
       }
     },
+    billing: {
+      title: "Facturation et Abonnement",
+      currentPlan: "Plan Actuel",
+      upgrade: "Mettre à Niveau le Plan",
+      active: "Actif",
+      freePlan: "Plan gratuit",
+      nextBilling: "Prochaine facturation:",
+      paymentMethod: "Méthode de Paiement",
+      change: "Changer",
+      billingHistory: "Historique de Facturation",
+      noHistory: "Aucun historique de facturation pour le moment",
+      paid: "Payé",
+      pending: "En attente"
+    },
     footer: {
+      description: "Plateforme de création de contenu IA de nouvelle génération",
       product: "Produit",
       company: "Entreprise",
       support: "Support",
       legal: "Légal",
-      description: "Plateforme IA pour créer du contenu convaincant",
       rights: "Tous droits réservés."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Se connecter à votre compte",
-          signup: "Créer votre compte"
-        }
-      },
-      providers: {
-        google: "Continuer avec Google",
-        linkedin: "Continuer avec LinkedIn",
-        facebook: "Continuer avec Facebook"
-      },
-      switch: {
-        login: "Vous avez déjà un compte?",
-        signup: "Vous n'avez pas de compte?",
-        action: "Se connecter"
-      }
     },
     toast: {
       success: {
@@ -1200,8 +1027,19 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "Erreur de génération de contenu",
         copy: "Erreur de copie"
       }
+    },
+    common: {
+      save: "Sauvegarder",
+      cancel: "Annuler",
+      loading: "Chargement...",
+      close: "Fermer",
+      back: "Retour",
+      next: "Suivant",
+      previous: "Précédent",
+      continue: "Continuer"
     }
   },
+  
   it: {
     nav: {
       dashboard: "Dashboard",
@@ -1209,77 +1047,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Impostazioni",
       login: "Accedi",
       logout: "Esci",
-      signup: "Registrati",
       features: "Funzionalità",
       pricing: "Prezzi",
       about: "Chi siamo",
-      contact: "Contatti"
+      contact: "Contatti",
+      signup: "Registrati"
     },
-    billing: {
-      title: "Fatturazione e Abbonamento",
-      currentPlan: "Piano Attuale",
-      upgrade: "Aggiorna Piano",
-      paymentMethod: "Metodo di Pagamento",
-      billingHistory: "Cronologia Fatturazione",
-      nextBilling: "Prossima fatturazione:",
-      active: "Attivo",
-      paid: "Pagato",
-      pending: "In attesa",
-      change: "Cambia",
-      noHistory: "Nessuna cronologia di fatturazione ancora",
-      freePlan: "Piano gratuito"
-    },
-    common: {
-      save: "Salva",
-      cancel: "Annulla",
-      loading: "Caricamento...",
-      error: "Errore",
-      success: "Successo",
-      confirm: "Conferma",
-      delete: "Elimina",
-      edit: "Modifica",
-      view: "Visualizza",
-      download: "Scarica",
-      upload: "Carica",
-      search: "Cerca",
-      filter: "Filtra",
-      sort: "Ordina",
-      export: "Esporta",
-      import: "Importa",
-      refresh: "Aggiorna",
-      back: "Indietro",
-      next: "Avanti",
-      previous: "Precedente",
-      close: "Chiudi",
-      open: "Apri",
-      yes: "Sì",
-      no: "No"
-    },
-    dashboard: {
-      title: "Dashboard",
-      welcome: "Benvenuto",
-      overview: "Panoramica",
-      analytics: "Analitiche",
-      recent: "Recente",
-      usage: "Utilizzo",
-      plan: "Piano",
-      generations: "generazioni"
+    hero: {
+      title: "Generatore di Descrizioni Prodotti IA",
+      subtitle: "Crea descrizioni ottimizzate SEO in secondi",
+      description: "Potente strumento IA per creare descrizioni prodotti, titoli e CTA convincenti per la tua azienda",
+      trusted: "Fidato da oltre 10.000 aziende",
+      cta: {
+        primary: "Prova gratis",
+        secondary: "Guarda demo"
+      }
     },
     form: {
       title: "Generatore di Contenuti",
       product: {
         name: "Nome Prodotto",
-        placeholder: "Inserisci il nome del prodotto..."
+        placeholder: "Inserisci il nome del tuo prodotto"
       },
       category: "Categoria",
+      placeholder: "Seleziona categoria",
+      electronics: "Elettronica",
+      clothing: "Abbigliamento",
+      home: "Casa e Giardino",
+      beauty: "Bellezza",
+      sports: "Sport",
+      books: "Libri",
+      automotive: "Automotive",
+      other: "Altro",
       style: "Stile di Scrittura",
+      professional: "Professionale",
+      casual: "Casual",
+      luxury: "Lusso",
+      technical: "Tecnico",
+      creative: "Creativo",
       generate: "Genera",
-      generating: "Generazione...",
-      placeholder: "Seleziona..."
+      generating: "Generazione..."
     },
     results: {
       title: "Risultati",
-      empty: "Genera contenuto per vedere i risultati",
+      empty: "Compila il modulo e clicca 'Genera' per creare contenuti",
       regenerate: "Rigenera",
       export: "Esporta",
       product: {
@@ -1294,22 +1105,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Call to Action"
     },
-    hero: {
-      title: "Generatore di Descrizioni Prodotti AI",
-      subtitle: "Crea descrizioni prodotti convincenti in secondi",
-      description: "Sfrutta la potenza dell'intelligenza artificiale per generare descrizioni prodotti, titoli e CTA ottimizzati per SEO che convertono i visitatori in clienti.",
-      cta: {
-        primary: "Inizia Gratis",
-        secondary: "Guarda Demo"
-      },
-      trusted: "Fidato da oltre 10.000 aziende"
-    },
     features: {
-      title: "Funzionalità potenti per la tua azienda",
-      subtitle: "Tutto ciò di cui hai bisogno per creare contenuti convincenti",
+      title: "Funzionalità Potenti",
+      subtitle: "Tutto ciò di cui hai bisogno per creare contenuti perfetti",
       ai: {
-        title: "Generazione AI",
-        description: "Algoritmi AI avanzati per la creazione di contenuti unici"
+        title: "Generazione IA",
+        description: "Tecnologia avanzata di intelligenza artificiale per creare contenuti unici"
       },
       seo: {
         title: "Ottimizzazione SEO",
@@ -1317,24 +1118,24 @@ export const translations: Record<LanguageCode, Language> = {
       },
       multilingual: {
         title: "Multilingue",
-        description: "Supporto per 11+ lingue per portata globale"
+        description: "Supporto per 11+ lingue per una portata globale"
       },
       export: {
         title: "Esporta",
-        description: "Esporta in vari formati"
+        description: "Salvataggio conveniente in vari formati"
       },
       templates: {
         title: "Template",
         description: "Template professionali pronti all'uso"
       },
       analytics: {
-        title: "Analitiche",
-        description: "Analitiche dettagliate delle prestazioni"
+        title: "Analytics",
+        description: "Statistiche dettagliate delle prestazioni"
       }
     },
     pricing: {
-      title: "Prezzi semplici e trasparenti",
-      subtitle: "Scegli il piano che si adatta alla tua azienda",
+      title: "Prezzi Semplici",
+      subtitle: "Scegli un piano adatto alla tua azienda",
       popular: "Popolare",
       cta: "Inizia",
       free: {
@@ -1352,11 +1153,11 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "500 generazioni al mese",
         feature2: "Tutti i template",
         feature3: "Supporto prioritario",
-        feature4: "Analitiche"
+        feature4: "Esporta in tutti i formati"
       },
       business: {
         title: "Business",
-        price: "€49",
+        price: "€59",
         description: "Per grandi team",
         feature1: "Generazioni illimitate",
         feature2: "Template personalizzati",
@@ -1364,31 +1165,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "Accesso API"
       }
     },
+    billing: {
+      title: "Fatturazione e Abbonamento",
+      currentPlan: "Piano Attuale",
+      upgrade: "Aggiorna Piano",
+      active: "Attivo",
+      freePlan: "Piano gratuito",
+      nextBilling: "Prossima fatturazione:",
+      paymentMethod: "Metodo di Pagamento",
+      change: "Cambia",
+      billingHistory: "Storico Fatturazione",
+      noHistory: "Nessuno storico di fatturazione ancora",
+      paid: "Pagato",
+      pending: "In attesa"
+    },
     footer: {
+      description: "Piattaforma di creazione contenuti IA di nuova generazione",
       product: "Prodotto",
       company: "Azienda",
       support: "Supporto",
       legal: "Legale",
-      description: "Piattaforma AI per creare contenuti convincenti",
       rights: "Tutti i diritti riservati."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Accedi al tuo account",
-          signup: "Crea il tuo account"
-        }
-      },
-      providers: {
-        google: "Continua con Google",
-        linkedin: "Continua con LinkedIn",
-        facebook: "Continua con Facebook"
-      },
-      switch: {
-        login: "Hai già un account?",
-        signup: "Non hai un account?",
-        action: "Accedi"
-      }
     },
     toast: {
       success: {
@@ -1400,86 +1197,70 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "Errore nella generazione del contenuto",
         copy: "Errore di copia"
       }
+    },
+    common: {
+      save: "Salva",
+      cancel: "Annulla",
+      loading: "Caricamento...",
+      close: "Chiudi",
+      back: "Indietro",
+      next: "Avanti",
+      previous: "Precedente",
+      continue: "Continua"
     }
   },
+  
   pl: {
     nav: {
       dashboard: "Panel",
       billing: "Rozliczenia",
       settings: "Ustawienia",
-      login: "Zaloguj się",
-      logout: "Wyloguj się",
-      signup: "Zarejestruj się",
+      login: "Zaloguj",
+      logout: "Wyloguj",
       features: "Funkcje",
       pricing: "Cennik",
       about: "O nas",
-      contact: "Kontakt"
+      contact: "Kontakt",
+      signup: "Zarejestruj"
     },
-    billing: {
-      title: "Rozliczenia i Subskrypcja",
-      currentPlan: "Aktualny Plan",
-      upgrade: "Ulepsz Plan",
-      paymentMethod: "Metoda Płatności",
-      billingHistory: "Historia Rozliczeń",
-      nextBilling: "Następne rozliczenie:",
-      active: "Aktywny",
-      paid: "Opłacone",
-      pending: "Oczekujące",
-      change: "Zmień",
-      noHistory: "Brak historii rozliczeń",
-      freePlan: "Plan darmowy"
-    },
-    common: {
-      save: "Zapisz",
-      cancel: "Anuluj",
-      loading: "Ładowanie...",
-      error: "Błąd",
-      success: "Sukces",
-      confirm: "Potwierdź",
-      delete: "Usuń",
-      edit: "Edytuj",
-      view: "Zobacz",
-      download: "Pobierz",
-      upload: "Prześlij",
-      search: "Szukaj",
-      filter: "Filtruj",
-      sort: "Sortuj",
-      export: "Eksportuj",
-      import: "Importuj",
-      refresh: "Odśwież",
-      back: "Wstecz",
-      next: "Dalej",
-      previous: "Poprzedni",
-      close: "Zamknij",
-      open: "Otwórz",
-      yes: "Tak",
-      no: "Nie"
-    },
-    dashboard: {
-      title: "Panel",
-      welcome: "Witamy",
-      overview: "Przegląd",
-      analytics: "Analityka",
-      recent: "Ostatnie",
-      usage: "Użycie",
-      plan: "Plan",
-      generations: "generacji"
+    hero: {
+      title: "Generator Opisów Produktów AI",
+      subtitle: "Twórz opisy zoptymalizowane pod SEO w sekundach",
+      description: "Potężne narzędzie AI do tworzenia przekonujących opisów produktów, tytułów i CTA dla Twojego biznesu",
+      trusted: "Zaufało nam ponad 10 000 firm",
+      cta: {
+        primary: "Wypróbuj za darmo",
+        secondary: "Zobacz demo"
+      }
     },
     form: {
       title: "Generator Treści",
       product: {
         name: "Nazwa Produktu",
-        placeholder: "Wprowadź nazwę produktu..."
+        placeholder: "Wprowadź nazwę swojego produktu"
       },
       category: "Kategoria",
+      placeholder: "Wybierz kategorię",
+      electronics: "Elektronika",
+      clothing: "Odzież",
+      home: "Dom i Ogród",
+      beauty: "Uroda",
+      sports: "Sport",
+      books: "Książki",
+      automotive: "Motoryzacja",
+      other: "Inne",
       style: "Styl Pisania",
+      professional: "Profesjonalny",
+      casual: "Swobodny",
+      luxury: "Luksusowy",
+      technical: "Techniczny",
+      creative: "Kreatywny",
       generate: "Generuj",
-      generating: "Generowanie...",
-      placeholder: "Wybierz..."
+      generating: "Generowanie..."
     },
     results: {
       title: "Wyniki",
-      empty: "Wygeneruj treść, aby zobaczyć wyniki",
+      empty: "Wypełnij formularz i kliknij 'Generuj', aby utworzyć treść",
       regenerate: "Regeneruj",
       export: "Eksportuj",
       product: {
@@ -1494,22 +1275,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Wezwanie do Działania"
     },
-    hero: {
-      title: "Generator Opisów Produktów AI",
-      subtitle: "Twórz przekonujące opisy produktów w sekundach",
-      description: "Wykorzystaj moc sztucznej inteligencji do generowania zoptymalizowanych pod kątem SEO opisów produktów, tytułów i CTA, które przekształcają odwiedzających w klientów.",
-      cta: {
-        primary: "Zacznij Za Darmo",
-        secondary: "Zobacz Demo"
-      },
-      trusted: "Zaufało nam ponad 10 000 firm"
-    },
     features: {
-      title: "Potężne funkcje dla Twojego biznesu",
-      subtitle: "Wszystko, czego potrzebujesz do tworzenia przekonujących treści",
+      title: "Potężne Funkcje",
+      subtitle: "Wszystko czego potrzebujesz do tworzenia idealnej treści",
       ai: {
         title: "Generowanie AI",
-        description: "Zaawansowane algorytmy AI do tworzenia unikalnych treści"
+        description: "Zaawansowana technologia sztucznej inteligencji do tworzenia unikalnej treści"
       },
       seo: {
         title: "Optymalizacja SEO",
@@ -1521,7 +1292,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Eksport",
-        description: "Eksport w różnych formatach"
+        description: "Wygodne zapisywanie w różnych formatach"
       },
       templates: {
         title: "Szablony",
@@ -1529,12 +1300,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "Analityka",
-        description: "Szczegółowa analityka wydajności"
+        description: "Szczegółowe statystyki wydajności"
       }
     },
     pricing: {
-      title: "Proste i przejrzyste ceny",
-      subtitle: "Wybierz plan, który pasuje do Twojego biznesu",
+      title: "Proste Ceny",
+      subtitle: "Wybierz plan dopasowany do Twojego biznesu",
       popular: "Popularny",
       cta: "Rozpocznij",
       free: {
@@ -1552,11 +1323,11 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "500 generacji miesięcznie",
         feature2: "Wszystkie szablony",
         feature3: "Priorytetowe wsparcie",
-        feature4: "Analityka"
+        feature4: "Eksport do wszystkich formatów"
       },
       business: {
         title: "Biznesowy",
-        price: "199 zł",
+        price: "249 zł",
         description: "Dla dużych zespołów",
         feature1: "Nieograniczone generacje",
         feature2: "Niestandardowe szablony",
@@ -1564,31 +1335,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "Dostęp do API"
       }
     },
+    billing: {
+      title: "Rozliczenia i Subskrypcja",
+      currentPlan: "Aktualny Plan",
+      upgrade: "Ulepsz Plan",
+      active: "Aktywny",
+      freePlan: "Plan darmowy",
+      nextBilling: "Następne rozliczenie:",
+      paymentMethod: "Metoda Płatności",
+      change: "Zmień",
+      billingHistory: "Historia Rozliczeń",
+      noHistory: "Brak historii rozliczeń",
+      paid: "Opłacone",
+      pending: "Oczekujące"
+    },
     footer: {
+      description: "Platforma tworzenia treści AI nowej generacji",
       product: "Produkt",
       company: "Firma",
       support: "Wsparcie",
       legal: "Prawne",
-      description: "Platforma AI do tworzenia przekonujących treści",
       rights: "Wszystkie prawa zastrzeżone."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Zaloguj się do swojego konta",
-          signup: "Utwórz swoje konto"
-        }
-      },
-      providers: {
-        google: "Kontynuuj z Google",
-        linkedin: "Kontynuuj z LinkedIn",
-        facebook: "Kontynuuj z Facebook"
-      },
-      switch: {
-        login: "Masz już konto?",
-        signup: "Nie masz konta?",
-        action: "Zaloguj się"
-      }
     },
     toast: {
       success: {
@@ -1600,8 +1367,19 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "Błąd generowania treści",
         copy: "Błąd kopiowania"
       }
+    },
+    common: {
+      save: "Zapisz",
+      cancel: "Anuluj",
+      loading: "Ładowanie...",
+      close: "Zamknij",
+      back: "Wstecz",
+      next: "Dalej",
+      previous: "Poprzedni",
+      continue: "Kontynuuj"
     }
   },
+  
   pt: {
     nav: {
       dashboard: "Painel",
@@ -1609,77 +1387,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "Configurações",
       login: "Entrar",
       logout: "Sair",
-      signup: "Registar",
-      features: "Funcionalidades",
+      features: "Recursos",
       pricing: "Preços",
       about: "Sobre",
-      contact: "Contacto"
+      contact: "Contato",
+      signup: "Registrar"
     },
-    billing: {
-      title: "Faturação e Subscrição",
-      currentPlan: "Plano Atual",
-      upgrade: "Atualizar Plano",
-      paymentMethod: "Método de Pagamento",
-      billingHistory: "Histórico de Faturação",
-      nextBilling: "Próxima faturação:",
-      active: "Ativo",
-      paid: "Pago",
-      pending: "Pendente",
-      change: "Alterar",
-      noHistory: "Ainda não há histórico de faturação",
-      freePlan: "Plano gratuito"
-    },
-    common: {
-      save: "Guardar",
-      cancel: "Cancelar",
-      loading: "Carregando...",
-      error: "Erro",
-      success: "Sucesso",
-      confirm: "Confirmar",
-      delete: "Eliminar",
-      edit: "Editar",
-      view: "Ver",
-      download: "Descarregar",
-      upload: "Carregar",
-      search: "Pesquisar",
-      filter: "Filtrar",
-      sort: "Ordenar",
-      export: "Exportar",
-      import: "Importar",
-      refresh: "Atualizar",
-      back: "Voltar",
-      next: "Próximo",
-      previous: "Anterior",
-      close: "Fechar",
-      open: "Abrir",
-      yes: "Sim",
-      no: "Não"
-    },
-    dashboard: {
-      title: "Painel",
-      welcome: "Bem-vindo",
-      overview: "Visão Geral",
-      analytics: "Analíticas",
-      recent: "Recente",
-      usage: "Uso",
-      plan: "Plano",
-      generations: "gerações"
+    hero: {
+      title: "Gerador de Descrições de Produtos IA",
+      subtitle: "Crie descrições otimizadas para SEO em segundos",
+      description: "Ferramenta IA poderosa para criar descrições de produtos, títulos e CTAs convincentes para seu negócio",
+      trusted: "Confiado por mais de 10.000 empresas",
+      cta: {
+        primary: "Experimentar grátis",
+        secondary: "Ver demo"
+      }
     },
     form: {
       title: "Gerador de Conteúdo",
       product: {
         name: "Nome do Produto",
-        placeholder: "Introduza o nome do produto..."
+        placeholder: "Digite o nome do seu produto"
       },
       category: "Categoria",
+      placeholder: "Selecionar categoria",
+      electronics: "Eletrônicos",
+      clothing: "Roupas",
+      home: "Casa e Jardim",
+      beauty: "Beleza",
+      sports: "Esportes",
+      books: "Livros",
+      automotive: "Automotivo",
+      other: "Outro",
       style: "Estilo de Escrita",
+      professional: "Profissional",
+      casual: "Casual",
+      luxury: "Luxo",
+      technical: "Técnico",
+      creative: "Criativo",
       generate: "Gerar",
-      generating: "Gerando...",
-      placeholder: "Selecionar..."
+      generating: "Gerando..."
     },
     results: {
       title: "Resultados",
-      empty: "Gere conteúdo para ver resultados",
+      empty: "Preencha o formulário e clique em 'Gerar' para criar conteúdo",
       regenerate: "Regenerar",
       export: "Exportar",
       product: {
@@ -1694,22 +1445,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "Chamada para Ação"
     },
-    hero: {
-      title: "Gerador de Descrições de Produtos IA",
-      subtitle: "Crie descrições de produtos convincentes em segundos",
-      description: "Aproveite o poder da inteligência artificial para gerar descrições de produtos, títulos e CTAs otimizados para SEO que convertem visitantes em clientes.",
-      cta: {
-        primary: "Começar Grátis",
-        secondary: "Ver Demo"
-      },
-      trusted: "Confiado por mais de 10.000 empresas"
-    },
     features: {
-      title: "Funcionalidades poderosas para o seu negócio",
-      subtitle: "Tudo o que precisa para criar conteúdo convincente",
+      title: "Recursos Poderosos",
+      subtitle: "Tudo que você precisa para criar conteúdo perfeito",
       ai: {
         title: "Geração IA",
-        description: "Algoritmos IA avançados para criação de conteúdo único"
+        description: "Tecnologia avançada de inteligência artificial para criar conteúdo único"
       },
       seo: {
         title: "Otimização SEO",
@@ -1721,25 +1462,25 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "Exportar",
-        description: "Exportar em vários formatos"
+        description: "Salvamento conveniente em vários formatos"
       },
       templates: {
         title: "Modelos",
-        description: "Modelos profissionais prontos a usar"
+        description: "Modelos profissionais prontos para usar"
       },
       analytics: {
-        title: "Analíticas",
-        description: "Analíticas detalhadas de desempenho"
+        title: "Análises",
+        description: "Estatísticas detalhadas de desempenho"
       }
     },
     pricing: {
-      title: "Preços simples e transparentes",
-      subtitle: "Escolha o plano que se adequa ao seu negócio",
+      title: "Preços Simples",
+      subtitle: "Escolha um plano que se adapte ao seu negócio",
       popular: "Popular",
       cta: "Começar",
       free: {
-        title: "Gratuito",
-        price: "€0",
+        title: "Grátis",
+        price: "R$ 0",
         description: "Para iniciantes",
         feature1: "5 gerações por mês",
         feature2: "Modelos básicos",
@@ -1747,61 +1488,68 @@ export const translations: Record<LanguageCode, Language> = {
       },
       pro: {
         title: "Profissional",
-        price: "€19",
+        price: "R$ 99",
         description: "Para pequenas empresas",
         feature1: "500 gerações por mês",
         feature2: "Todos os modelos",
         feature3: "Suporte prioritário",
-        feature4: "Analíticas"
+        feature4: "Exportar para todos os formatos"
       },
       business: {
         title: "Empresarial",
-        price: "€49",
-        description: "Para grandes equipas",
+        price: "R$ 299",
+        description: "Para grandes equipes",
         feature1: "Gerações ilimitadas",
         feature2: "Modelos personalizados",
-        feature3: "Gestor pessoal",
-        feature4: "Acesso API"
+        feature3: "Gerente pessoal",
+        feature4: "Acesso à API"
       }
     },
+    billing: {
+      title: "Faturação e Subscrição",
+      currentPlan: "Plano Atual",
+      upgrade: "Atualizar Plano",
+      active: "Ativo",
+      freePlan: "Plano gratuito",
+      nextBilling: "Próxima cobrança:",
+      paymentMethod: "Método de Pagamento",
+      change: "Alterar",
+      billingHistory: "Histórico de Faturação",
+      noHistory: "Ainda não há histórico de faturação",
+      paid: "Pago",
+      pending: "Pendente"
+    },
     footer: {
+      description: "Plataforma de criação de conteúdo IA de próxima geração",
       product: "Produto",
       company: "Empresa",
       support: "Suporte",
       legal: "Legal",
-      description: "Plataforma IA para criar conteúdo convincente",
       rights: "Todos os direitos reservados."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "Entrar na sua conta",
-          signup: "Criar a sua conta"
-        }
-      },
-      providers: {
-        google: "Continuar com Google",
-        linkedin: "Continuar com LinkedIn",
-        facebook: "Continuar com Facebook"
-      },
-      switch: {
-        login: "Já tem uma conta?",
-        signup: "Não tem uma conta?",
-        action: "Entrar"
-      }
     },
     toast: {
       success: {
         generated: "Conteúdo gerado com sucesso!",
         copied: "Copiado para a área de transferência",
-        exported: "Ficheiro exportado com sucesso"
+        exported: "Arquivo exportado com sucesso"
       },
       error: {
         generation: "Erro na geração de conteúdo",
-        copy: "Erro ao copiar"
+        copy: "Erro de cópia"
       }
+    },
+    common: {
+      save: "Salvar",
+      cancel: "Cancelar",
+      loading: "Carregando...",
+      close: "Fechar",
+      back: "Voltar",
+      next: "Próximo",
+      previous: "Anterior",
+      continue: "Continuar"
     }
   },
+  
   zh: {
     nav: {
       dashboard: "仪表板",
@@ -1809,77 +1557,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "设置",
       login: "登录",
       logout: "退出",
-      signup: "注册",
       features: "功能",
-      pricing: "定价",
+      pricing: "价格",
       about: "关于",
-      contact: "联系"
+      contact: "联系",
+      signup: "注册"
     },
-    billing: {
-      title: "账单和订阅",
-      currentPlan: "当前计划",
-      upgrade: "升级计划",
-      paymentMethod: "付款方式",
-      billingHistory: "账单历史",
-      nextBilling: "下次账单:",
-      active: "活跃",
-      paid: "已付款",
-      pending: "待处理",
-      change: "更改",
-      noHistory: "暂无账单历史",
-      freePlan: "免费计划"
-    },
-    common: {
-      save: "保存",
-      cancel: "取消",
-      loading: "加载中...",
-      error: "错误",
-      success: "成功",
-      confirm: "确认",
-      delete: "删除",
-      edit: "编辑",
-      view: "查看",
-      download: "下载",
-      upload: "上传",
-      search: "搜索",
-      filter: "筛选",
-      sort: "排序",
-      export: "导出",
-      import: "导入",
-      refresh: "刷新",
-      back: "返回",
-      next: "下一个",
-      previous: "上一个",
-      close: "关闭",
-      open: "打开",
-      yes: "是",
-      no: "否"
-    },
-    dashboard: {
-      title: "仪表板",
-      welcome: "欢迎",
-      overview: "概览",
-      analytics: "分析",
-      recent: "最近",
-      usage: "使用情况",
-      plan: "计划",
-      generations: "生成次数"
+    hero: {
+      title: "AI产品描述生成器",
+      subtitle: "几秒钟内创建SEO优化的描述",
+      description: "强大的AI工具，为您的业务创建引人注目的产品描述、标题和CTA",
+      trusted: "超过10,000家公司的信赖",
+      cta: {
+        primary: "免费试用",
+        secondary: "观看演示"
+      }
     },
     form: {
       title: "内容生成器",
       product: {
         name: "产品名称",
-        placeholder: "输入产品名称..."
+        placeholder: "输入您的产品名称"
       },
       category: "类别",
+      placeholder: "选择类别",
+      electronics: "电子产品",
+      clothing: "服装",
+      home: "家居园艺",
+      beauty: "美容",
+      sports: "运动",
+      books: "图书",
+      automotive: "汽车",
+      other: "其他",
       style: "写作风格",
+      professional: "专业",
+      casual: "休闲",
+      luxury: "奢华",
+      technical: "技术",
+      creative: "创意",
       generate: "生成",
-      generating: "生成中...",
-      placeholder: "选择..."
+      generating: "生成中..."
     },
     results: {
       title: "结果",
-      empty: "生成内容以查看结果",
+      empty: "填写表单并点击\"生成"来创建内容",
       regenerate: "重新生成",
       export: "导出",
       product: {
@@ -1894,22 +1615,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "行动号召"
     },
-    hero: {
-      title: "AI产品描述生成器",
-      subtitle: "在几秒钟内创建引人注目的产品描述",
-      description: "利用人工智能的力量生成SEO优化的产品描述、标题和CTA，将访客转化为客户。",
-      cta: {
-        primary: "免费开始",
-        secondary: "观看演示"
-      },
-      trusted: "受到10,000+公司信赖"
-    },
     features: {
-      title: "为您的业务提供强大功能",
-      subtitle: "创建引人注目内容所需的一切",
+      title: "强大功能",
+      subtitle: "创建完美内容所需的一切",
       ai: {
         title: "AI生成",
-        description: "用于独特内容创建的先进AI算法"
+        description: "先进的人工智能技术创建独特内容"
       },
       seo: {
         title: "SEO优化",
@@ -1921,7 +1632,7 @@ export const translations: Record<LanguageCode, Language> = {
       },
       export: {
         title: "导出",
-        description: "以各种格式导出"
+        description: "便捷的多格式保存"
       },
       templates: {
         title: "模板",
@@ -1929,11 +1640,11 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "分析",
-        description: "详细的性能分析"
+        description: "详细的性能统计"
       }
     },
     pricing: {
-      title: "简单透明的定价",
+      title: "简单定价",
       subtitle: "选择适合您业务的计划",
       popular: "热门",
       cta: "开始使用",
@@ -1952,11 +1663,11 @@ export const translations: Record<LanguageCode, Language> = {
         feature1: "每月500次生成",
         feature2: "所有模板",
         feature3: "优先支持",
-        feature4: "分析功能"
+        feature4: "导出所有格式"
       },
       business: {
         title: "企业版",
-        price: "¥328",
+        price: "¥398",
         description: "适合大团队",
         feature1: "无限生成",
         feature2: "自定义模板",
@@ -1964,31 +1675,27 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "API访问"
       }
     },
+    billing: {
+      title: "账单和订阅",
+      currentPlan: "当前计划",
+      upgrade: "升级计划",
+      active: "活跃",
+      freePlan: "免费计划",
+      nextBilling: "下次计费：",
+      paymentMethod: "付款方式",
+      change: "更改",
+      billingHistory: "账单历史",
+      noHistory: "暂无账单历史",
+      paid: "已付款",
+      pending: "待处理"
+    },
     footer: {
+      description: "下一代AI内容创作平台",
       product: "产品",
       company: "公司",
       support: "支持",
       legal: "法律",
-      description: "用于创建引人注目内容的AI平台",
       rights: "版权所有。"
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "登录您的账户",
-          signup: "创建您的账户"
-        }
-      },
-      providers: {
-        google: "使用Google继续",
-        linkedin: "使用LinkedIn继续",
-        facebook: "使用Facebook继续"
-      },
-      switch: {
-        login: "已有账户？",
-        signup: "没有账户？",
-        action: "登录"
-      }
     },
     toast: {
       success: {
@@ -2000,8 +1707,19 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "内容生成错误",
         copy: "复制错误"
       }
+    },
+    common: {
+      save: "保存",
+      cancel: "取消",
+      loading: "加载中...",
+      close: "关闭",
+      back: "返回",
+      next: "下一步",
+      previous: "上一步",
+      continue: "继续"
     }
   },
+  
   ja: {
     nav: {
       dashboard: "ダッシュボード",
@@ -2009,77 +1727,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "設定",
       login: "ログイン",
       logout: "ログアウト",
-      signup: "サインアップ",
       features: "機能",
       pricing: "料金",
-      about: "について",
-      contact: "お問い合わせ"
+      about: "概要",
+      contact: "お問い合わせ",
+      signup: "サインアップ"
     },
-    billing: {
-      title: "請求とサブスクリプション",
-      currentPlan: "現在のプラン",
-      upgrade: "プランをアップグレード",
-      paymentMethod: "支払い方法",
-      billingHistory: "請求履歴",
-      nextBilling: "次回請求:",
-      active: "アクティブ",
-      paid: "支払い済み",
-      pending: "保留中",
-      change: "変更",
-      noHistory: "請求履歴がまだありません",
-      freePlan: "無料プラン"
-    },
-    common: {
-      save: "保存",
-      cancel: "キャンセル",
-      loading: "読み込み中...",
-      error: "エラー",
-      success: "成功",
-      confirm: "確認",
-      delete: "削除",
-      edit: "編集",
-      view: "表示",
-      download: "ダウンロード",
-      upload: "アップロード",
-      search: "検索",
-      filter: "フィルター",
-      sort: "並び替え",
-      export: "エクスポート",
-      import: "インポート",
-      refresh: "更新",
-      back: "戻る",
-      next: "次へ",
-      previous: "前へ",
-      close: "閉じる",
-      open: "開く",
-      yes: "はい",
-      no: "いいえ"
-    },
-    dashboard: {
-      title: "ダッシュボード",
-      welcome: "ようこそ",
-      overview: "概要",
-      analytics: "分析",
-      recent: "最近",
-      usage: "使用状況",
-      plan: "プラン",
-      generations: "生成回数"
+    hero: {
+      title: "AI商品説明ジェネレーター",
+      subtitle: "SEO最適化された説明を数秒で作成",
+      description: "ビジネス向けの魅力的な商品説明、タイトル、CTAを作成する強力なAIツール",
+      trusted: "10,000社以上に信頼されています",
+      cta: {
+        primary: "無料で試す",
+        secondary: "デモを見る"
+      }
     },
     form: {
       title: "コンテンツジェネレーター",
       product: {
         name: "商品名",
-        placeholder: "商品名を入力..."
+        placeholder: "商品名を入力してください"
       },
       category: "カテゴリー",
+      placeholder: "カテゴリーを選択",
+      electronics: "電子機器",
+      clothing: "衣類",
+      home: "ホーム＆ガーデン",
+      beauty: "美容",
+      sports: "スポーツ",
+      books: "書籍",
+      automotive: "自動車",
+      other: "その他",
       style: "文体",
+      professional: "プロフェッショナル",
+      casual: "カジュアル",
+      luxury: "ラグジュアリー",
+      technical: "技術的",
+      creative: "クリエイティブ",
       generate: "生成",
-      generating: "生成中...",
-      placeholder: "選択..."
+      generating: "生成中..."
     },
     results: {
       title: "結果",
-      empty: "結果を見るためにコンテンツを生成してください",
+      empty: "フォームに記入して「生成」をクリックしてコンテンツを作成してください",
       regenerate: "再生成",
       export: "エクスポート",
       product: {
@@ -2094,34 +1785,24 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "コールトゥアクション"
     },
-    hero: {
-      title: "AI商品説明ジェネレーター",
-      subtitle: "数秒で魅力的な商品説明を作成",
-      description: "人工知能の力を活用して、訪問者を顧客に変換するSEO最適化された商品説明、タイトル、CTAを生成します。",
-      cta: {
-        primary: "無料で始める",
-        secondary: "デモを見る"
-      },
-      trusted: "10,000以上の企業に信頼されています"
-    },
     features: {
-      title: "ビジネスのための強力な機能",
-      subtitle: "魅力的なコンテンツを作成するために必要なすべて",
+      title: "強力な機能",
+      subtitle: "完璧なコンテンツ作成に必要なすべて",
       ai: {
         title: "AI生成",
-        description: "ユニークなコンテンツ作成のための高度なAIアルゴリズム"
+        description: "ユニークなコンテンツを作成する高度な人工知能技術"
       },
       seo: {
         title: "SEO最適化",
         description: "検索エンジンの自動最適化"
       },
       multilingual: {
-        title: "多言語",
+        title: "多言語対応",
         description: "グローバルリーチのための11以上の言語サポート"
       },
       export: {
         title: "エクスポート",
-        description: "様々な形式でエクスポート"
+        description: "様々な形式での便利な保存"
       },
       templates: {
         title: "テンプレート",
@@ -2129,12 +1810,12 @@ export const translations: Record<LanguageCode, Language> = {
       },
       analytics: {
         title: "分析",
-        description: "詳細なパフォーマンス分析"
+        description: "詳細なパフォーマンス統計"
       }
     },
     pricing: {
-      title: "シンプルで透明な料金",
-      subtitle: "あなのビジネスに合ったプランを選択",
+      title: "シンプルな料金",
+      subtitle: "ビジネスに適したプランを選択",
       popular: "人気",
       cta: "始める",
       free: {
@@ -2148,15 +1829,15 @@ export const translations: Record<LanguageCode, Language> = {
       pro: {
         title: "プロフェッショナル",
         price: "¥2,000",
-        description: "小規模ビジネス向け",
+        description: "小規模企業向け",
         feature1: "月500回の生成",
         feature2: "すべてのテンプレート",
         feature3: "優先サポート",
-        feature4: "分析機能"
+        feature4: "すべての形式にエクスポート"
       },
       business: {
         title: "ビジネス",
-        price: "¥5,000",
+        price: "¥6,000",
         description: "大規模チーム向け",
         feature1: "無制限の生成",
         feature2: "カスタムテンプレート",
@@ -2164,44 +1845,51 @@ export const translations: Record<LanguageCode, Language> = {
         feature4: "APIアクセス"
       }
     },
+    billing: {
+      title: "請求とサブスクリプション",
+      currentPlan: "現在のプラン",
+      upgrade: "プランをアップグレード",
+      active: "アクティブ",
+      freePlan: "無料プラン",
+      nextBilling: "次回請求：",
+      paymentMethod: "支払い方法",
+      change: "変更",
+      billingHistory: "請求履歴",
+      noHistory: "請求履歴はまだありません",
+      paid: "支払済み",
+      pending: "保留中"
+    },
     footer: {
+      description: "次世代AIコンテンツ作成プラットフォーム",
       product: "製品",
       company: "会社",
       support: "サポート",
       legal: "法的事項",
-      description: "魅力的なコンテンツを作成するためのAIプラットフォーム",
       rights: "すべての権利を保有。"
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "アカウントにサインイン",
-          signup: "アカウントを作成"
-        }
-      },
-      providers: {
-        google: "Googleで続行",
-        linkedin: "LinkedInで続行",
-        facebook: "Facebookで続行"
-      },
-      switch: {
-        login: "すでにアカウントをお持ちですか？",
-        signup: "アカウントをお持ちでないですか？",
-        action: "サインイン"
-      }
     },
     toast: {
       success: {
         generated: "コンテンツが正常に生成されました！",
-        copied: "クリップボードにコピーされました",
+        copied: "クリップボードにコピーしました",
         exported: "ファイルが正常にエクスポートされました"
       },
       error: {
         generation: "コンテンツ生成エラー",
         copy: "コピーエラー"
       }
+    },
+    common: {
+      save: "保存",
+      cancel: "キャンセル",
+      loading: "読み込み中...",
+      close: "閉じる",
+      back: "戻る",
+      next: "次へ",
+      previous: "前へ",
+      continue: "続行"
     }
   },
+  
   ar: {
     nav: {
       dashboard: "لوحة التحكم",
@@ -2209,77 +1897,50 @@ export const translations: Record<LanguageCode, Language> = {
       settings: "الإعدادات",
       login: "تسجيل الدخول",
       logout: "تسجيل الخروج",
-      signup: "إنشاء حساب",
       features: "المميزات",
       pricing: "الأسعار",
       about: "حول",
-      contact: "اتصل بنا"
+      contact: "اتصل بنا",
+      signup: "إنشاء حساب"
     },
-    billing: {
-      title: "الفواتير والاشتراك",
-      currentPlan: "الخطة الحالية",
-      upgrade: "ترقية الخطة",
-      paymentMethod: "طريقة الدفع",
-      billingHistory: "تاريخ الفواتير",
-      nextBilling: "الفاتورة التالية:",
-      active: "نشط",
-      paid: "مدفوع",
-      pending: "في الانتظار",
-      change: "تغيير",
-      noHistory: "لا يوجد تاريخ فواتير بعد",
-      freePlan: "خطة مجانية"
-    },
-    common: {
-      save: "حفظ",
-      cancel: "إلغاء",
-      loading: "جاري التحميل...",
-      error: "خطأ",
-      success: "نجح",
-      confirm: "تأكيد",
-      delete: "حذف",
-      edit: "تحرير",
-      view: "عرض",
-      download: "تحميل",
-      upload: "رفع",
-      search: "بحث",
-      filter: "تصفية",
-      sort: "ترتيب",
-      export: "تصدير",
-      import: "استيراد",
-      refresh: "تحديث",
-      back: "رجوع",
-      next: "التالي",
-      previous: "السابق",
-      close: "إغلاق",
-      open: "فتح",
-      yes: "نعم",
-      no: "لا"
-    },
-    dashboard: {
-      title: "لوحة التحكم",
-      welcome: "مرحباً",
-      overview: "نظرة عامة",
-      analytics: "التحليلات",
-      recent: "الأخيرة",
-      usage: "الاستخدام",
-      plan: "الخطة",
-      generations: "عمليات الإنشاء"
+    hero: {
+      title: "مولد أوصاف المنتجات بالذكاء الاصطناعي",
+      subtitle: "إنشاء أوصاف محسنة لمحركات البحث في ثوانٍ",
+      description: "أداة ذكاء اصطناعي قوية لإنشاء أوصاف منتجات وعناوين ودعوات للعمل مقنعة لعملك",
+      trusted: "موثوق من قبل أكثر من 10,000 شركة",
+      cta: {
+        primary: "جرب مجاناً",
+        secondary: "شاهد العرض التوضيحي"
+      }
     },
     form: {
       title: "مولد المحتوى",
       product: {
         name: "اسم المنتج",
-        placeholder: "أدخل اسم المنتج..."
+        placeholder: "أدخل اسم منتجك"
       },
       category: "الفئة",
+      placeholder: "اختر الفئة",
+      electronics: "الإلكترونيات",
+      clothing: "الملابس",
+      home: "المنزل والحديقة",
+      beauty: "الجمال",
+      sports: "الرياضة",
+      books: "الكتب",
+      automotive: "السيارات",
+      other: "أخرى",
       style: "أسلوب الكتابة",
+      professional: "مهني",
+      casual: "عادي",
+      luxury: "فاخر",
+      technical: "تقني",
+      creative: "إبداعي",
       generate: "إنشاء",
-      generating: "جاري الإنشاء...",
-      placeholder: "اختر..."
+      generating: "جاري الإنشاء..."
     },
     results: {
       title: "النتائج",
-      empty: "قم بإنشاء محتوى لرؤية النتائج",
+      empty: "املأ النموذج واضغط على 'إنشاء' لإنتاج المحتوى",
       regenerate: "إعادة إنشاء",
       export: "تصدير",
       product: {
@@ -2294,101 +1955,87 @@ export const translations: Record<LanguageCode, Language> = {
       },
       cta: "دعوة للعمل"
     },
-    hero: {
-      title: "مولد أوصاف المنتجات بالذكاء الاصطناعي",
-      subtitle: "أنشئ أوصاف منتجات مقنعة في ثوانٍ",
-      description: "استغل قوة الذكاء الاصطناعي لإنشاء أوصاف منتجات وعناوين ودعوات للعمل محسنة لمحركات البحث تحول الزوار إلى عملاء.",
-      cta: {
-        primary: "ابدأ مجاناً",
-        secondary: "شاهد العرض التوضيحي"
-      },
-      trusted: "موثوق من قبل أكثر من 10,000 شركة"
-    },
     features: {
-      title: "ميزات قوية لعملك",
-      subtitle: "كل ما تحتاجه لإنشاء محتوى مقنع",
+      title: "مميزات قوية",
+      subtitle: "كل ما تحتاجه لإنشاء محتوى مثالي",
       ai: {
         title: "إنشاء بالذكاء الاصطناعي",
-        description: "خوارزميات ذكاء اصطناعي متقدمة لإنشاء محتوى فريد"
+        description: "تقنية ذكاء اصطناعي متقدمة لإنشاء محتوى فريد"
       },
       seo: {
-        title: "تحسين SEO",
+        title: "تحسين محركات البحث",
         description: "تحسين تلقائي لمحركات البحث"
       },
       multilingual: {
         title: "متعدد اللغات",
-        description: "دعم لأكثر من 11 لغة للوصول العالمي"
+        description: "دعم أكثر من 11 لغة للوصول العالمي"
       },
       export: {
         title: "تصدير",
-        description: "تصدير بتنسيقات مختلفة"
+        description: "حفظ مريح بتنسيقات مختلفة"
       },
       templates: {
-        title: "قوالب",
+        title: "القوالب",
         description: "قوالب احترافية جاهزة للاستخدام"
       },
       analytics: {
         title: "التحليلات",
-        description: "تحليلات أداء مفصلة"
+        description: "إحصائيات أداء مفصلة"
       }
     },
     pricing: {
-      title: "أسعار بسيطة وشفافة",
-      subtitle: "اختر الخطة التي تناسب عملك",
+      title: "أسعار بسيطة",
+      subtitle: "اختر خطة تناسب عملك",
       popular: "شائع",
       cta: "ابدأ",
       free: {
         title: "مجاني",
-        price: "$0",
+        price: "0 ريال",
         description: "للمبتدئين",
-        feature1: "5 عمليات إنشاء شهرياً",
+        feature1: "5 إنشاءات شهرياً",
         feature2: "قوالب أساسية",
         feature3: "دعم بالبريد الإلكتروني"
       },
       pro: {
         title: "احترافي",
-        price: "$19",
+        price: "75 ريال",
         description: "للشركات الصغيرة",
-        feature1: "500 عملية إنشاء شهرياً",
+        feature1: "500 إنشاء شهرياً",
         feature2: "جميع القوالب",
         feature3: "دعم أولوية",
-        feature4: "التحليلات"
+        feature4: "تصدير لجميع التنسيقات"
       },
       business: {
         title: "الأعمال",
-        price: "$49",
+        price: "225 ريال",
         description: "للفرق الكبيرة",
-        feature1: "عمليات إنشاء غير محدودة",
+        feature1: "إنشاءات غير محدودة",
         feature2: "قوالب مخصصة",
         feature3: "مدير شخصي",
         feature4: "وصول API"
       }
     },
+    billing: {
+      title: "الفواتير والاشتراك",
+      currentPlan: "الخطة الحالية",
+      upgrade: "ترقية الخطة",
+      active: "نشط",
+      freePlan: "خطة مجانية",
+      nextBilling: "الفاتورة التالية:",
+      paymentMethod: "طريقة الدفع",
+      change: "تغيير",
+      billingHistory: "تاريخ الفواتير",
+      noHistory: "لا يوجد تاريخ فواتير بعد",
+      paid: "مدفوع",
+      pending: "معلق"
+    },
     footer: {
+      description: "منصة إنشاء المحتوى بالذكاء الاصطناعي من الجيل القادم",
       product: "المنتج",
       company: "الشركة",
       support: "الدعم",
       legal: "قانوني",
-      description: "منصة ذكاء اصطناعي لإنشاء محتوى مقنع",
       rights: "جميع الحقوق محفوظة."
-    },
-    auth: {
-      modal: {
-        title: {
-          login: "تسجيل الدخول إلى حسابك",
-          signup: "إنشاء حسابك"
-        }
-      },
-      providers: {
-        google: "المتابعة مع Google",
-        linkedin: "المتابعة مع LinkedIn",
-        facebook: "المتابعة مع Facebook"
-      },
-      switch: {
-        login: "هل لديك حساب بالفعل؟",
-        signup: "ليس لديك حساب؟",
-        action: "تسجيل الدخول"
-      }
     },
     toast: {
       success: {
@@ -2400,60 +2047,101 @@ export const translations: Record<LanguageCode, Language> = {
         generation: "خطأ في إنشاء المحتوى",
         copy: "خطأ في النسخ"
       }
+    },
+    common: {
+      save: "حفظ",
+      cancel: "إلغاء",
+      loading: "جاري التحميل...",
+      close: "إغلاق",
+      back: "رجوع",
+      next: "التالي",
+      previous: "السابق",
+      continue: "متابعة"
     }
   }
 };
 
-let currentLanguage: LanguageCode = 'en';
+// Current language state
+let currentLanguage: LanguageCode = 'uk';
 
-export function getCurrentLanguage(): LanguageCode {
-  return currentLanguage;
-}
-
-export function setLanguage(lang: LanguageCode): void {
-  currentLanguage = lang;
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('copyflow-language', lang);
-    
-    // Set RTL for Arabic
-    if (lang === 'ar') {
-      document.documentElement.setAttribute('dir', 'rtl');
-      document.documentElement.setAttribute('lang', 'ar');
-    } else {
-      document.documentElement.setAttribute('dir', 'ltr');
-      document.documentElement.setAttribute('lang', lang);
-    }
+// Initialize language from localStorage or default to Ukrainian
+if (typeof window !== 'undefined') {
+  const savedLanguage = localStorage.getItem('copyflow-language') as LanguageCode;
+  if (savedLanguage && translations[savedLanguage]) {
+    currentLanguage = savedLanguage;
+  }
+  
+  // Set document direction for RTL languages
+  if (currentLanguage === 'ar') {
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'ar';
+  } else {
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = currentLanguage;
   }
 }
 
-export function t(lang: LanguageCode, key: string): string {
+// Translation function
+export function t(language: LanguageCode, key: string): string {
   const keys = key.split('.');
-  let value: any = translations[lang];
+  let value: any = translations[language] || translations.en;
   
   for (const k of keys) {
-    if (value && typeof value === 'object' && k in value) {
-      value = value[k];
-    } else {
+    value = value?.[k];
+    if (value === undefined) {
       // Fallback to English if translation not found
       value = translations.en;
       for (const fallbackKey of keys) {
-        if (value && typeof value === 'object' && fallbackKey in value) {
-          value = value[fallbackKey];
-        } else {
-          return key; // Return key if no translation found
+        value = value?.[fallbackKey];
+        if (value === undefined) {
+          return key; // Return key if even English translation is missing
         }
       }
       break;
     }
   }
   
-  return typeof value === 'string' ? value : key;
+  return value || key;
 }
 
-// Initialize language from localStorage on client side
-if (typeof window !== 'undefined') {
-  const savedLang = localStorage.getItem('copyflow-language') as LanguageCode;
-  if (savedLang && savedLang in translations) {
-    setLanguage(savedLang);
+// Get current language
+export function getCurrentLanguage(): LanguageCode {
+  return currentLanguage;
+}
+
+// Set language and persist to localStorage
+export function setLanguage(language: LanguageCode): void {
+  if (translations[language]) {
+    currentLanguage = language;
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('copyflow-language', language);
+      
+      // Update document direction and language
+      if (language === 'ar') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+      } else {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = language;
+      }
+    }
   }
+}
+
+// Get available languages
+export function getAvailableLanguages(): Array<{ code: LanguageCode; name: string }> {
+  return [
+    { code: 'uk', name: 'Українська' },
+    { code: 'en', name: 'English' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'it', name: 'Italiano' },
+    { code: 'pl', name: 'Polski' },
+    { code: 'pt', name: 'Português' },
+    { code: 'zh', name: '中文' },
+    { code: 'ja', name: '日本語' },
+    { code: 'ar', name: 'العربية' }
+  ];
 }

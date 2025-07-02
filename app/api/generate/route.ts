@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { GeneratorFormData } from '@/types/generator';
 
-export const runtime = 'nodejs'
+export const runtime = 'nodejs';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
