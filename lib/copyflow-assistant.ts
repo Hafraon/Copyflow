@@ -24,6 +24,12 @@ interface AssistantResult {
   processing_time?: number;
 }
 
+interface EmojiPrefixes {
+  title: string;
+  seo: string;
+  meta: string;
+}
+
 export async function generateWithAssistant(
   productData: any, 
   options: AssistantOptions
@@ -125,21 +131,21 @@ async function simulateAssistantResponse(productData: any, options: AssistantOpt
   const intensity = emojiConfig?.intensity ?? 2;
   
   // Generate emoji-aware content based on settings
-  const emojiPrefix = useEmojis ? getEmojisByIntensity(intensity, emojiConfig?.categoryEmojis) : '';
+  const emojiPrefixes = useEmojis ? getEmojisByIntensity(intensity, emojiConfig?.categoryEmojis) : null;
   
   return {
-    productTitle: useEmojis 
-      ? `${emojiPrefix.title} ${productData.name || 'Преміум продукт'} ⭐`
+    productTitle: useEmojis && emojiPrefixes
+      ? `${emojiPrefixes.title} ${productData.name || 'Преміум продукт'} ⭐`
       : `${productData.name || 'Преміум продукт'} - Висока якість`,
     
     productDescription: generateDescription(productData, useEmojis, intensity, emojiConfig?.categoryEmojis),
     
-    seoTitle: useEmojis
-      ? `${emojiPrefix.seo} ${productData.name || 'Продукт'} | Купити в Україні ⭐`
+    seoTitle: useEmojis && emojiPrefixes
+      ? `${emojiPrefixes.seo} ${productData.name || 'Продукт'} | Купити в Україні ⭐`
       : `${productData.name || 'Продукт'} | Купити в Україні | Найкраща ціна`,
     
-    metaDescription: useEmojis
-      ? `${emojiPrefix.meta} Купуйте ${productData.name || 'продукт'} за найкращою ціною! ✅ Швидка доставка 🚚 Гарантія якості ⭐`
+    metaDescription: useEmojis && emojiPrefixes
+      ? `${emojiPrefixes.meta} Купуйте ${productData.name || 'продукт'} за найкращою ціною! ✅ Швидка доставка 🚚 Гарантія якості ⭐`
       : `Купуйте ${productData.name || 'продукт'} за найкращою ціною! Швидка доставка по Україні. Гарантія якості.`,
     
     callToAction: useEmojis ? '🛒 Замовити зараз!' : 'Замовити зараз',
@@ -160,7 +166,7 @@ async function simulateAssistantResponse(productData: any, options: AssistantOpt
   };
 }
 
-function getEmojisByIntensity(intensity: number, categoryEmojis?: string[]) {
+function getEmojisByIntensity(intensity: number, categoryEmojis?: string[]): EmojiPrefixes {
   const category = categoryEmojis?.[0] || '⭐';
   
   switch (intensity) {
