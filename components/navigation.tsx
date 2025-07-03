@@ -2,39 +2,40 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { AuthModal } from '@/components/auth-modal';
-import { Menu, X, Zap } from 'lucide-react';
+import { LoginModal } from '@/components/auth/login-modal';
+import { SignupModal } from '@/components/auth/signup-modal';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Menu, X, Zap, User, Settings, LogOut, BarChart3, CreditCard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function Navigation() {
   const { t } = useTranslation();
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
   const menuItems = [
     { key: 'features', href: '#features' },
     { key: 'pricing', href: '#pricing' },
-    { key: 'about', href: '#about' },
-    { key: 'contact', href: '#contact' }
+    { key: 'about', href: '/about' },
+    { key: 'contact', href: '/contact' }
   ];
 
-  const openLogin = () => {
-    setAuthMode('login');
-    setAuthModalOpen(true);
-  };
-
-  const openSignup = () => {
-    setAuthMode('signup');
-    setAuthModalOpen(true);
-  };
-
-  const switchAuthMode = () => {
-    setAuthMode(authMode === 'login' ? 'signup' : 'login');
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    window.location.href = '/';
   };
 
   return (
@@ -70,14 +71,61 @@ export function Navigation() {
                 <LanguageSwitcher />
               </div>
               
-              <div className="hidden md:flex items-center space-x-2">
-                <Button variant="ghost" size="sm" onClick={openLogin}>
-                  {t('nav.login')}
-                </Button>
-                <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" onClick={openSignup}>
-                  {t('nav.signup')}
-                </Button>
-              </div>
+              {session ? (
+                // Authenticated User Menu
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      <User className="h-4 w-4" />
+                      <span className="hidden sm:inline">{session.user?.name || session.user?.email}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard">
+                        <BarChart3 className="mr-2 h-4 w-4" />
+                        {t('nav.dashboard')}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard/billing">
+                        <CreditCard className="mr-2 h-4 w-4" />
+                        {t('nav.billing')}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/settings">
+                        <Settings className="mr-2 h-4 w-4" />
+                        {t('nav.settings')}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      {t('nav.logout')}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                // Login/Signup Buttons
+                <div className="hidden md:flex items-center space-x-2">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => setIsLoginModalOpen(true)}
+                  >
+                    {t('nav.login')}
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" 
+                    onClick={() => setIsSignupModalOpen(true)}
+                  >
+                    {t('nav.signup')}
+                  </Button>
+                </div>
+              )}
 
               {/* Mobile Menu Button */}
               <Button
@@ -118,14 +166,40 @@ export function Navigation() {
                     <ThemeToggle />
                     <LanguageSwitcher />
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="sm" onClick={openLogin}>
-                      {t('nav.login')}
-                    </Button>
-                    <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" onClick={openSignup}>
-                      {t('nav.signup')}
-                    </Button>
-                  </div>
+                  
+                  {session ? (
+                    <div className="flex flex-col space-y-2">
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link href="/dashboard">{t('nav.dashboard')}</Link>
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                        {t('nav.logout')}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => {
+                          setIsLoginModalOpen(true);
+                          setIsOpen(false);
+                        }}
+                      >
+                        {t('nav.login')}
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" 
+                        onClick={() => {
+                          setIsSignupModalOpen(true);
+                          setIsOpen(false);
+                        }}
+                      >
+                        {t('nav.signup')}
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -133,11 +207,22 @@ export function Navigation() {
         </AnimatePresence>
       </nav>
 
-      <AuthModal 
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        mode={authMode}
-        onSwitchMode={switchAuthMode}
+      {/* Auth Modals */}
+      <LoginModal 
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onSwitchToSignup={() => {
+          setIsLoginModalOpen(false)
+          setIsSignupModalOpen(true)
+        }}
+      />
+      <SignupModal 
+        isOpen={isSignupModalOpen}
+        onClose={() => setIsSignupModalOpen(false)}
+        onSwitchToLogin={() => {
+          setIsSignupModalOpen(false)
+          setIsLoginModalOpen(true)
+        }}
       />
     </>
   );
