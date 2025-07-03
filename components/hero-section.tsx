@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -37,7 +37,7 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight">
-              <span className="text-gradient">{t('hero.title')}</span>
+              <span className="text-gradient">CopyFlow</span>
             </h1>
             <p className="mt-4 text-xl sm:text-2xl text-muted-foreground font-medium">
               {t('hero.subtitle')}

@@ -19,8 +19,8 @@ const resources = {
       'nav.logout': 'Logout',
       
       // Hero
-      'hero.title': 'AI-Powered Product Descriptions',
-      'hero.subtitle': 'Generate compelling content in seconds',
+      'hero.title': 'CopyFlow',
+      'hero.subtitle': 'AI-Powered Product Description Generator',
       'hero.description': 'Create SEO-optimized product descriptions, titles, and CTAs with advanced AI technology. Perfect for e-commerce businesses of all sizes.',
       'hero.cta.primary': 'Start Generating',
       'hero.cta.secondary': 'Watch Demo',
@@ -277,8 +277,8 @@ const resources = {
       'nav.logout': 'Вийти',
       
       // Hero
-      'hero.title': 'ШІ-генератор описів товарів',
-      'hero.subtitle': 'Створюйте привабливий контент за секунди',
+      'hero.title': 'CopyFlow',
+      'hero.subtitle': 'ШІ-генератор описів товарів',
       'hero.description': 'Створюйте SEO-оптимізовані описи товарів, заголовки та заклики до дії за допомогою передових ШІ-технологій. Ідеально для e-commerce бізнесу будь-якого розміру.',
       'hero.cta.primary': 'Почати генерацію',
       'hero.cta.secondary': 'Дивитися демо',
