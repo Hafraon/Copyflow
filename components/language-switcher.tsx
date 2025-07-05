@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,27 +9,31 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
+import { getCurrentLanguage, setLanguage, useLanguageChange, removeLanguageListener, LanguageCode } from '@/lib/translations';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'uk', name: 'Українська', flag: '🇺🇦' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  { code: 'pl', name: 'Polski', flag: '🇵🇱' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' }
+  { code: 'en' as LanguageCode, name: 'English', flag: '🇺🇸' },
+  { code: 'uk' as LanguageCode, name: 'Українська', flag: '🇺🇦' },
+  // Removed other languages for performance optimization
 ];
 
 export function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const [currentLang, setCurrentLang] = useState(i18n.language);
+  const [currentLang, setCurrentLang] = useState<LanguageCode>(getCurrentLanguage());
 
-  const changeLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode);
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setCurrentLang(getCurrentLanguage());
+    };
+
+    useLanguageChange(handleLanguageChange);
+
+    return () => {
+      removeLanguageListener(handleLanguageChange);
+    };
+  }, []);
+
+  const changeLanguage = (langCode: LanguageCode) => {
+    setLanguage(langCode);
     setCurrentLang(langCode);
   };
 

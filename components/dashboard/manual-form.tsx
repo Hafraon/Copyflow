@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { GeneratedContent } from '@/types/generator';
-import { getCurrentLanguage, t } from '@/lib/translations';
+import { getCurrentLanguage, t, useLanguageChange, removeLanguageListener } from '@/lib/translations';
 
 interface ManualFormProps {
   onContentGenerated?: (content: GeneratedContent) => void;
@@ -31,15 +31,16 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
 
   // Update language when it changes
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newLang = getCurrentLanguage();
-      if (newLang !== currentLang) {
-        setCurrentLang(newLang);
-      }
-    }, 100);
+    const handleLanguageChange = () => {
+      setCurrentLang(getCurrentLanguage());
+    };
 
-    return () => clearInterval(interval);
-  }, [currentLang]);
+    useLanguageChange(handleLanguageChange);
+
+    return () => {
+      removeLanguageListener(handleLanguageChange);
+    };
+  }, []);
 
   const handleGenerate = async () => {
     if (!formData.productName || !formData.category || !formData.writingStyle) {

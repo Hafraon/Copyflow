@@ -214,6 +214,7 @@ const translations: Record<LanguageCode, Translations> = {
 };
 
 let currentLanguage: LanguageCode = 'en';
+let listeners: (() => void)[] = [];
 
 export function getCurrentLanguage(): LanguageCode {
   return currentLanguage;
@@ -224,6 +225,8 @@ export function setLanguage(lang: LanguageCode): void {
   if (typeof window !== 'undefined') {
     localStorage.setItem('copyflow-language', lang);
   }
+  // Notify all listeners about language change
+  listeners.forEach(listener => listener());
 }
 
 export function t(key: string, fallback?: string): string {
@@ -237,4 +240,13 @@ export function initializeLanguage(): void {
       currentLanguage = saved;
     }
   }
+}
+
+// Hook for components to listen to language changes
+export function useLanguageChange(callback: () => void): void {
+  listeners.push(callback);
+}
+
+export function removeLanguageListener(callback: () => void): void {
+  listeners = listeners.filter(listener => listener !== callback);
 }

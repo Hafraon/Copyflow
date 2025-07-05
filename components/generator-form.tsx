@@ -22,7 +22,7 @@ import { GeneratedContent, GeneratorFormData, CATEGORIES, WRITING_STYLES } from 
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
-import { getCurrentLanguage, t } from '@/lib/translations';
+import { getCurrentLanguage, t, useLanguageChange, removeLanguageListener } from '@/lib/translations';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
@@ -60,15 +60,16 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
 
   // Update language when it changes
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newLang = getCurrentLanguage();
-      if (newLang !== currentLang) {
-        setCurrentLang(newLang);
-      }
-    }, 100);
+    const handleLanguageChange = () => {
+      setCurrentLang(getCurrentLanguage());
+    };
 
-    return () => clearInterval(interval);
-  }, [currentLang]);
+    useLanguageChange(handleLanguageChange);
+
+    return () => {
+      removeLanguageListener(handleLanguageChange);
+    };
+  }, []);
 
   // Load saved form data on client mount
   useEffect(() => {
