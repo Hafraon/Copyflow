@@ -23,6 +23,7 @@ import { getEmojiPreview } from '@/lib/emoji-config';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { getCurrentLanguage } from '@/lib/translations';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
@@ -86,11 +87,16 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
 
   const onSubmit = async (data: GeneratorFormData) => {
     try {
+      // Get current language from translation system
+      const currentLanguage = getCurrentLanguage();
+      
       // Ensure emoji settings have defaults
       const formDataWithEmojis = {
         ...data,
         useEmojis: data.useEmojis ?? true,
         emojiIntensity: data.emojiIntensity ?? 2,
+        // NEW: Add language parameter
+        language: currentLanguage,
       };
       
       await onGenerate(formDataWithEmojis);

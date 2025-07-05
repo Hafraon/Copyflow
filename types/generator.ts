@@ -13,6 +13,8 @@ export interface GeneratorFormData {
   // NEW: Emoji control fields
   useEmojis?: boolean;
   emojiIntensity?: number; // 1-3
+  // NEW: Language field
+  language?: string;
 }
 
 export interface GeneratorState {

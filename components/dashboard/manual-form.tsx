@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { GeneratedContent } from '@/types/generator';
 import { useTranslation } from 'react-i18next';
+import { getCurrentLanguage } from '@/lib/translations';
 
 interface ManualFormProps {
   onContentGenerated?: (content: GeneratedContent) => void;
@@ -38,12 +39,21 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
     setIsGenerating(true);
 
     try {
+      // Get current language from translation system
+      const currentLanguage = getCurrentLanguage();
+      
+      // Add language to form data
+      const requestData = {
+        ...formData,
+        language: currentLanguage,
+      };
+
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(requestData),
       });
 
       if (!response.ok) {
