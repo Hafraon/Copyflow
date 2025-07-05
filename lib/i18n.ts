@@ -71,6 +71,15 @@ const resources = {
       'form.generate': 'Generate Content',
       'form.generating': 'Generating...',
       
+      // Emoji Settings
+      'form.emoji.title': 'Emojis in Description',
+      'form.emoji.description': 'Add emojis for visual appeal',
+      'form.emoji.intensity': 'Intensity',
+      'form.emoji.minimal': 'Minimal (3-5)',
+      'form.emoji.standard': 'Standard (8-12)',
+      'form.emoji.maximum': 'Maximum (15-20+)',
+      'form.emoji.preview': 'Preview',
+      
       // Generator Tabs
       'generator.title': 'Content Generator',
       'generator.tabs.manual': 'Manual',
@@ -328,6 +337,15 @@ const resources = {
       'form.language': 'Мова',
       'form.generate': 'Генерувати контент',
       'form.generating': 'Генерація...',
+      
+      // Emoji Settings
+      'form.emoji.title': 'Емодзі в описі',
+      'form.emoji.description': 'Додавати емодзі для візуального привернення уваги',
+      'form.emoji.intensity': 'Інтенсивність',
+      'form.emoji.minimal': 'Мінімум (3-5)',
+      'form.emoji.standard': 'Стандарт (8-12)',
+      'form.emoji.maximum': 'Максимум (15-20+)',
+      'form.emoji.preview': 'Попередній перегляд',
       
       // Generator Tabs
       'generator.title': 'Генератор контенту',

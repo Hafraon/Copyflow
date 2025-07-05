@@ -12,15 +12,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { GeneratedContent } from '@/types/generator';
-import { getCurrentLanguage, t } from '@/lib/translations';
+import { useTranslation } from 'react-i18next';
 
 interface ManualFormProps {
   onContentGenerated?: (content: GeneratedContent) => void;
 }
 
 export function ManualForm({ onContentGenerated }: ManualFormProps) {
+  const { t } = useTranslation();
   const [isGenerating, setIsGenerating] = useState(false);
-  const [currentLang, setCurrentLang] = useState(getCurrentLanguage());
   const [formData, setFormData] = useState({
     productName: '',
     category: '',
@@ -28,18 +28,6 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
     useEmojis: true,
     emojiIntensity: 2
   });
-
-  // Update language when it changes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newLang = getCurrentLanguage();
-      if (newLang !== currentLang) {
-        setCurrentLang(newLang);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [currentLang]);
 
   const handleGenerate = async () => {
     if (!formData.productName || !formData.category || !formData.writingStyle) {
@@ -143,10 +131,10 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <Label className="text-base font-medium flex items-center gap-2">
-              ✨ {t('emoji.title')}
+              ✨ {t('form.emoji.title', 'Emojis in Description')}
             </Label>
             <p className="text-sm text-muted-foreground">
-              {t('emoji.description')}
+              {t('form.emoji.description', 'Add emojis for visual appeal')}
             </p>
           </div>
           <Switch
@@ -167,10 +155,10 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
               className="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-600"
             >
               <Label className="text-sm font-medium">
-                {t('emoji.intensity')}: {
-                  formData.emojiIntensity === 1 ? t('emoji.intensity.minimal') :
-                  formData.emojiIntensity === 2 ? t('emoji.intensity.standard') : 
-                  t('emoji.intensity.maximum')
+                {t('form.emoji.intensity', 'Intensity')}: {
+                  formData.emojiIntensity === 1 ? t('form.emoji.minimal', 'Minimal (3-5)') :
+                  formData.emojiIntensity === 2 ? t('form.emoji.standard', 'Standard (8-12)') : 
+                  t('form.emoji.maximum', 'Maximum (15-20+)')
                 }
               </Label>
               <Slider
@@ -182,9 +170,9 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
                 className="w-full"
               />
               <div className="flex justify-between text-xs text-muted-foreground">
-                <span>{t('emoji.intensity.minimal').split(' ')[0]}</span>
-                <span>{t('emoji.intensity.standard').split(' ')[0]}</span>
-                <span>{t('emoji.intensity.maximum').split(' ')[0]}</span>
+                <span>{t('form.emoji.minimal', 'Minimal (3-5)').split(' ')[0]}</span>
+                <span>{t('form.emoji.standard', 'Standard (8-12)').split(' ')[0]}</span>
+                <span>{t('form.emoji.maximum', 'Maximum (15-20+)').split(' ')[0]}</span>
               </div>
             </motion.div>
           )}
@@ -192,7 +180,7 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
         
         {/* Live Preview */}
         <div className="text-xs text-muted-foreground italic bg-white/50 dark:bg-gray-900/50 p-2 rounded">
-          <strong>{t('emoji.preview')}:</strong> {getEmojiPreview(
+          <strong>{t('form.emoji.preview', 'Preview')}:</strong> {getEmojiPreview(
             formData.useEmojis, 
             formData.emojiIntensity, 
             formData.category || 'other'

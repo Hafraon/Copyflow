@@ -22,7 +22,7 @@ import { GeneratedContent, GeneratorFormData, CATEGORIES, WRITING_STYLES } from 
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
-import { getCurrentLanguage, t } from '@/lib/translations';
+import { useTranslation } from 'react-i18next';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
@@ -39,7 +39,7 @@ interface GeneratorFormProps {
 }
 
 export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: GeneratorFormProps) {
-  const [currentLang, setCurrentLang] = useState(getCurrentLanguage());
+  const { t } = useTranslation();
   
   const {
     register,
@@ -57,18 +57,6 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
   });
 
   const watchedValues = watch();
-
-  // Update language when it changes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newLang = getCurrentLanguage();
-      if (newLang !== currentLang) {
-        setCurrentLang(newLang);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [currentLang]);
 
   // Load saved form data on client mount
   useEffect(() => {
@@ -190,10 +178,10 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <Label className="text-base font-medium flex items-center gap-2">
-                  ✨ {t('emoji.title')}
+                  ✨ {t('form.emoji.title', 'Emojis in Description')}
                 </Label>
                 <p className="text-sm text-muted-foreground">
-                  {t('emoji.description')}
+                  {t('form.emoji.description', 'Add emojis for visual appeal')}
                 </p>
               </div>
               <Switch
@@ -214,10 +202,10 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
                   className="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-600"
                 >
                   <Label className="text-sm font-medium">
-                    {t('emoji.intensity')}: {
-                      watchedValues.emojiIntensity === 1 ? t('emoji.intensity.minimal') :
-                      watchedValues.emojiIntensity === 2 ? t('emoji.intensity.standard') : 
-                      t('emoji.intensity.maximum')
+                    {t('form.emoji.intensity', 'Intensity')}: {
+                      watchedValues.emojiIntensity === 1 ? t('form.emoji.minimal', 'Minimal (3-5)') :
+                      watchedValues.emojiIntensity === 2 ? t('form.emoji.standard', 'Standard (8-12)') : 
+                      t('form.emoji.maximum', 'Maximum (15-20+)')
                     }
                   </Label>
                   <Slider
@@ -229,9 +217,9 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
                     className="w-full"
                   />
                   <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>{t('emoji.intensity.minimal').split(' ')[0]}</span>
-                    <span>{t('emoji.intensity.standard').split(' ')[0]}</span>
-                    <span>{t('emoji.intensity.maximum').split(' ')[0]}</span>
+                    <span>{t('form.emoji.minimal', 'Minimal (3-5)').split(' ')[0]}</span>
+                    <span>{t('form.emoji.standard', 'Standard (8-12)').split(' ')[0]}</span>
+                    <span>{t('form.emoji.maximum', 'Maximum (15-20+)').split(' ')[0]}</span>
                   </div>
                 </motion.div>
               )}
@@ -239,7 +227,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             
             {/* Live Preview */}
             <div className="text-xs text-muted-foreground italic bg-white/50 dark:bg-gray-900/50 p-2 rounded">
-              <strong>{t('emoji.preview')}:</strong> {getEmojiPreview(
+              <strong>{t('form.emoji.preview', 'Preview')}:</strong> {getEmojiPreview(
                 watchedValues.useEmojis ?? true, 
                 watchedValues.emojiIntensity ?? 2, 
                 watchedValues.category || 'other'
