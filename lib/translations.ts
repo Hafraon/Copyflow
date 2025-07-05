@@ -71,6 +71,16 @@ const translations: Record<LanguageCode, Translations> = {
     'form.generate': 'Generate Content',
     'form.generating': 'Generating...',
     
+    // Emoji Settings
+    'emoji.title': 'Emojis in Description',
+    'emoji.description': 'Add emojis for visual appeal',
+    'emoji.intensity': 'Intensity',
+    'emoji.intensity.minimal': 'Minimal (3-5)',
+    'emoji.intensity.standard': 'Standard (8-12)',
+    'emoji.intensity.maximum': 'Maximum (15-20+)',
+    'emoji.preview': 'Preview',
+    'emoji.preview.none': 'No emojis (text only)',
+    
     // Generator Tabs
     'generator.title': 'Content Generator',
     'generator.tabs.manual': 'Manual',
@@ -163,6 +173,16 @@ const translations: Record<LanguageCode, Translations> = {
     'form.language': 'Мова',
     'form.generate': 'Генерувати контент',
     'form.generating': 'Генерація...',
+    
+    // Emoji Settings
+    'emoji.title': 'Емодзі в описі',
+    'emoji.description': 'Додавати емодзі для візуального привернення уваги',
+    'emoji.intensity': 'Інтенсивність',
+    'emoji.intensity.minimal': 'Мінімум (3-5)',
+    'emoji.intensity.standard': 'Стандарт (8-12)',
+    'emoji.intensity.maximum': 'Максимум (15-20+)',
+    'emoji.preview': 'Попередній перегляд',
+    'emoji.preview.none': 'Без емодзі (тільки текст)',
     
     // Generator Tabs
     'generator.title': 'Генератор контенту',
