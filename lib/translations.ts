@@ -216,6 +216,14 @@ const translations: Record<LanguageCode, Translations> = {
 let currentLanguage: LanguageCode = 'en';
 
 export function getCurrentLanguage(): LanguageCode {
+  // FIXED: Always read from localStorage first
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('copyflow-language') as LanguageCode;
+    if (saved && (saved === 'en' || saved === 'uk')) {
+      currentLanguage = saved;
+      return saved;
+    }
+  }
   return currentLanguage;
 }
 
@@ -227,7 +235,7 @@ export function setLanguage(lang: LanguageCode): void {
 }
 
 export function t(key: string, fallback?: string): string {
-  return translations[currentLanguage]?.[key] || fallback || key;
+  return translations[getCurrentLanguage()]?.[key] || fallback || key;
 }
 
 export function initializeLanguage(): void {
