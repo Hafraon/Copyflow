@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -40,8 +39,7 @@ interface GeneratorFormProps {
 }
 
 export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: GeneratorFormProps) {
-  const { t: translate } = useTranslation();
-  const currentLang = getCurrentLanguage();
+  const [currentLang, setCurrentLang] = useState(getCurrentLanguage());
   
   const {
     register,
@@ -59,6 +57,18 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
   });
 
   const watchedValues = watch();
+
+  // Update language when it changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newLang = getCurrentLanguage();
+      if (newLang !== currentLang) {
+        setCurrentLang(newLang);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [currentLang]);
 
   // Load saved form data on client mount
   useEffect(() => {
@@ -135,7 +145,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             )}
           </div>
 
-          {/* Category */}
+          {/* Category - NO EMOJIS in dropdown */}
           <div className="space-y-2">
             <Label htmlFor="category">{t('form.category')}</Label>
             <Select onValueChange={(value) => setValue('category', value)}>
@@ -175,7 +185,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             )}
           </div>
 
-          {/* Emoji Control System */}
+          {/* Emoji Control System - LOCALIZED */}
           <div className="space-y-4 p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
             <div className="flex items-center justify-between">
               <div className="space-y-1">

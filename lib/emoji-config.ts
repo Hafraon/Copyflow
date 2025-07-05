@@ -31,17 +31,17 @@ export const CATEGORY_EMOJIS: EmojiConfig = {
 export const EMOJI_INTENSITY_CONFIGS = {
   1: { // Minimal
     count: { min: 3, max: 5 },
-    description: 'Мінімум (3-5)',
+    description: 'Minimal (3-5)',
     pattern: 'Only key benefits with ✅ and quality indicators ⭐'
   },
   2: { // Standard
     count: { min: 8, max: 12 },
-    description: 'Стандарт (8-12)',
+    description: 'Standard (8-12)',
     pattern: 'Structured: ✅ Features, 💰 Price, 🚚 Delivery, ⭐ Quality'
   },
   3: { // Maximum
     count: { min: 15, max: 20 },
-    description: 'Максимум (15-20+)',
+    description: 'Maximum (15-20+)',
     pattern: 'High visual impact with category-specific emojis throughout'
   }
 };
@@ -88,18 +88,18 @@ Make content visually appealing and conversion-focused!
 }
 
 export function getEmojiPreview(useEmojis: boolean, intensity: number, category: string): string {
-  if (!useEmojis) return 'Без емодзі (тільки текст)';
+  if (!useEmojis) return 'No emojis (text only)';
   
   const categoryEmojis = CATEGORY_EMOJIS[category?.toLowerCase()] || CATEGORY_EMOJIS.other;
   
   switch (intensity) {
     case 1:
-      return `Мінімум (3-5): ✅ Якість ${categoryEmojis[0] || '⭐'}`;
+      return `Minimal (3-5): ✅ Quality ${categoryEmojis[0] || '⭐'}`;
     case 2:
-      return `Стандарт (8-12): ✅ Якість 💰 Ціна 🚚 Доставка ${categoryEmojis[0] || '⭐'}`;
+      return `Standard (8-12): ✅ Quality 💰 Price 🚚 Delivery ${categoryEmojis[0] || '⭐'}`;
     case 3:
-      return `Максимум (15-20+): ✅ Якість 💰 Ціна 🚚 Доставка ${categoryEmojis[0] || '⭐'} 🔥 Топ 💯 Гарантія 🎯 ${categoryEmojis[1] || '💎'}`;
+      return `Maximum (15-20+): ✅ Quality 💰 Price 🚚 Delivery ${categoryEmojis[0] || '⭐'} 🔥 Top 💯 Guarantee 🎯 ${categoryEmojis[1] || '💎'}`;
     default:
-      return 'Стандартні емодзі';
+      return 'Standard emojis';
   }
 }

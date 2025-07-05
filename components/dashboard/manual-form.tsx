@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,14 +12,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { GeneratedContent } from '@/types/generator';
+import { getCurrentLanguage, t } from '@/lib/translations';
 
 interface ManualFormProps {
   onContentGenerated?: (content: GeneratedContent) => void;
 }
 
 export function ManualForm({ onContentGenerated }: ManualFormProps) {
-  const { t } = useTranslation();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [currentLang, setCurrentLang] = useState(getCurrentLanguage());
   const [formData, setFormData] = useState({
     productName: '',
     category: '',
@@ -28,6 +28,18 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
     useEmojis: true,
     emojiIntensity: 2
   });
+
+  // Update language when it changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newLang = getCurrentLanguage();
+      if (newLang !== currentLang) {
+        setCurrentLang(newLang);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [currentLang]);
 
   const handleGenerate = async () => {
     if (!formData.productName || !formData.category || !formData.writingStyle) {
@@ -80,7 +92,7 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
         />
       </div>
       
-      {/* Category */}
+      {/* Category - NO EMOJIS in dropdown */}
       <div>
         <Label htmlFor="category">{t('form.category')}</Label>
         <Select value={formData.category} onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}>
@@ -88,23 +100,23 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
             <SelectValue placeholder={t('form.category.placeholder')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="electronics">📱 {t('form.category.electronics')}</SelectItem>
-            <SelectItem value="clothing">👗 {t('form.category.clothing')}</SelectItem>
-            <SelectItem value="home">🏠 {t('form.category.home')}</SelectItem>
-            <SelectItem value="beauty">💄 {t('form.category.beauty')}</SelectItem>
-            <SelectItem value="sports">⚽ {t('form.category.sports')}</SelectItem>
-            <SelectItem value="automotive">🚗 {t('form.category.automotive')}</SelectItem>
-            <SelectItem value="books">📚 {t('form.category.books')}</SelectItem>
-            <SelectItem value="toys">🧸 {t('form.category.toys')}</SelectItem>
-            <SelectItem value="health">💊 {t('form.category.health')}</SelectItem>
-            <SelectItem value="business">💼 {t('form.category.business')}</SelectItem>
-            <SelectItem value="food">🍕 {t('form.category.food')}</SelectItem>
-            <SelectItem value="travel">✈️ {t('form.category.travel')}</SelectItem>
-            <SelectItem value="pets">🐕 {t('form.category.pets')}</SelectItem>
-            <SelectItem value="jewelry">💎 {t('form.category.jewelry')}</SelectItem>
-            <SelectItem value="art">🎨 {t('form.category.art')}</SelectItem>
-            <SelectItem value="music">🎵 {t('form.category.music')}</SelectItem>
-            <SelectItem value="other">⭐ {t('form.category.other')}</SelectItem>
+            <SelectItem value="electronics">{t('form.category.electronics')}</SelectItem>
+            <SelectItem value="clothing">{t('form.category.clothing')}</SelectItem>
+            <SelectItem value="home">{t('form.category.home')}</SelectItem>
+            <SelectItem value="beauty">{t('form.category.beauty')}</SelectItem>
+            <SelectItem value="sports">{t('form.category.sports')}</SelectItem>
+            <SelectItem value="automotive">{t('form.category.automotive')}</SelectItem>
+            <SelectItem value="books">{t('form.category.books')}</SelectItem>
+            <SelectItem value="toys">{t('form.category.toys')}</SelectItem>
+            <SelectItem value="health">{t('form.category.health')}</SelectItem>
+            <SelectItem value="business">{t('form.category.business')}</SelectItem>
+            <SelectItem value="food">{t('form.category.food')}</SelectItem>
+            <SelectItem value="travel">{t('form.category.travel')}</SelectItem>
+            <SelectItem value="pets">{t('form.category.pets')}</SelectItem>
+            <SelectItem value="jewelry">{t('form.category.jewelry')}</SelectItem>
+            <SelectItem value="art">{t('form.category.art')}</SelectItem>
+            <SelectItem value="music">{t('form.category.music')}</SelectItem>
+            <SelectItem value="other">{t('form.category.other')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -126,7 +138,7 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
         </Select>
       </div>
 
-      {/* Emoji Control System */}
+      {/* Emoji Control System - LOCALIZED */}
       <div className="space-y-4 p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
