@@ -9,6 +9,7 @@ import { PhotoUpload } from './photo-upload';
 import { VoiceInput } from './voice-input';
 import { URLParser } from './url-parser';
 import { GeneratedContent } from '@/types/generator';
+import { isTabEnabled } from '@/lib/feature-flags';
 
 interface GeneratorSectionProps {
   onContentGenerated?: (content: GeneratedContent) => void;
@@ -28,27 +29,52 @@ export function GeneratorSection({ onContentGenerated }: GeneratorSectionProps) 
       <CardContent>
         <Tabs defaultValue="manual" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="manual" className="text-xs">📝 {t('generator.tabs.manual')}</TabsTrigger>
-            <TabsTrigger value="photo" className="text-xs">📸 {t('generator.tabs.photo')}</TabsTrigger>
-            <TabsTrigger value="voice" className="text-xs">🎤 {t('generator.tabs.voice')}</TabsTrigger>
-            <TabsTrigger value="url" className="text-xs">🔗 {t('generator.tabs.url')}</TabsTrigger>
+            <TabsList className={`grid w-full ${
+              [
+                isTabEnabled('manual'),
+                isTabEnabled('photo'), 
+                isTabEnabled('voice'),
+                isTabEnabled('url')
+              ].filter(Boolean).length === 2 ? 'grid-cols-2' : 'grid-cols-4'
+            }`}>
+              {isTabEnabled('manual') && (
+                <TabsTrigger value="manual" className="text-xs">📝 {t('generator.tabs.manual')}</TabsTrigger>
+              )}
+              {isTabEnabled('photo') && (
+                <TabsTrigger value="photo" className="text-xs">📸 {t('generator.tabs.photo')}</TabsTrigger>
+              )}
+              {isTabEnabled('voice') && (
+                <TabsTrigger value="voice" className="text-xs">🎤 {t('generator.tabs.voice')}</TabsTrigger>
+              )}
+              {isTabEnabled('url') && (
+                <TabsTrigger value="url" className="text-xs">🔗 {t('generator.tabs.url')}</TabsTrigger>
+              )}
+            </TabsList>
           </TabsList>
           
-          <TabsContent value="manual" className="mt-6">
-            <ManualForm onContentGenerated={onContentGenerated} />
-          </TabsContent>
+          {isTabEnabled('manual') && (
+            <TabsContent value="manual" className="mt-6">
+              <ManualForm onContentGenerated={onContentGenerated} />
+            </TabsContent>
+          )}
           
-          <TabsContent value="photo" className="mt-6">
-            <PhotoUpload />
-          </TabsContent>
+          {isTabEnabled('photo') && (
+            <TabsContent value="photo" className="mt-6">
+              <PhotoUpload />
+            </TabsContent>
+          )}
           
-          <TabsContent value="voice" className="mt-6">
-            <VoiceInput />
-          </TabsContent>
+          {isTabEnabled('voice') && (
+            <TabsContent value="voice" className="mt-6">
+              <VoiceInput />
+            </TabsContent>
+          )}
           
-          <TabsContent value="url" className="mt-6">
-            <URLParser />
-          </TabsContent>
+          {isTabEnabled('url') && (
+            <TabsContent value="url" className="mt-6">
+              <URLParser />
+            </TabsContent>
+          )}
         </Tabs>
       </CardContent>
     </Card>
