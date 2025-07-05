@@ -23,6 +23,7 @@ import { GeneratedContent, GeneratorFormData, CATEGORIES, WRITING_STYLES } from 
 import { getEmojiPreview } from '@/lib/emoji-config';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import { getCurrentLanguage, t } from '@/lib/translations';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
@@ -39,7 +40,8 @@ interface GeneratorFormProps {
 }
 
 export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: GeneratorFormProps) {
-  const { t } = useTranslation();
+  const { t: translate } = useTranslation();
+  const currentLang = getCurrentLanguage();
   
   const {
     register,
@@ -178,10 +180,10 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <Label className="text-base font-medium flex items-center gap-2">
-                  ✨ Емодзі в описі
+                  ✨ {t('emoji.title')}
                 </Label>
                 <p className="text-sm text-muted-foreground">
-                  Додавати емодзі для візуального привернення уваги
+                  {t('emoji.description')}
                 </p>
               </div>
               <Switch
@@ -202,9 +204,10 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
                   className="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-600"
                 >
                   <Label className="text-sm font-medium">
-                    Інтенсивність: {
-                      watchedValues.emojiIntensity === 1 ? 'Мінімум (3-5)' :
-                      watchedValues.emojiIntensity === 2 ? 'Стандарт (8-12)' : 'Максимум (15-20+)'
+                    {t('emoji.intensity')}: {
+                      watchedValues.emojiIntensity === 1 ? t('emoji.intensity.minimal') :
+                      watchedValues.emojiIntensity === 2 ? t('emoji.intensity.standard') : 
+                      t('emoji.intensity.maximum')
                     }
                   </Label>
                   <Slider
@@ -216,9 +219,9 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
                     className="w-full"
                   />
                   <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Мінімум</span>
-                    <span>Стандарт</span>
-                    <span>Максимум</span>
+                    <span>{t('emoji.intensity.minimal').split(' ')[0]}</span>
+                    <span>{t('emoji.intensity.standard').split(' ')[0]}</span>
+                    <span>{t('emoji.intensity.maximum').split(' ')[0]}</span>
                   </div>
                 </motion.div>
               )}
@@ -226,7 +229,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             
             {/* Live Preview */}
             <div className="text-xs text-muted-foreground italic bg-white/50 dark:bg-gray-900/50 p-2 rounded">
-              <strong>Попередній перегляд:</strong> {getEmojiPreview(
+              <strong>{t('emoji.preview')}:</strong> {getEmojiPreview(
                 watchedValues.useEmojis ?? true, 
                 watchedValues.emojiIntensity ?? 2, 
                 watchedValues.category || 'other'

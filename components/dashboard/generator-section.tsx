@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,8 +8,13 @@ import { ManualForm } from './manual-form';
 import { PhotoUpload } from './photo-upload';
 import { VoiceInput } from './voice-input';
 import { URLParser } from './url-parser';
+import { GeneratedContent } from '@/types/generator';
 
-export function GeneratorSection() {
+interface GeneratorSectionProps {
+  onContentGenerated?: (content: GeneratedContent) => void;
+}
+
+export function GeneratorSection({ onContentGenerated }: GeneratorSectionProps) {
   const { t } = useTranslation();
 
   return (
@@ -29,7 +35,7 @@ export function GeneratorSection() {
           </TabsList>
           
           <TabsContent value="manual" className="mt-6">
-            <ManualForm />
+            <ManualForm onContentGenerated={onContentGenerated} />
           </TabsContent>
           
           <TabsContent value="photo" className="mt-6">
