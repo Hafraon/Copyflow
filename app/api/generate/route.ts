@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const emojiInstruction = generateEmojiInstruction(useEmojis, emojiIntensity, category);
 
     // NEW: Language instruction based on selected language
-    const languageInstruction = language === 'uk' 
+    const languageInstruction = language === 'ua' 
       ? 'Generate all content in Ukrainian language (українська мова).'
       : 'Generate all content in English language.';
 
@@ -59,7 +59,7 @@ Generate professional e-commerce content for a product with the following detail
 - Product Name: ${productName}
 - Category: ${category}
 - Writing Style: ${writingStyle}
-- Content Language: ${language === 'uk' ? 'Ukrainian' : 'English'}
+- Content Language: ${language === 'ua' ? 'Ukrainian' : 'English'}
 
 ${emojiInstruction}
 
@@ -73,7 +73,7 @@ Please generate exactly 5 pieces of content in JSON format:
 
 Requirements:
 - Use ${writingStyle} tone throughout
-- Write ALL content in ${language === 'uk' ? 'Ukrainian language' : 'English language'}
+- Write ALL content in ${language === 'ua' ? 'Ukrainian language' : 'English language'}
 - Focus on benefits over features
 - Include relevant keywords for ${category}
 - Make content compelling and conversion-focused
