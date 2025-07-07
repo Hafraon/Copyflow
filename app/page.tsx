@@ -106,16 +106,16 @@ export default function Home() {
                       ].filter(Boolean).length === 2 ? 'grid-cols-2' : 'grid-cols-4'
                     }`}>
                       {isTabEnabled('manual') && (
-                        <TabsTrigger value="manual" className="text-xs">📝 {t('generator.tabs.manual')}</TabsTrigger>
+                        <TabsTrigger value="manual" className="text-xs flex-1">📝 {t('generator.tabs.manual')}</TabsTrigger>
                       )}
                       {isTabEnabled('photo') && (
-                        <TabsTrigger value="photo" className="text-xs">📸 {t('generator.tabs.photo')}</TabsTrigger>
+                        <TabsTrigger value="photo" className="text-xs flex-1">📸 {t('generator.tabs.photo')}</TabsTrigger>
                       )}
                       {isTabEnabled('voice') && (
-                        <TabsTrigger value="voice" className="text-xs">🎤 {t('generator.tabs.voice')}</TabsTrigger>
+                        <TabsTrigger value="voice" className="text-xs flex-1">🎤 {t('generator.tabs.voice')}</TabsTrigger>
                       )}
                       {isTabEnabled('url') && (
-                        <TabsTrigger value="url" className="text-xs">🔗 {t('generator.tabs.url')}</TabsTrigger>
+                        <TabsTrigger value="url" className="text-xs flex-1">🔗 {t('generator.tabs.url')}</TabsTrigger>
                       )}
                     </TabsList>
                     

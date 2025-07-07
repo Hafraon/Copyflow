@@ -27,7 +27,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
             <Menu className="h-5 w-5" />
           </Button>
           
-          <h1 className="text-lg font-semibold">{t('dashboard.header.title')}</h1>
+          <h1 className="text-sm md:text-lg font-semibold">{t('dashboard.header.title')}</h1>
         </div>
         
         <div className="flex items-center space-x-4">
