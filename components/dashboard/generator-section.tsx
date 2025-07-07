@@ -48,6 +48,7 @@ export function GeneratorSection({ onContentGenerated }: GeneratorSectionProps) 
             {isTabEnabled('url') && (
               <TabsTrigger value="url" className="text-xs flex-1">🔗 {t('generator.tabs.url')}</TabsTrigger>
             )}
+          </TabsList>
           
           {isTabEnabled('manual') && (
             <TabsContent value="manual" className="mt-6">
