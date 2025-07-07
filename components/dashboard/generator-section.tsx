@@ -37,18 +37,18 @@ export function GeneratorSection({ onContentGenerated }: GeneratorSectionProps) 
                 isTabEnabled('url')
               ].filter(Boolean).length === 2 ? 'grid-cols-2' : 'grid-cols-4'
             }`}>
-              {isTabEnabled('manual') && (
-                <TabsTrigger value="manual" className="text-xs">📝 {t('generator.tabs.manual')}</TabsTrigger>
-              )}
-              {isTabEnabled('photo') && (
-                <TabsTrigger value="photo" className="text-xs">📸 {t('generator.tabs.photo')}</TabsTrigger>
-              )}
-              {isTabEnabled('voice') && (
-                <TabsTrigger value="voice" className="text-xs">🎤 {t('generator.tabs.voice')}</TabsTrigger>
-              )}
-              {isTabEnabled('url') && (
-                <TabsTrigger value="url" className="text-xs">🔗 {t('generator.tabs.url')}</TabsTrigger>
-              )}
+            {isTabEnabled('manual') && (
+              <TabsTrigger value="manual" className="text-xs">📝 {t('generator.tabs.manual')}</TabsTrigger>
+            )}
+            {isTabEnabled('photo') && (
+              <TabsTrigger value="photo" className="text-xs">📸 {t('generator.tabs.photo')}</TabsTrigger>
+            )}
+            {isTabEnabled('voice') && (
+              <TabsTrigger value="voice" className="text-xs">🎤 {t('generator.tabs.voice')}</TabsTrigger>
+            )}
+            {isTabEnabled('url') && (
+              <TabsTrigger value="url" className="text-xs">🔗 {t('generator.tabs.url')}</TabsTrigger>
+            )}
             </TabsList>
           </TabsList>
           

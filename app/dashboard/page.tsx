@@ -10,6 +10,7 @@ import { GeneratedContent } from '@/types/generator';
 export default function Dashboard() {
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleContentGenerated = (content: GeneratedContent) => {
     setGeneratedContent(content);
@@ -21,11 +22,23 @@ export default function Dashboard() {
     // This will be handled by the ManualForm component
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <div className="flex h-screen bg-background">
-      <DashboardSidebar />
-      <main className="flex-1 overflow-auto">
-        <DashboardHeader />
+      <DashboardSidebar 
+        isOpen={isMobileMenuOpen} 
+        onClose={closeMobileMenu}
+      />
+      
+      <main className="flex-1 overflow-auto md:ml-0">
+        <DashboardHeader onMenuClick={toggleMobileMenu} />
         <div className="container py-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <GeneratorSection onContentGenerated={handleContentGenerated} />

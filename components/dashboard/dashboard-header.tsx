@@ -4,15 +4,29 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { Bell, User } from 'lucide-react';
+import { Bell, User, Menu } from 'lucide-react';
 
-export function DashboardHeader() {
+interface DashboardHeaderProps {
+  onMenuClick?: () => void;
+}
+
+export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
   const { t } = useTranslation();
 
   return (
     <header className="border-b bg-background/95 backdrop-blur">
       <div className="container flex h-14 items-center justify-between">
-        <div>
+        <div className="flex items-center gap-4">
+          {/* Mobile hamburger button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden"
+            onClick={onMenuClick}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          
           <h1 className="text-lg font-semibold">{t('dashboard.header.title')}</h1>
         </div>
         
