@@ -5,7 +5,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-interface GenerationRequest {
+interface AssistantRequest {
   productName: string;
   category: string;
   description?: string;
@@ -21,7 +21,7 @@ interface GenerationRequest {
   emojiIntensity?: number;
 }
 
-export interface GenerationRequest {
+export interface AssistantRequest {
   productName: string;
   category: string;
   description?: string;
@@ -72,7 +72,7 @@ interface AssistantResult {
   method: 'assistant' | 'chat' | 'error';
 }
 
-export async function generateWithAssistant(request: GenerationRequest): Promise<AssistantResult> {
+export async function generateWithAssistant(request: AssistantRequest): Promise<AssistantResult> {
   // Get assistant selection based on category
   const assistantSelection = selectAssistant(request.category);
   const fallbackChain = assistantSelection.fallbackChain;
@@ -126,7 +126,7 @@ export async function generateWithAssistant(request: GenerationRequest): Promise
   }
 }
 
-async function tryAssistantAPI(assistantId: string, request: GenerationRequest): Promise<{ success: boolean; data?: GenerationResponse; error?: string }> {
+async function tryAssistantAPI(assistantId: string, request: AssistantRequest): Promise<{ success: boolean; data?: GenerationResponse; error?: string }> {
   try {
     // Create a thread
     const thread = await openai.beta.threads.create();
@@ -193,7 +193,7 @@ async function tryAssistantAPI(assistantId: string, request: GenerationRequest):
   }
 }
 
-async function tryChatCompletions(request: GenerationRequest): Promise<{ success: boolean; data?: GenerationResponse; error?: string }> {
+async function tryChatCompletions(request: AssistantRequest): Promise<{ success: boolean; data?: GenerationResponse; error?: string }> {
   try {
     const prompt = buildChatPrompt(request);
 
@@ -233,7 +233,7 @@ async function tryChatCompletions(request: GenerationRequest): Promise<{ success
   }
 }
 
-function buildUserMessage(request: GenerationRequest): string {
+function buildUserMessage(request: AssistantRequest): string {
   const emojiInstruction = request.useEmojis 
     ? `Use emojis strategically (intensity level ${request.emojiIntensity || 2}: 1=minimal, 2=standard, 3=maximum)`
     : 'NO emojis - use clean text only';
@@ -288,7 +288,7 @@ Generate content that converts and ranks well. Return ONLY valid JSON with this 
 `;
 }
 
-function buildChatPrompt(request: GenerationRequest): string {
+function buildChatPrompt(request: AssistantRequest): string {
   return buildUserMessage(request); // Same prompt structure for consistency
 }
 

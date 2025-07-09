@@ -1,4 +1,4 @@
-import { GenerationRequest } from './openai-assistant';
+import { AssistantRequest } from './openai-assistant';
 
 // Category to Assistant ID mapping
 const ASSISTANT_MAPPING = {
