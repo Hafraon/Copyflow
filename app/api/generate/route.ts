@@ -1,34 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
 import { GeneratorFormData } from '@/types/generator';
 import { generateEmojiInstruction } from '@/lib/emoji-config';
+import { generateWithAssistant } from '@/lib/openai-assistant';
 
 export const runtime = 'nodejs';
-
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Extract form data with emoji settings
+    // Extract form data with all parameters
     const { 
       productName, 
       category, 
+      description,
+      targetAudience,
+      uniqueFeatures,
+      pricePoint,
       writingStyle,
       language = 'en',
-      // NEW: Emoji control parameters
+      market = 'US',
+      emotionalTone,
+      psychologicalTrigger,
       useEmojis = true,
       emojiIntensity = 2
     } = body as GeneratorFormData & {
+      description?: string;
+      targetAudience?: string;
+      uniqueFeatures?: string;
+      pricePoint?: string;
+      market?: string;
+      emotionalTone?: string;
+      psychologicalTrigger?: string;
       useEmojis?: boolean;
       emojiIntensity?: number;
     };
 
-    // Existing validation (preserved)
+    // Validation
     if (!productName || !category || !writingStyle) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -43,101 +51,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // NEW: Generate emoji instruction based on settings
-    const emojiInstruction = generateEmojiInstruction(useEmojis, emojiIntensity, category);
-
-    // NEW: Language instruction based on selected language
-    const languageInstruction = language === 'uk' 
-      ? 'Generate all content in Ukrainian language (українська мова).'
-      : 'Generate all content in English language.';
-
-    // Enhanced prompt with emoji control
-    const prompt = `
-${languageInstruction}
-
-Generate professional e-commerce content for a product with the following details:
-- Product Name: ${productName}
-- Category: ${category}
-- Writing Style: ${writingStyle}
-- Content Language: ${language === 'uk' ? 'Ukrainian' : 'English'}
-
-${emojiInstruction}
-
-Please generate exactly 5 pieces of content in JSON format:
-
-1. Product Title: A catchy, compelling title (max 60 characters)
-2. Product Description: An engaging, benefit-focused description (100-150 words)
-3. SEO Title: An SEO-optimized title for search engines (max 60 characters)
-4. Meta Description: A search-friendly meta description (max 160 characters)
-5. Call-to-Action: A conversion-focused CTA (5-10 words)
-
-Requirements:
-- Use ${writingStyle} tone throughout
-- Write ALL content in ${language === 'uk' ? 'Ukrainian language' : 'English language'}
-- Focus on benefits over features
-- Include relevant keywords for ${category}
-- Make content compelling and conversion-focused
-- Ensure all content is unique and engaging
-${useEmojis ? `- Apply emoji strategy as specified above with intensity level ${emojiIntensity}` : '- NO emojis - use clean text only'}
-
-Return ONLY a valid JSON object with these exact keys:
-{
-  "productTitle": "...",
-  "productDescription": "...",
-  "seoTitle": "...",
-  "metaDescription": "...",
-  "callToAction": "..."
-}
-`;
-
-    // Existing OpenAI call (preserved)
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4",
-      messages: [
-        {
-          role: "system",
-          content: "You are an expert copywriter specializing in e-commerce product descriptions. Generate compelling, SEO-optimized content that converts browsers into buyers. Always respond with valid JSON only."
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      max_tokens: 1000,
-      temperature: 0.7,
+    // Use Universal Assistant with fallback
+    const result = await generateWithAssistant({
+      productName,
+      category,
+      description,
+      targetAudience,
+      uniqueFeatures,
+      pricePoint,
+      style: writingStyle,
+      language,
+      market,
+      emotionalTone,
+      psychologicalTrigger,
+      useEmojis,
+      emojiIntensity
     });
 
-    const content = completion.choices[0]?.message?.content;
-    
-    if (!content) {
+    if (!result.success) {
       return NextResponse.json(
-        { error: 'No content generated' },
+        { error: result.error || 'Generation failed' },
         { status: 500 }
       );
     }
 
-    try {
-      const parsedContent = JSON.parse(content);
-      
-      // Validate required fields (preserved)
-      const requiredFields = ['productTitle', 'productDescription', 'seoTitle', 'metaDescription', 'callToAction'];
-      const missingFields = requiredFields.filter(field => !parsedContent[field]);
-      
-      if (missingFields.length > 0) {
-        return NextResponse.json(
-          { error: `Missing fields: ${missingFields.join(', ')}` },
-          { status: 500 }
-        );
-      }
+    // Log which method was used for analytics
+    console.log(`✅ Content generated using: ${result.method}`);
 
-      return NextResponse.json(parsedContent);
-    } catch (parseError) {
-      console.error('Failed to parse OpenAI response:', content);
-      return NextResponse.json(
-        { error: 'Failed to parse generated content' },
-        { status: 500 }
-      );
-    }
+    return NextResponse.json(result.data);
 
   } catch (error) {
     console.error('Generation error:', error);
