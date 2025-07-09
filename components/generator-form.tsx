@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
@@ -44,7 +43,6 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
   const { t } = useTranslation();
   
   const {
-    register,
     handleSubmit,
     setValue,
     watch,
@@ -96,7 +94,6 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
         ...data,
         useEmojis: data.useEmojis ?? true,
         emojiIntensity: data.emojiIntensity ?? 2,
-        // NEW: Add language parameter
         language: currentLanguage,
       };
       
@@ -126,22 +123,28 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Magic Input - replaces productName field */}
+          {/* Magic Input - replaces both Product Name and Upload File fields */}
           <div className="space-y-2">
+            <Label className="text-base font-medium flex items-center gap-2">
+              🪄 {t('form.product.name')}
+            </Label>
             <MagicInput
               value={watchedValues.productName || ''}
               onChange={(value) => setValue('productName', value)}
               onParsedData={(data) => {
-                // Auto-fill product name from parsed data
                 setValue('productName', data.productName);
                 toast.success(`Product extracted from ${data.type}: ${data.productName}`);
               }}
-              placeholder={t('form.product.name.placeholder')}
+              placeholder="Drag & drop files, paste URLs, or type product name..."
               disabled={isGenerating}
             />
             {errors.productName && (
               <p className="text-sm text-red-500">{errors.productName.message}</p>
             )}
+            <div className="text-xs text-muted-foreground flex items-center justify-between">
+              <span>💡 Supports: Text, URLs, CSV, Excel, TXT</span>
+              <span>Examples: "Tactical backpack" • amazon.com/product • [Drop file]</span>
+            </div>
           </div>
 
           {/* Category */}
