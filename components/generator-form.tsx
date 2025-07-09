@@ -24,6 +24,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { getCurrentLanguage } from '@/lib/translations';
+import { MagicInput } from '@/components/magic-input';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
@@ -125,21 +126,25 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Product Name */}
+          {/* Magic Input - replaces productName field */}
           <div className="space-y-2">
-            <Label htmlFor="productName">{t('form.product.name')}</Label>
-            <Input
-              id="productName"
-              {...register('productName')}
+            <MagicInput
+              value={watchedValues.productName || ''}
+              onChange={(value) => setValue('productName', value)}
+              onParsedData={(data) => {
+                // Auto-fill product name from parsed data
+                setValue('productName', data.productName);
+                toast.success(`Product extracted from ${data.type}: ${data.productName}`);
+              }}
               placeholder={t('form.product.name.placeholder')}
-              className={errors.productName ? 'border-red-500' : ''}
+              disabled={isGenerating}
             />
             {errors.productName && (
               <p className="text-sm text-red-500">{errors.productName.message}</p>
             )}
           </div>
 
-          {/* Category - NO EMOJIS in dropdown */}
+          {/* Category */}
           <div className="space-y-2">
             <Label htmlFor="category">{t('form.category')}</Label>
             <Select onValueChange={(value) => setValue('category', value)}>
@@ -179,7 +184,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             )}
           </div>
 
-          {/* Emoji Control System - LOCALIZED */}
+          {/* Emoji Control System */}
           <div className="space-y-4 p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
             <div className="flex items-center justify-between">
               <div className="space-y-1">

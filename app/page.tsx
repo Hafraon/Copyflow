@@ -11,9 +11,7 @@ import { Footer } from '@/components/footer';
 import { GeneratedContent, GeneratorFormData, GeneratorState } from '@/types/generator';
 import { toast } from 'sonner';
 import '@/lib/i18n';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { isTabEnabled } from '@/lib/feature-flags';
 import { useTranslation } from 'react-i18next';
 
 export default function Home() {
@@ -88,73 +86,11 @@ export default function Home() {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div className="lg:sticky lg:top-24">
-              <Card className="w-full">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <span className="text-2xl">⚡</span>
-                    {t('generator.title')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Tabs defaultValue="manual" className="w-full">
-                    <TabsList className={`grid w-full ${
-                      [
-                        isTabEnabled('manual'),
-                        isTabEnabled('photo'), 
-                        isTabEnabled('voice'),
-                        isTabEnabled('url')
-                      ].filter(Boolean).length === 2 ? 'grid-cols-2' : 'grid-cols-4'
-                    }`}>
-                      {isTabEnabled('manual') && (
-                        <TabsTrigger value="manual" className="text-xs flex-1">📝 {t('generator.tabs.manual')}</TabsTrigger>
-                      )}
-                      {isTabEnabled('photo') && (
-                        <TabsTrigger value="photo" className="text-xs flex-1">📸 {t('generator.tabs.photo')}</TabsTrigger>
-                      )}
-                      {isTabEnabled('voice') && (
-                        <TabsTrigger value="voice" className="text-xs flex-1">🎤 {t('generator.tabs.voice')}</TabsTrigger>
-                      )}
-                      {isTabEnabled('url') && (
-                        <TabsTrigger value="url" className="text-xs flex-1">🔗 {t('generator.tabs.url')}</TabsTrigger>
-                      )}
-                    </TabsList>
-                    
-                    {isTabEnabled('manual') && (
-                      <TabsContent value="manual" className="mt-6">
-                        <GeneratorForm
-                          onGenerate={handleGenerate}
-                          isGenerating={generatorState.isGenerating}
-                          generatedContent={generatorState.content}
-                        />
-                      </TabsContent>
-                    )}
-                    
-                    {isTabEnabled('photo') && (
-                      <TabsContent value="photo" className="mt-6">
-                        <div className="text-center py-8 text-muted-foreground">
-                          Photo upload feature (hidden)
-                        </div>
-                      </TabsContent>
-                    )}
-                    
-                    {isTabEnabled('voice') && (
-                      <TabsContent value="voice" className="mt-6">
-                        <div className="text-center py-8 text-muted-foreground">
-                          Voice input feature (hidden)
-                        </div>
-                      </TabsContent>
-                    )}
-                    
-                    {isTabEnabled('url') && (
-                      <TabsContent value="url" className="mt-6">
-                        <div className="text-center py-8 text-muted-foreground">
-                          URL parser feature (coming soon)
-                        </div>
-                      </TabsContent>
-                    )}
-                  </Tabs>
-                </CardContent>
-              </Card>
+              <GeneratorForm
+                onGenerate={handleGenerate}
+                isGenerating={generatorState.isGenerating}
+                generatedContent={generatorState.content}
+              />
             </div>
             
             <div>
