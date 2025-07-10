@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { Bell, User, Menu } from 'lucide-react';
-import Link from 'next/link';
 
 interface DashboardHeaderProps {
   onMenuClick?: () => void;
@@ -28,10 +27,7 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
             <Menu className="h-5 w-5" />
           </Button>
           
-          <Link href="/" className="text-xs sm:text-sm md:text-lg font-semibold hover:opacity-80 transition-opacity flex items-center gap-1">
-            <span>⚡</span>
-            <span>CopyFlow</span>
-          </Link>
+          <h1 className="text-xs sm:text-sm md:text-lg font-semibold">{t('dashboard.header.title')}</h1>
         </div>
         
         <div className="flex items-center space-x-4">

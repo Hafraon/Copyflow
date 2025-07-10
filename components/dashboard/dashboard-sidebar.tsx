@@ -3,7 +3,6 @@
 import { useTranslation } from 'react-i18next';
 import { Zap, FileText, BarChart3, TrendingUp, Users, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 
 interface DashboardSidebarProps {
   isOpen?: boolean;
@@ -30,12 +29,12 @@ export function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarPro
         isOpen ? "translate-x-0" : "-translate-x-full" // Mobile: slide in/out
       )}>
         <div className="p-6">
-          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+          <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
               <Zap className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-gradient">CopyFlow</span>
-          </Link>
+          </div>
         </div>
         
         <nav className="space-y-2 px-4 flex-1">

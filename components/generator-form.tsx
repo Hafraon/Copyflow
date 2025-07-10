@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
@@ -23,7 +24,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { getCurrentLanguage } from '@/lib/translations';
-import { MagicInput } from '@/components/magic-input';
 
 const formSchema = z.object({
   productName: z.string().min(1, 'Product name is required').max(100, 'Product name too long'),
@@ -43,6 +43,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
   const { t } = useTranslation();
   
   const {
+    register,
     handleSubmit,
     setValue,
     watch,
@@ -94,6 +95,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
         ...data,
         useEmojis: data.useEmojis ?? true,
         emojiIntensity: data.emojiIntensity ?? 2,
+        // NEW: Add language parameter
         language: currentLanguage,
       };
       
@@ -123,31 +125,21 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Magic Input - replaces both Product Name and Upload File fields */}
+          {/* Product Name */}
           <div className="space-y-2">
-            <Label className="text-base font-medium flex items-center gap-2">
-              🪄 {t('form.product.name')}
-            </Label>
-            <MagicInput
-              value={watchedValues.productName || ''}
-              onChange={(value) => setValue('productName', value)}
-              onParsedData={(data) => {
-                setValue('productName', data.productName);
-                toast.success(`Product extracted from ${data.type}: ${data.productName}`);
-              }}
-              placeholder="Drag & drop files, paste URLs, or type product name..."
-              disabled={isGenerating}
+            <Label htmlFor="productName">{t('form.product.name')}</Label>
+            <Input
+              id="productName"
+              {...register('productName')}
+              placeholder={t('form.product.name.placeholder')}
+              className={errors.productName ? 'border-red-500' : ''}
             />
             {errors.productName && (
               <p className="text-sm text-red-500">{errors.productName.message}</p>
             )}
-            <div className="text-xs text-muted-foreground flex items-center justify-between">
-              <span>💡 Supports: Text, URLs, CSV, Excel, TXT</span>
-              <span>Examples: "Tactical backpack" • amazon.com/product • [Drop file]</span>
-            </div>
           </div>
 
-          {/* Category */}
+          {/* Category - NO EMOJIS in dropdown */}
           <div className="space-y-2">
             <Label htmlFor="category">{t('form.category')}</Label>
             <Select onValueChange={(value) => setValue('category', value)}>
@@ -187,7 +179,7 @@ export function GeneratorForm({ onGenerate, isGenerating, generatedContent }: Ge
             )}
           </div>
 
-          {/* Emoji Control System */}
+          {/* Emoji Control System - LOCALIZED */}
           <div className="space-y-4 p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700">
             <div className="flex items-center justify-between">
               <div className="space-y-1">

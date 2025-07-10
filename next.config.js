@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
   images: { 
     unoptimized: true 
+  },
+  typescript: {
+    ignoreBuildErrors: false,
   },
 };
 
