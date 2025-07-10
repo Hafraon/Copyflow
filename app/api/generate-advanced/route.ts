@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     
     // Enhanced parameter extraction with emoji support
     const { 
-      productData, 
+      products = [], // NEW: Accept array of products
       style = 'professional', 
       language = 'uk', 
       market = 'UA',
@@ -36,9 +36,9 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Existing validation (preserved)
-    if (!productData) {
+    if (!products || !Array.isArray(products) || products.length === 0) {
       return NextResponse.json(
-        { error: 'Product data is required' },
+        { error: 'Products array is required' },
         { status: 400 }
       );
     }
@@ -51,50 +51,58 @@ export async function POST(request: NextRequest) {
       features: ['advanced_generation', 'competitor_analysis']
     };
 
-    // Enhanced product data with emoji settings for Assistant
-    const enhancedProductData = {
-      ...productData,
-      user_preferences: {
+
+    // NEW: Process multiple products
+    const results = [];
+    
+    for (const productData of products) {
+      // Enhanced product data with emoji settings for Assistant
+      const enhancedProductData = {
+        ...productData,
+        user_preferences: {
+          style,
+          language,
+          market,
+          subscription_level: userSubscription.plan,
+          // NEW: Emoji configuration for ChatGPT Assistant
+          emoji_settings: {
+            use_emojis: useEmojis,
+            intensity: emojiIntensity,
+            category_specific: true,
+            category_emojis: CATEGORY_EMOJIS[productData.category?.toLowerCase()] || CATEGORY_EMOJIS.other
+          }
+        },
+        context: {
+          user_id: session.user.id,
+          generation_type: 'advanced',
+          timestamp: new Date().toISOString(),
+          input_type: inputType
+        }
+      };
+
+      // Enhanced Assistant call with emoji configuration
+      const result = await generateWithAssistant(enhancedProductData, {
         style,
         language,
         market,
-        subscription_level: userSubscription.plan,
-        // NEW: Emoji configuration for ChatGPT Assistant
-        emoji_settings: {
-          use_emojis: useEmojis,
+        includeCompetitorAnalysis: competitorAnalysis,
+        includeViralContent: includeViralContent || userSubscription.plan === 'enterprise',
+        // NEW: Emoji configuration passed to Assistant
+        emojiConfig: {
+          enabled: useEmojis,
           intensity: emojiIntensity,
-          category_specific: true,
-          category_emojis: CATEGORY_EMOJIS[category?.toLowerCase()] || CATEGORY_EMOJIS.other
+          categoryEmojis: CATEGORY_EMOJIS[productData.category?.toLowerCase()] || CATEGORY_EMOJIS.other,
+          category: productData.category || 'other'
         }
-      },
-      context: {
-        user_id: session.user.id,
-        generation_type: 'advanced',
-        timestamp: new Date().toISOString(),
-        input_type: inputType
+      });
+      
+      if (result.success) {
+        results.push(result.content);
       }
-    };
-
-    // Enhanced Assistant call with emoji configuration
-    const result = await generateWithAssistant(enhancedProductData, {
-      style,
-      language,
-      market,
-      includeCompetitorAnalysis: competitorAnalysis,
-      includeViralContent: includeViralContent || userSubscription.plan === 'enterprise',
-      // NEW: Emoji configuration passed to Assistant
-      emojiConfig: {
-        enabled: useEmojis,
-        intensity: emojiIntensity,
-        categoryEmojis: CATEGORY_EMOJIS[category?.toLowerCase()] || CATEGORY_EMOJIS.other,
-        category: category
-      }
-    });
-
-    // Existing response handling (preserved)
-    if (!result.success) {
+    }
+    if (results.length === 0) {
       return NextResponse.json(
-        { error: result.error || 'Generation failed' },
+        { error: 'No content generated successfully' },
         { status: 500 }
       );
     }
@@ -104,10 +112,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      content: result.content,
+      content: results, // Return array of results
       metadata: {
-        generation_id: result.generation_id,
-        processing_time: result.processing_time,
+        products_processed: results.length,
         model_used: 'gpt-4-assistant',
         features_used: {
           competitor_analysis: competitorAnalysis,
