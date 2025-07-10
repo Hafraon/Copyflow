@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
@@ -13,7 +14,6 @@ import { getEmojiPreview } from '@/lib/emoji-config';
 import { GeneratedContent } from '@/types/generator';
 import { useTranslation } from 'react-i18next';
 import { getCurrentLanguage } from '@/lib/translations';
-import { MagicInput } from '@/components/magic-input';
 
 interface ManualFormProps {
   onContentGenerated?: (content: GeneratedContent) => void;
@@ -79,17 +79,14 @@ export function ManualForm({ onContentGenerated }: ManualFormProps) {
 
   return (
     <div className="space-y-6">
-      {/* Magic Input - replaces Product Name field */}
+      {/* Product Name */}
       <div>
-        <MagicInput
-          value={formData.productName}
-          onChange={(value) => setFormData(prev => ({ ...prev, productName: value }))}
-          onParsedData={(data) => {
-            setFormData(prev => ({ ...prev, productName: data.productName }));
-            toast.success(`Product extracted from ${data.type}: ${data.productName}`);
-          }}
+        <Label htmlFor="productName">{t('form.product.name')}</Label>
+        <Input 
+          id="productName"
           placeholder={t('form.product.name.placeholder')}
-          disabled={isGenerating}
+          value={formData.productName}
+          onChange={(e) => setFormData(prev => ({ ...prev, productName: e.target.value }))}
         />
       </div>
       
