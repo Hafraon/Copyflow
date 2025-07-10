@@ -4,7 +4,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 const resources = {
-  en: {
+  uk: {
     translation: {
       // Navigation
       'nav.features': 'Features',
@@ -271,7 +271,7 @@ const resources = {
       'toast.error.export': 'Failed to export content.',
     }
   },
-  uk: {
+  en: {
     translation: {
       // Navigation
       'nav.features': 'Функції',
@@ -534,13 +534,14 @@ const resources = {
       'toast.success.copied': 'Скопійовано в буфер обміну!',
       'toast.success.exported': 'Контент успішно експортовано!',
       'toast.error.generation': 'Не вдалося згенерувати контент. Спробуйте ще раз.',
-      'toast.error.copy': 'Не вдалося скопіювати в буфер обміну.',
+    }
+    if (saved && (saved === 'uk' || saved === 'en')) {
       'toast.error.export': 'Не вдалося експортувати контент.',
     }
   }
   // REMOVED: de, es, fr, it, pl, pt, zh, ja, ar - 9 languages removed for performance optimization
 };
-
+let currentLanguage: LanguageCode = 'uk';
 i18n
   .use(initReactI18next)
   .init({
@@ -553,3 +554,5 @@ i18n
   });
 
 export default i18n;
+    if (saved && (saved === 'uk' || saved === 'en')) {
+    }

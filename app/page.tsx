@@ -11,6 +11,7 @@ import { Footer } from '@/components/footer';
 import { GeneratedContent, GeneratorFormData, GeneratorState } from '@/types/generator';
 import { toast } from 'sonner';
 import '@/lib/i18n';
+import { MagicInput } from '@/components/magic-input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { isTabEnabled } from '@/lib/feature-flags';
@@ -71,6 +72,63 @@ export default function Home() {
     }
   };
 
+  const handleMagicInputData = async (products: any[]) => {
+    setGeneratorState(prev => ({ ...prev, isGenerating: true, error: null }));
+
+    try {
+      // Process multiple products
+      const results = [];
+      
+      for (const product of products.slice(0, 5)) { // Limit to 5 products for demo
+        const formData = {
+          productName: product.name,
+          category: 'other', // Default category
+          writingStyle: 'professional',
+          useEmojis: true,
+          emojiIntensity: 2,
+          language: 'en'
+        };
+
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const content = await response.json();
+          results.push(content);
+        }
+      }
+
+      if (results.length > 0) {
+        // For now, show the first result
+        setGeneratorState({
+          isGenerating: false,
+          content: results[0],
+          error: null,
+        });
+        
+        toast.success(`Generated content for ${results.length} product(s)`);
+      } else {
+        throw new Error('No content generated');
+      }
+    } catch (error) {
+      console.error('Magic input error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      
+      setGeneratorState({
+        isGenerating: false,
+        content: null,
+        error: errorMessage,
+      });
+      
+      toast.error(errorMessage);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -88,7 +146,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div className="lg:sticky lg:top-24">
-              <Card className="w-full">
+              <Card className="w-full max-w-2xl mx-auto">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <span className="text-2xl">⚡</span>
@@ -96,30 +154,20 @@ export default function Home() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Tabs defaultValue="manual" className="w-full">
-                    <TabsList className={`grid w-full ${
-                      [
-                        isTabEnabled('manual'),
-                        isTabEnabled('photo'), 
-                        isTabEnabled('voice'),
-                        isTabEnabled('url')
-                      ].filter(Boolean).length === 2 ? 'grid-cols-2' : 'grid-cols-4'
-                    }`}>
-                      {isTabEnabled('manual') && (
-                        <TabsTrigger value="manual" className="text-xs flex-1">📝 {t('generator.tabs.manual')}</TabsTrigger>
-                      )}
-                      {isTabEnabled('photo') && (
-                        <TabsTrigger value="photo" className="text-xs flex-1">📸 {t('generator.tabs.photo')}</TabsTrigger>
-                      )}
-                      {isTabEnabled('voice') && (
-                        <TabsTrigger value="voice" className="text-xs flex-1">🎤 {t('generator.tabs.voice')}</TabsTrigger>
-                      )}
-                      {isTabEnabled('url') && (
-                        <TabsTrigger value="url" className="text-xs flex-1">🔗 {t('generator.tabs.url')}</TabsTrigger>
-                      )}
+                  <Tabs defaultValue="magic" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="magic" className="text-xs flex-1">
+                        ✨ Magic Input
+                      </TabsTrigger>
+                      <TabsTrigger value="manual" className="text-xs flex-1">
+                        📝 {t('generator.tabs.manual')}
+                      </TabsTrigger>
                     </TabsList>
                     
-                    {isTabEnabled('manual') && (
+                    <TabsContent value="magic" className="mt-6">
+                      <MagicInput onDataExtracted={handleMagicInputData} />
+                    </TabsContent>
+                    
                       <TabsContent value="manual" className="mt-6">
                         <GeneratorForm
                           onGenerate={handleGenerate}
@@ -127,31 +175,6 @@ export default function Home() {
                           generatedContent={generatorState.content}
                         />
                       </TabsContent>
-                    )}
-                    
-                    {isTabEnabled('photo') && (
-                      <TabsContent value="photo" className="mt-6">
-                        <div className="text-center py-8 text-muted-foreground">
-                          Photo upload feature (hidden)
-                        </div>
-                      </TabsContent>
-                    )}
-                    
-                    {isTabEnabled('voice') && (
-                      <TabsContent value="voice" className="mt-6">
-                        <div className="text-center py-8 text-muted-foreground">
-                          Voice input feature (hidden)
-                        </div>
-                      </TabsContent>
-                    )}
-                    
-                    {isTabEnabled('url') && (
-                      <TabsContent value="url" className="mt-6">
-                        <div className="text-center py-8 text-muted-foreground">
-                          URL parser feature (coming soon)
-                        </div>
-                      </TabsContent>
-                    )}
                   </Tabs>
                 </CardContent>
               </Card>

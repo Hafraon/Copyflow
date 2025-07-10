@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 import { Zap, FileText, BarChart3, TrendingUp, Users, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,12 +39,12 @@ export function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarPro
         </div>
         
         <nav className="space-y-2 px-4 flex-1">
-          <NavItem icon={Zap} label={t('dashboard.sidebar.generator')} active />
-          <NavItem icon={FileText} label={t('dashboard.sidebar.history')} />
-          <NavItem icon={BarChart3} label={t('dashboard.sidebar.analytics')} />
-          <NavItem icon={TrendingUp} label={t('dashboard.sidebar.trending')} />
-          <NavItem icon={Users} label={t('dashboard.sidebar.competitors')} />
-          <NavItem icon={Settings} label={t('dashboard.sidebar.settings')} />
+          <NavItem icon={Zap} label={t('dashboard.sidebar.generator')} href="/dashboard" active />
+          <NavItem icon={FileText} label={t('dashboard.sidebar.history')} href="/dashboard/history" />
+          <NavItem icon={BarChart3} label={t('dashboard.sidebar.analytics')} href="/dashboard/analytics" />
+          <NavItem icon={TrendingUp} label={t('dashboard.sidebar.trending')} href="/dashboard/trends" />
+          <NavItem icon={Users} label={t('dashboard.sidebar.competitors')} href="/dashboard/competitors" />
+          <NavItem icon={Settings} label={t('dashboard.sidebar.settings')} href="/dashboard/settings" />
         </nav>
         
         <div className="p-4 mt-auto">
@@ -60,9 +61,9 @@ export function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarPro
   );
 }
 
-function NavItem({ icon: Icon, label, active = false }: { icon: any, label: string, active?: boolean }) {
+function NavItem({ icon: Icon, label, href, active = false }: { icon: any, label: string, href: string, active?: boolean }) {
   return (
-    <a className={cn(
+    <Link href={href} className={cn(
       "flex items-center space-x-3 px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer",
       active 
         ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
@@ -70,6 +71,6 @@ function NavItem({ icon: Icon, label, active = false }: { icon: any, label: stri
     )}>
       <Icon className="h-4 w-4" />
       <span>{label}</span>
-    </a>
+    </Link>
   );
 }
