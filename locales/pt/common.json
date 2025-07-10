@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "Recursos",
+    "pricing": "Preços",
+    "about": "Sobre",
+    "contact": "Contato",
+    "login": "Entrar",
+    "signup": "Cadastrar",
+    "dashboard": "Painel",
+    "billing": "Faturamento",
+    "settings": "Configurações",
+    "logout": "Sair",
+    "api": "API",
+    "help": "Ajuda",
+    "feedback": "Feedback",
+    "security": "Segurança"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "Gerador de Descrições de Produtos com IA",
+    "description": "Crie descrições de produtos otimizadas para SEO, títulos e CTAs com tecnologia de IA avançada. Perfeito para empresas de e-commerce de todos os tamanhos.",
+    "cta": {
+      "primary": "Começar a Gerar",
+      "secondary": "Ver Demo"
+    },
+    "trusted": "Confiado por mais de 10.000 empresas em todo o mundo"
+  },
+  "form": {
+    "title": "Gerar Conteúdo do Produto",
+    "product": {
+      "name": "Nome do Produto",
+      "placeholder": "Digite o nome do seu produto..."
+    },
+    "category": {
+      "label": "Categoria",
+      "placeholder": "Selecionar categoria...",
+      "electronics": "Eletrônicos",
+      "clothing": "Roupas e Moda",
+      "home": "Casa e Jardim",
+      "beauty": "Beleza e Saúde",
+      "sports": "Esportes e Ar Livre",
+      "books": "Livros e Mídia",
+      "automotive": "Automotivo",
+      "toys": "Brinquedos e Jogos",
+      "health": "Saúde e Bem-estar",
+      "business": "Negócios e Industrial",
+      "food": "Alimentos e Bebidas",
+      "travel": "Viagem e Turismo",
+      "pets": "Suprimentos para Animais",
+      "jewelry": "Joias e Acessórios",
+      "art": "Arte e Artesanato",
+      "music": "Música e Instrumentos",
+      "other": "Outro"
+    },
+    "style": {
+      "label": "Estilo de Escrita",
+      "placeholder": "Selecionar estilo...",
+      "professional": "Profissional",
+      "casual": "Casual",
+      "luxury": "Luxo",
+      "technical": "Técnico",
+      "creative": "Criativo"
+    },
+    "generate": "Gerar Conteúdo",
+    "generating": "Gerando..."
+  },
+  "results": {
+    "title": "Conteúdo Gerado",
+    "product": {
+      "title": "Título do Produto",
+      "description": "Descrição do Produto"
+    },
+    "seo": {
+      "title": "Título SEO"
+    },
+    "meta": {
+      "description": "Meta Descrição"
+    },
+    "cta": "Chamada para Ação",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "export": "Exportar Tudo",
+    "regenerate": "Regenerar",
+    "empty": "Gere conteúdo para ver resultados aqui"
+  },
+  "toast": {
+    "success": {
+      "generated": "Conteúdo gerado com sucesso!",
+      "copied": "Copiado para a área de transferência!",
+      "exported": "Conteúdo exportado com sucesso!"
+    },
+    "error": {
+      "generation": "Falha ao gerar conteúdo. Tente novamente.",
+      "copy": "Falha ao copiar para a área de transferência.",
+      "export": "Falha ao exportar conteúdo."
+    }
+  }
+}

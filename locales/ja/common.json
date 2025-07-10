@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "機能",
+    "pricing": "料金",
+    "about": "概要",
+    "contact": "お問い合わせ",
+    "login": "ログイン",
+    "signup": "サインアップ",
+    "dashboard": "ダッシュボード",
+    "billing": "請求",
+    "settings": "設定",
+    "logout": "ログアウト",
+    "api": "API",
+    "help": "ヘルプ",
+    "feedback": "フィードバック",
+    "security": "セキュリティ"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "AI搭載商品説明ジェネレーター",
+    "description": "先進的なAI技術でSEO最適化された商品説明、タイトル、CTAを作成。あらゆる規模のEコマース企業に最適。",
+    "cta": {
+      "primary": "生成を開始",
+      "secondary": "デモを見る"
+    },
+    "trusted": "世界中の10,000以上の企業に信頼されています"
+  },
+  "form": {
+    "title": "商品コンテンツを生成",
+    "product": {
+      "name": "商品名",
+      "placeholder": "商品名を入力してください..."
+    },
+    "category": {
+      "label": "カテゴリー",
+      "placeholder": "カテゴリーを選択...",
+      "electronics": "電子機器",
+      "clothing": "衣類・ファッション",
+      "home": "ホーム・ガーデン",
+      "beauty": "美容・健康",
+      "sports": "スポーツ・アウトドア",
+      "books": "書籍・メディア",
+      "automotive": "自動車",
+      "toys": "おもちゃ・ゲーム",
+      "health": "健康・ウェルネス",
+      "business": "ビジネス・産業",
+      "food": "食品・飲料",
+      "travel": "旅行・観光",
+      "pets": "ペット用品",
+      "jewelry": "ジュエリー・アクセサリー",
+      "art": "アート・クラフト",
+      "music": "音楽・楽器",
+      "other": "その他"
+    },
+    "style": {
+      "label": "文体",
+      "placeholder": "文体を選択...",
+      "professional": "プロフェッショナル",
+      "casual": "カジュアル",
+      "luxury": "ラグジュアリー",
+      "technical": "テクニカル",
+      "creative": "クリエイティブ"
+    },
+    "generate": "コンテンツを生成",
+    "generating": "生成中..."
+  },
+  "results": {
+    "title": "生成されたコンテンツ",
+    "product": {
+      "title": "商品タイトル",
+      "description": "商品説明"
+    },
+    "seo": {
+      "title": "SEOタイトル"
+    },
+    "meta": {
+      "description": "メタ説明"
+    },
+    "cta": "コール・トゥ・アクション",
+    "copy": "コピー",
+    "copied": "コピーしました！",
+    "export": "すべてエクスポート",
+    "regenerate": "再生成",
+    "empty": "コンテンツを生成して結果を表示"
+  },
+  "toast": {
+    "success": {
+      "generated": "コンテンツが正常に生成されました！",
+      "copied": "クリップボードにコピーしました！",
+      "exported": "コンテンツが正常にエクスポートされました！"
+    },
+    "error": {
+      "generation": "コンテンツの生成に失敗しました。もう一度お試しください。",
+      "copy": "クリップボードへのコピーに失敗しました。",
+      "export": "コンテンツのエクスポートに失敗しました。"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "Funkcje",
+    "pricing": "Cennik",
+    "about": "O nas",
+    "contact": "Kontakt",
+    "login": "Zaloguj się",
+    "signup": "Zarejestruj się",
+    "dashboard": "Panel",
+    "billing": "Płatności",
+    "settings": "Ustawienia",
+    "logout": "Wyloguj się",
+    "api": "API",
+    "help": "Pomoc",
+    "feedback": "Opinie",
+    "security": "Bezpieczeństwo"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "Generator Opisów Produktów AI",
+    "description": "Twórz zoptymalizowane pod SEO opisy produktów, tytuły i CTA z zaawansowaną technologią AI. Idealny dla firm e-commerce każdej wielkości.",
+    "cta": {
+      "primary": "Zacznij Generować",
+      "secondary": "Zobacz Demo"
+    },
+    "trusted": "Zaufało nam ponad 10 000 firm na całym świecie"
+  },
+  "form": {
+    "title": "Generuj Treść Produktu",
+    "product": {
+      "name": "Nazwa Produktu",
+      "placeholder": "Wprowadź nazwę swojego produktu..."
+    },
+    "category": {
+      "label": "Kategoria",
+      "placeholder": "Wybierz kategorię...",
+      "electronics": "Elektronika",
+      "clothing": "Odzież i Moda",
+      "home": "Dom i Ogród",
+      "beauty": "Uroda i Zdrowie",
+      "sports": "Sport i Rekreacja",
+      "books": "Książki i Media",
+      "automotive": "Motoryzacja",
+      "toys": "Zabawki i Gry",
+      "health": "Zdrowie i Wellness",
+      "business": "Biznes i Przemysł",
+      "food": "Żywność i Napoje",
+      "travel": "Podróże i Turystyka",
+      "pets": "Artykuły dla Zwierząt",
+      "jewelry": "Biżuteria i Akcesoria",
+      "art": "Sztuka i Rękodzieło",
+      "music": "Muzyka i Instrumenty",
+      "other": "Inne"
+    },
+    "style": {
+      "label": "Styl Pisania",
+      "placeholder": "Wybierz styl...",
+      "professional": "Profesjonalny",
+      "casual": "Swobodny",
+      "luxury": "Luksusowy",
+      "technical": "Techniczny",
+      "creative": "Kreatywny"
+    },
+    "generate": "Generuj Treść",
+    "generating": "Generowanie..."
+  },
+  "results": {
+    "title": "Wygenerowana Treść",
+    "product": {
+      "title": "Tytuł Produktu",
+      "description": "Opis Produktu"
+    },
+    "seo": {
+      "title": "Tytuł SEO"
+    },
+    "meta": {
+      "description": "Meta Opis"
+    },
+    "cta": "Wezwanie do Działania",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano!",
+    "export": "Eksportuj Wszystko",
+    "regenerate": "Regeneruj",
+    "empty": "Wygeneruj treść, aby zobaczyć wyniki tutaj"
+  },
+  "toast": {
+    "success": {
+      "generated": "Treść wygenerowana pomyślnie!",
+      "copied": "Skopiowano do schowka!",
+      "exported": "Treść wyeksportowana pomyślnie!"
+    },
+    "error": {
+      "generation": "Nie udało się wygenerować treści. Spróbuj ponownie.",
+      "copy": "Nie udało się skopiować do schowka.",
+      "export": "Nie udało się wyeksportować treści."
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "Características",
+    "pricing": "Precios",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "dashboard": "Panel",
+    "billing": "Facturación",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión",
+    "api": "API",
+    "help": "Ayuda",
+    "feedback": "Comentarios",
+    "security": "Seguridad"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "Generador de Descripciones de Productos con IA",
+    "description": "Crea descripciones de productos optimizadas para SEO, títulos y CTAs con tecnología de IA avanzada. Perfecto para negocios de comercio electrónico de todos los tamaños.",
+    "cta": {
+      "primary": "Comenzar a Generar",
+      "secondary": "Ver Demo"
+    },
+    "trusted": "Confiado por más de 10,000 empresas en todo el mundo"
+  },
+  "form": {
+    "title": "Generar Contenido de Producto",
+    "product": {
+      "name": "Nombre del Producto",
+      "placeholder": "Ingrese el nombre de su producto..."
+    },
+    "category": {
+      "label": "Categoría",
+      "placeholder": "Seleccionar categoría...",
+      "electronics": "Electrónicos",
+      "clothing": "Ropa y Moda",
+      "home": "Hogar y Jardín",
+      "beauty": "Belleza y Salud",
+      "sports": "Deportes y Aire Libre",
+      "books": "Libros y Medios",
+      "automotive": "Automotriz",
+      "toys": "Juguetes y Juegos",
+      "health": "Salud y Bienestar",
+      "business": "Negocios e Industrial",
+      "food": "Alimentos y Bebidas",
+      "travel": "Viajes y Turismo",
+      "pets": "Suministros para Mascotas",
+      "jewelry": "Joyería y Accesorios",
+      "art": "Arte y Manualidades",
+      "music": "Música e Instrumentos",
+      "other": "Otro"
+    },
+    "style": {
+      "label": "Estilo de Escritura",
+      "placeholder": "Seleccionar estilo...",
+      "professional": "Profesional",
+      "casual": "Casual",
+      "luxury": "Lujo",
+      "technical": "Técnico",
+      "creative": "Creativo"
+    },
+    "generate": "Generar Contenido",
+    "generating": "Generando..."
+  },
+  "results": {
+    "title": "Contenido Generado",
+    "product": {
+      "title": "Título del Producto",
+      "description": "Descripción del Producto"
+    },
+    "seo": {
+      "title": "Título SEO"
+    },
+    "meta": {
+      "description": "Meta Descripción"
+    },
+    "cta": "Llamada a la Acción",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "export": "Exportar Todo",
+    "regenerate": "Regenerar",
+    "empty": "Genere contenido para ver resultados aquí"
+  },
+  "toast": {
+    "success": {
+      "generated": "¡Contenido generado exitosamente!",
+      "copied": "¡Copiado al portapapeles!",
+      "exported": "¡Contenido exportado exitosamente!"
+    },
+    "error": {
+      "generation": "Error al generar contenido. Por favor intente de nuevo.",
+      "copy": "Error al copiar al portapapeles.",
+      "export": "Error al exportar contenido."
+    }
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up",
+    "dashboard": "Dashboard",
+    "billing": "Billing",
+    "settings": "Settings",
+    "logout": "Logout",
+    "api": "API",
+    "help": "Help",
+    "feedback": "Feedback",
+    "security": "Security"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "AI-Powered Product Description Generator",
+    "description": "Create SEO-optimized product descriptions, titles, and CTAs with advanced AI technology. Perfect for e-commerce businesses of all sizes.",
+    "cta": {
+      "primary": "Start Generating",
+      "secondary": "Watch Demo"
+    },
+    "trusted": "Trusted by 10,000+ businesses worldwide"
+  },
+  "dashboard": {
+    "header": {
+      "title": "Content Generator"
+    },
+    "sidebar": {
+      "generator": "Generator",
+      "history": "History",
+      "analytics": "Analytics",
+      "trending": "Trending",
+      "competitors": "Competitors",
+      "settings": "Settings"
+    },
+    "usage": {
+      "plan": "Pro Plan",
+      "generations": "generations"
+    }
+  },
+  "form": {
+    "title": "Generate Product Content",
+    "product": {
+      "name": "Product Name",
+      "placeholder": "Enter your product name..."
+    },
+    "category": {
+      "label": "Category",
+      "placeholder": "Select category...",
+      "electronics": "Electronics",
+      "clothing": "Clothing & Fashion",
+      "home": "Home & Garden",
+      "beauty": "Beauty & Health",
+      "sports": "Sports & Outdoors",
+      "books": "Books & Media",
+      "automotive": "Automotive",
+      "toys": "Toys & Games",
+      "health": "Health & Wellness",
+      "business": "Business & Industrial",
+      "food": "Food & Beverages",
+      "travel": "Travel & Tourism",
+      "pets": "Pet Supplies",
+      "jewelry": "Jewelry & Accessories",
+      "art": "Art & Crafts",
+      "music": "Music & Instruments",
+      "other": "Other"
+    },
+    "style": {
+      "label": "Writing Style",
+      "placeholder": "Select writing style...",
+      "professional": "Professional",
+      "casual": "Casual",
+      "luxury": "Luxury",
+      "technical": "Technical",
+      "creative": "Creative"
+    },
+    "platform": {
+      "label": "Platform",
+      "placeholder": "Select platform...",
+      "universal": "Universal",
+      "amazon": "Amazon",
+      "shopify": "Shopify",
+      "aliexpress": "AliExpress",
+      "horoshop": "Horoshop",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "instagram": "Instagram",
+      "facebook": "Facebook"
+    },
+    "emoji": {
+      "title": "Emojis in Description",
+      "description": "Add emojis for visual appeal",
+      "intensity": "Intensity",
+      "minimal": "Minimal (3-5)",
+      "standard": "Standard (8-12)",
+      "maximum": "Maximum (15-20+)",
+      "preview": "Preview"
+    },
+    "generate": "Generate Content",
+    "generating": "Generating..."
+  },
+  "generator": {
+    "title": "Content Generator",
+    "tabs": {
+      "magic": "Magic Input",
+      "manual": "Manual",
+      "photo": "Photo",
+      "voice": "Voice",
+      "url": "URL"
+    }
+  },
+  "results": {
+    "title": "Generated Content",
+    "product": {
+      "title": "Product Title",
+      "description": "Product Description"
+    },
+    "seo": {
+      "title": "SEO Title"
+    },
+    "meta": {
+      "description": "Meta Description"
+    },
+    "cta": "Call-to-Action",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "export": "Export All",
+    "regenerate": "Regenerate",
+    "empty": "Generate content to see results here",
+    "export": {
+      "txt": "Export TXT",
+      "csv": "Export CSV",
+      "xlsx": "Export Excel",
+      "json": "Export JSON"
+    }
+  },
+  "features": {
+    "title": "Powerful Features",
+    "subtitle": "Everything you need to create compelling content",
+    "ai": {
+      "title": "AI Generation",
+      "description": "Advanced AI technology for creating unique content"
+    },
+    "seo": {
+      "title": "SEO Optimized",
+      "description": "Content optimized for search engines"
+    },
+    "multilingual": {
+      "title": "Multi-Language",
+      "description": "Generate content in 11 languages"
+    },
+    "export": {
+      "title": "Easy Export",
+      "description": "Export content in various formats"
+    },
+    "templates": {
+      "title": "Smart Templates",
+      "description": "Pre-built templates for different platforms"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Track content performance"
+    }
+  },
+  "pricing": {
+    "title": "Simple Pricing",
+    "subtitle": "Choose the perfect plan for your business",
+    "popular": "Most Popular",
+    "cta": "Get Started",
+    "free": {
+      "title": "Free",
+      "price": "$0",
+      "description": "Perfect for trying out CopyFlow",
+      "feature1": "1 product at a time",
+      "feature2": "Basic templates",
+      "feature3": "Email support"
+    },
+    "pro": {
+      "title": "Pro",
+      "price": "$19",
+      "description": "Best for growing businesses",
+      "feature1": "50 products at a time",
+      "feature2": "All platforms",
+      "feature3": "Priority support",
+      "feature4": "Export in all formats"
+    },
+    "business": {
+      "title": "Business",
+      "price": "$49",
+      "description": "For large-scale operations",
+      "feature1": "100 products at a time",
+      "feature2": "API access",
+      "feature3": "White-label solution",
+      "feature4": "Custom integrations"
+    }
+  },
+  "footer": {
+    "description": "Generate professional product descriptions with AI technology.",
+    "product": "Product",
+    "company": "Company",
+    "support": "Support",
+    "legal": "Legal",
+    "rights": "All rights reserved."
+  },
+  "toast": {
+    "success": {
+      "generated": "Content generated successfully!",
+      "copied": "Copied to clipboard!",
+      "exported": "Content exported successfully!"
+    },
+    "error": {
+      "generation": "Failed to generate content. Please try again.",
+      "copy": "Failed to copy to clipboard.",
+      "export": "Failed to export content."
+    }
+  }
+}

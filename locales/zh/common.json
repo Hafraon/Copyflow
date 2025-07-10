@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "功能",
+    "pricing": "价格",
+    "about": "关于",
+    "contact": "联系",
+    "login": "登录",
+    "signup": "注册",
+    "dashboard": "仪表板",
+    "billing": "账单",
+    "settings": "设置",
+    "logout": "登出",
+    "api": "API",
+    "help": "帮助",
+    "feedback": "反馈",
+    "security": "安全"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "AI驱动的产品描述生成器",
+    "description": "使用先进的AI技术创建SEO优化的产品描述、标题和CTA。适合各种规模的电商企业。",
+    "cta": {
+      "primary": "开始生成",
+      "secondary": "观看演示"
+    },
+    "trusted": "全球超过10,000家企业的信赖之选"
+  },
+  "form": {
+    "title": "生成产品内容",
+    "product": {
+      "name": "产品名称",
+      "placeholder": "输入您的产品名称..."
+    },
+    "category": {
+      "label": "类别",
+      "placeholder": "选择类别...",
+      "electronics": "电子产品",
+      "clothing": "服装时尚",
+      "home": "家居园艺",
+      "beauty": "美容健康",
+      "sports": "运动户外",
+      "books": "图书媒体",
+      "automotive": "汽车用品",
+      "toys": "玩具游戏",
+      "health": "健康养生",
+      "business": "商业工业",
+      "food": "食品饮料",
+      "travel": "旅游观光",
+      "pets": "宠物用品",
+      "jewelry": "珠宝配饰",
+      "art": "艺术手工",
+      "music": "音乐乐器",
+      "other": "其他"
+    },
+    "style": {
+      "label": "写作风格",
+      "placeholder": "选择风格...",
+      "professional": "专业",
+      "casual": "休闲",
+      "luxury": "奢华",
+      "technical": "技术",
+      "creative": "创意"
+    },
+    "generate": "生成内容",
+    "generating": "生成中..."
+  },
+  "results": {
+    "title": "生成的内容",
+    "product": {
+      "title": "产品标题",
+      "description": "产品描述"
+    },
+    "seo": {
+      "title": "SEO标题"
+    },
+    "meta": {
+      "description": "元描述"
+    },
+    "cta": "行动号召",
+    "copy": "复制",
+    "copied": "已复制！",
+    "export": "导出全部",
+    "regenerate": "重新生成",
+    "empty": "生成内容以查看结果"
+  },
+  "toast": {
+    "success": {
+      "generated": "内容生成成功！",
+      "copied": "已复制到剪贴板！",
+      "exported": "内容导出成功！"
+    },
+    "error": {
+      "generation": "生成内容失败。请重试。",
+      "copy": "复制到剪贴板失败。",
+      "export": "导出内容失败。"
+    }
+  }
+}

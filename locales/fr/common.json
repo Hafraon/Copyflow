@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "dashboard": "Tableau de bord",
+    "billing": "Facturation",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter",
+    "api": "API",
+    "help": "Aide",
+    "feedback": "Commentaires",
+    "security": "Sécurité"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "Générateur de Descriptions de Produits IA",
+    "description": "Créez des descriptions de produits optimisées pour le SEO, des titres et des CTA avec une technologie IA avancée. Parfait pour les entreprises e-commerce de toutes tailles.",
+    "cta": {
+      "primary": "Commencer à Générer",
+      "secondary": "Voir la Démo"
+    },
+    "trusted": "Fait confiance par plus de 10 000 entreprises dans le monde"
+  },
+  "form": {
+    "title": "Générer du Contenu Produit",
+    "product": {
+      "name": "Nom du Produit",
+      "placeholder": "Entrez le nom de votre produit..."
+    },
+    "category": {
+      "label": "Catégorie",
+      "placeholder": "Sélectionner une catégorie...",
+      "electronics": "Électronique",
+      "clothing": "Vêtements et Mode",
+      "home": "Maison et Jardin",
+      "beauty": "Beauté et Santé",
+      "sports": "Sports et Plein Air",
+      "books": "Livres et Médias",
+      "automotive": "Automobile",
+      "toys": "Jouets et Jeux",
+      "health": "Santé et Bien-être",
+      "business": "Affaires et Industrie",
+      "food": "Alimentation et Boissons",
+      "travel": "Voyage et Tourisme",
+      "pets": "Fournitures pour Animaux",
+      "jewelry": "Bijoux et Accessoires",
+      "art": "Art et Artisanat",
+      "music": "Musique et Instruments",
+      "other": "Autre"
+    },
+    "style": {
+      "label": "Style d'Écriture",
+      "placeholder": "Sélectionner un style...",
+      "professional": "Professionnel",
+      "casual": "Décontracté",
+      "luxury": "Luxe",
+      "technical": "Technique",
+      "creative": "Créatif"
+    },
+    "generate": "Générer du Contenu",
+    "generating": "Génération..."
+  },
+  "results": {
+    "title": "Contenu Généré",
+    "product": {
+      "title": "Titre du Produit",
+      "description": "Description du Produit"
+    },
+    "seo": {
+      "title": "Titre SEO"
+    },
+    "meta": {
+      "description": "Meta Description"
+    },
+    "cta": "Appel à l'Action",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "export": "Tout Exporter",
+    "regenerate": "Régénérer",
+    "empty": "Générez du contenu pour voir les résultats ici"
+  },
+  "toast": {
+    "success": {
+      "generated": "Contenu généré avec succès !",
+      "copied": "Copié dans le presse-papiers !",
+      "exported": "Contenu exporté avec succès !"
+    },
+    "error": {
+      "generation": "Échec de la génération de contenu. Veuillez réessayer.",
+      "copy": "Échec de la copie dans le presse-papiers.",
+      "export": "Échec de l'exportation du contenu."
+    }
+  }
+}

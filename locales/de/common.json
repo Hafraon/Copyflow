@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "dashboard": "Dashboard",
+    "billing": "Abrechnung",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "api": "API",
+    "help": "Hilfe",
+    "feedback": "Feedback",
+    "security": "Sicherheit"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "KI-gestützter Produktbeschreibungs-Generator",
+    "description": "Erstellen Sie SEO-optimierte Produktbeschreibungen, Titel und CTAs mit fortschrittlicher KI-Technologie. Perfekt für E-Commerce-Unternehmen jeder Größe.",
+    "cta": {
+      "primary": "Generierung starten",
+      "secondary": "Demo ansehen"
+    },
+    "trusted": "Vertraut von über 10.000 Unternehmen weltweit"
+  },
+  "form": {
+    "title": "Produktinhalt generieren",
+    "product": {
+      "name": "Produktname",
+      "placeholder": "Geben Sie Ihren Produktnamen ein..."
+    },
+    "category": {
+      "label": "Kategorie",
+      "placeholder": "Kategorie auswählen...",
+      "electronics": "Elektronik",
+      "clothing": "Kleidung & Mode",
+      "home": "Haus & Garten",
+      "beauty": "Schönheit & Gesundheit",
+      "sports": "Sport & Outdoor",
+      "books": "Bücher & Medien",
+      "automotive": "Automobil",
+      "toys": "Spielzeug & Spiele",
+      "health": "Gesundheit & Wellness",
+      "business": "Business & Industrie",
+      "food": "Lebensmittel & Getränke",
+      "travel": "Reisen & Tourismus",
+      "pets": "Haustierbedarf",
+      "jewelry": "Schmuck & Accessoires",
+      "art": "Kunst & Handwerk",
+      "music": "Musik & Instrumente",
+      "other": "Andere"
+    },
+    "style": {
+      "label": "Schreibstil",
+      "placeholder": "Schreibstil auswählen...",
+      "professional": "Professionell",
+      "casual": "Lässig",
+      "luxury": "Luxus",
+      "technical": "Technisch",
+      "creative": "Kreativ"
+    },
+    "generate": "Inhalt generieren",
+    "generating": "Generierung..."
+  },
+  "results": {
+    "title": "Generierter Inhalt",
+    "product": {
+      "title": "Produkttitel",
+      "description": "Produktbeschreibung"
+    },
+    "seo": {
+      "title": "SEO-Titel"
+    },
+    "meta": {
+      "description": "Meta-Beschreibung"
+    },
+    "cta": "Call-to-Action",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "export": "Alle exportieren",
+    "regenerate": "Regenerieren",
+    "empty": "Generieren Sie Inhalte, um hier Ergebnisse zu sehen"
+  },
+  "features": {
+    "title": "Leistungsstarke Funktionen",
+    "subtitle": "Alles was Sie brauchen, um überzeugende Inhalte zu erstellen"
+  },
+  "pricing": {
+    "title": "Einfache Preise",
+    "subtitle": "Wählen Sie den perfekten Plan für Ihr Unternehmen",
+    "popular": "Am beliebtesten",
+    "cta": "Loslegen"
+  },
+  "toast": {
+    "success": {
+      "generated": "Inhalt erfolgreich generiert!",
+      "copied": "In die Zwischenablage kopiert!",
+      "exported": "Inhalt erfolgreich exportiert!"
+    },
+    "error": {
+      "generation": "Fehler beim Generieren des Inhalts. Bitte versuchen Sie es erneut.",
+      "copy": "Fehler beim Kopieren in die Zwischenablage.",
+      "export": "Fehler beim Exportieren des Inhalts."
+    }
+  }
+}

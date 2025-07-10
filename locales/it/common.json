@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "features": "Caratteristiche",
+    "pricing": "Prezzi",
+    "about": "Chi siamo",
+    "contact": "Contatto",
+    "login": "Accedi",
+    "signup": "Registrati",
+    "dashboard": "Dashboard",
+    "billing": "Fatturazione",
+    "settings": "Impostazioni",
+    "logout": "Esci",
+    "api": "API",
+    "help": "Aiuto",
+    "feedback": "Feedback",
+    "security": "Sicurezza"
+  },
+  "hero": {
+    "title": "CopyFlow",
+    "subtitle": "Generatore di Descrizioni Prodotto AI",
+    "description": "Crea descrizioni prodotto ottimizzate SEO, titoli e CTA con tecnologia AI avanzata. Perfetto per aziende e-commerce di tutte le dimensioni.",
+    "cta": {
+      "primary": "Inizia a Generare",
+      "secondary": "Guarda Demo"
+    },
+    "trusted": "Fidato da oltre 10.000 aziende in tutto il mondo"
+  },
+  "form": {
+    "title": "Genera Contenuto Prodotto",
+    "product": {
+      "name": "Nome Prodotto",
+      "placeholder": "Inserisci il nome del tuo prodotto..."
+    },
+    "category": {
+      "label": "Categoria",
+      "placeholder": "Seleziona categoria...",
+      "electronics": "Elettronica",
+      "clothing": "Abbigliamento e Moda",
+      "home": "Casa e Giardino",
+      "beauty": "Bellezza e Salute",
+      "sports": "Sport e Outdoor",
+      "books": "Libri e Media",
+      "automotive": "Automotive",
+      "toys": "Giocattoli e Giochi",
+      "health": "Salute e Benessere",
+      "business": "Business e Industriale",
+      "food": "Cibo e Bevande",
+      "travel": "Viaggi e Turismo",
+      "pets": "Forniture per Animali",
+      "jewelry": "Gioielli e Accessori",
+      "art": "Arte e Artigianato",
+      "music": "Musica e Strumenti",
+      "other": "Altro"
+    },
+    "style": {
+      "label": "Stile di Scrittura",
+      "placeholder": "Seleziona stile...",
+      "professional": "Professionale",
+      "casual": "Casual",
+      "luxury": "Lusso",
+      "technical": "Tecnico",
+      "creative": "Creativo"
+    },
+    "generate": "Genera Contenuto",
+    "generating": "Generazione..."
+  },
+  "results": {
+    "title": "Contenuto Generato",
+    "product": {
+      "title": "Titolo Prodotto",
+      "description": "Descrizione Prodotto"
+    },
+    "seo": {
+      "title": "Titolo SEO"
+    },
+    "meta": {
+      "description": "Meta Descrizione"
+    },
+    "cta": "Call-to-Action",
+    "copy": "Copia",
+    "copied": "Copiato!",
+    "export": "Esporta Tutto",
+    "regenerate": "Rigenera",
+    "empty": "Genera contenuto per vedere i risultati qui"
+  },
+  "toast": {
+    "success": {
+      "generated": "Contenuto generato con successo!",
+      "copied": "Copiato negli appunti!",
+      "exported": "Contenuto esportato con successo!"
+    },
+    "error": {
+      "generation": "Errore nella generazione del contenuto. Riprova.",
+      "copy": "Errore nella copia negli appunti.",
+      "export": "Errore nell'esportazione del contenuto."
+    }
+  }
+}
