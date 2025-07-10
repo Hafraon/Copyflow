@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { 
   TrendingUp, 
   TrendingDown,
-  Fire,
+  Zap,
   Star,
   ArrowUp,
   ArrowDown,
@@ -202,7 +202,7 @@ export default function TrendsPage() {
                 <p className="text-muted-foreground">Discover trending keywords and popular products</p>
               </div>
               <Badge variant="secondary" className="text-sm">
-                <Fire className="w-3 h-3 mr-1" />
+                <Zap className="w-3 h-3 mr-1" />
                 Updated hourly
               </Badge>
             </div>
@@ -309,7 +309,7 @@ export default function TrendsPage() {
                                 <h3 className="font-semibold">{product.name}</h3>
                                 {product.trending && (
                                   <Badge variant="secondary" className="text-xs">
-                                    <Fire className="w-3 h-3 mr-1" />
+                                    <Zap className="w-3 h-3 mr-1" />
                                     Trending
                                   </Badge>
                                 )}

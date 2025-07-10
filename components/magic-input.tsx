@@ -32,15 +32,25 @@ import {
   initialMagicInputState,
   magicInputReducer 
 } from '@/types/magic-input';
+import { GeneratedContent } from '@/types/generator';
 import { parseCsv, parseExcel, parseTxt } from '@/lib/input-parsers/csvParser';
 import { isValidUrl, parseUrl } from '@/lib/input-parsers/urlParser';
 
 interface MagicInputProps {
   onDataExtracted: (data: ParsedProduct[]) => void;
+  onContentGenerated?: (content: GeneratedContent) => void;
+  isGenerating?: boolean;
+  onGenerate?: (formData: any) => Promise<void>;
   className?: string;
 }
 
-export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
+export function MagicInput({ 
+  onDataExtracted, 
+  onContentGenerated, 
+  isGenerating, 
+  onGenerate, 
+  className 
+}: MagicInputProps) {
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(magicInputReducer, initialMagicInputState);
   const fileInputRef = useRef<HTMLInputElement>(null);
