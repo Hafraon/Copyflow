@@ -113,6 +113,73 @@
       "url": "URL"
     }
   },
+  "magicInput": {
+    "label": "Magic Input - Paste text, URL, or drop files",
+    "placeholder": "Paste product names, URLs, or drop CSV/Excel files here...",
+    "types": {
+      "url": "URL Detected",
+      "text": "Text Input",
+      "file": "File Upload"
+    },
+    "dropZone": {
+      "text": "Drop files here or",
+      "browse": "browse",
+      "formats": "Supports CSV, Excel, TXT files (max 5MB)"
+    },
+    "processing": "Processing...",
+    "process": "Process",
+    "errors": {
+      "unsupportedFileType": "Unsupported file type. Please use CSV, Excel, or TXT files.",
+      "fileTooLarge": "File too large. Maximum size is 5MB.",
+      "noProductsFound": "No products found in file"
+    },
+    "success": {
+      "fileParsed": "Parsed {{count}} products from file",
+      "urlParsed": "Successfully parsed product from URL",
+      "textParsed": "Parsed {{count}} products from text",
+      "generated": "Generating content for {{count}} products"
+    }
+  },
+  "filePreview": {
+    "title": "Preview",
+    "selected": "selected",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "generateSelected": "Generate Content ({{count}} products)",
+    "moreItems": "... and {{count}} more products"
+  },
+  "magicInput": {
+    "label": "Magic Input - Paste text, URL, or drop files",
+    "placeholder": "Paste product names, URLs, or drop CSV/Excel files here...",
+    "type": {
+      "url": "URL Detected",
+      "text": "Text Input",
+      "file": "File Upload"
+    },
+    "dropFiles": "Drop files here or",
+    "browse": "browse",
+    "supportedFormats": "Supports CSV, Excel, TXT files (max 5MB)",
+    "processing": "Processing...",
+    "processInput": "Process Input",
+    "errors": {
+      "unsupportedFileType": "Unsupported file type. Please use CSV, Excel, or TXT files.",
+      "fileTooLarge": "File too large. Maximum size is 5MB.",
+      "noProductsFound": "No products found in the input.",
+      "emptyInput": "Input cannot be empty.",
+      "noProductsSelected": "No products selected for generation."
+    },
+    "success": {
+      "fileParsed": "Parsed {{count}} products from file",
+      "inputProcessed": "Processed {{count}} products from input"
+    }
+  },
+  "filePreview": {
+    "title": "Preview ({{selected}}/{{total}} selected)",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "moreProducts": "... and {{count}} more products",
+    "generateSelected": "Generate Content ({{count}} products)"
+  },
   "results": {
     "title": "Generated Content",
     "product": {

@@ -113,6 +113,73 @@
       "url": "URL"
     }
   },
+  "magicInput": {
+    "label": "Magic Input - Вставте текст, URL або перетягніть файли",
+    "placeholder": "Вставте назви товарів, URL або перетягніть CSV/Excel файли сюди...",
+    "types": {
+      "url": "URL виявлено",
+      "text": "Текстовий ввід",
+      "file": "Завантаження файлу"
+    },
+    "dropZone": {
+      "text": "Перетягніть файли сюди або",
+      "browse": "оберіть",
+      "formats": "Підтримує CSV, Excel, TXT файли (макс 5МБ)"
+    },
+    "processing": "Обробка...",
+    "process": "Обробити",
+    "errors": {
+      "unsupportedFileType": "Непідтримуваний тип файлу. Використовуйте CSV, Excel або TXT файли.",
+      "fileTooLarge": "Файл занадто великий. Максимальний розмір 5МБ.",
+      "noProductsFound": "Товари не знайдені у файлі"
+    },
+    "success": {
+      "fileParsed": "Оброблено {{count}} товарів з файлу",
+      "urlParsed": "Успішно оброблено товар з URL",
+      "textParsed": "Оброблено {{count}} товарів з тексту",
+      "generated": "Генерація контенту для {{count}} товарів"
+    }
+  },
+  "filePreview": {
+    "title": "Попередній перегляд",
+    "selected": "обрано",
+    "selectAll": "Обрати все",
+    "deselectAll": "Скасувати все",
+    "generateSelected": "Генерувати контент ({{count}} товарів)",
+    "moreItems": "... та ще {{count}} товарів"
+  },
+  "magicInput": {
+    "label": "Magic Input - Вставте текст, URL або перетягніть файли",
+    "placeholder": "Вставте назви товарів, URL або перетягніть CSV/Excel файли сюди...",
+    "type": {
+      "url": "Виявлено URL",
+      "text": "Текстовий ввід",
+      "file": "Завантаження файлу"
+    },
+    "dropFiles": "Перетягніть файли сюди або",
+    "browse": "перегляньте",
+    "supportedFormats": "Підтримуються формати CSV, Excel, TXT (макс. 5 МБ)",
+    "processing": "Обробка...",
+    "processInput": "Обробити ввід",
+    "errors": {
+      "unsupportedFileType": "Непідтримуваний тип файлу. Будь ласка, використовуйте файли CSV, Excel або TXT.",
+      "fileTooLarge": "Файл занадто великий. Максимальний розмір 5 МБ.",
+      "noProductsFound": "Продукти не знайдено у введених даних.",
+      "emptyInput": "Ввід не може бути порожнім.",
+      "noProductsSelected": "Не вибрано жодного продукту для генерації."
+    },
+    "success": {
+      "fileParsed": "Розпарсено {{count}} продуктів з файлу",
+      "inputProcessed": "Оброблено {{count}} продуктів з вводу"
+    }
+  },
+  "filePreview": {
+    "title": "Попередній перегляд (вибрано {{selected}} з {{total}})",
+    "selectAll": "Вибрати все",
+    "deselectAll": "Зняти вибір з усіх",
+    "moreProducts": "... та ще {{count}} продуктів",
+    "generateSelected": "Згенерувати контент ({{count}} продуктів)"
+  },
   "results": {
     "title": "Згенерований контент",
     "product": {

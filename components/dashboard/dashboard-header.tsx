@@ -18,14 +18,16 @@ export function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Mobile hamburger button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden"
-            onClick={onMenuClick}
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+          {onMenuClick && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={onMenuClick}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          )}
           
           <h1 className="text-xs sm:text-sm md:text-lg font-semibold">{t('dashboard.header.title')}</h1>
         </div>

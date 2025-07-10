@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useRef, useCallback } from 'react';
+import { useReducer, useRef, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Upload, 
   Link, 
@@ -16,72 +18,88 @@ import {
   AlertCircle,
   Download,
   Eye,
-  Loader2
+  Loader2,
+  Globe
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import { PlatformSelector } from '@/components/platform-selector';
+import { 
+  MagicInputState, 
+  MagicInputAction, 
+  ParsedProduct, 
+  InputType,
+  initialMagicInputState,
+  magicInputReducer 
+} from '@/types/magic-input';
+import { parseCsv, parseExcel, parseTxt } from '@/lib/input-parsers/csvParser';
+import { isValidUrl, parseUrl } from '@/lib/input-parsers/urlParser';
 
 interface MagicInputProps {
-  onDataExtracted: (data: any[]) => void;
+  onDataExtracted: (data: ParsedProduct[]) => void;
   className?: string;
-}
-
-interface ParsedProduct {
-  name: string;
-  price?: string;
-  description?: string;
-  url?: string;
-  image?: string;
 }
 
 export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
   const { t } = useTranslation();
-  const [inputType, setInputType] = useState<'text' | 'url' | 'file' | null>(null);
-  const [inputValue, setInputValue] = useState('');
-  const [dragActive, setDragActive] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [parsedData, setParsedData] = useState<ParsedProduct[]>([]);
-  const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
-  const [showPreview, setShowPreview] = useState(false);
+  const [state, dispatch] = useReducer(magicInputReducer, initialMagicInputState);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dragCounter = useRef(0);
 
-  // Auto-detect input type
-  const detectInputType = (value: string) => {
-    if (value.startsWith('http://') || value.startsWith('https://')) {
-      setInputType('url');
-    } else if (value.length > 0) {
-      setInputType('text');
-    } else {
-      setInputType(null);
-    }
-  };
+  // Auto-detect input type with debouncing
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!state.inputValue.trim()) {
+        dispatch({ type: 'SET_INPUT_TYPE', payload: null });
+        return;
+      }
 
-  // Handle drag and drop
+      if (isValidUrl(state.inputValue)) {
+        dispatch({ type: 'SET_INPUT_TYPE', payload: 'url' });
+      } else {
+        dispatch({ type: 'SET_INPUT_TYPE', payload: 'text' });
+      }
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [state.inputValue]);
+
+  // Drag and drop handlers
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
+  }, []);
+
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current++;
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      // Visual feedback for drag enter
+    }
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current--;
+    if (dragCounter.current === 0) {
+      // Remove visual feedback
     }
   }, []);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragActive(false);
+    dragCounter.current = 0;
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFileUpload(e.dataTransfer.files[0]);
     }
   }, []);
 
-  // Handle file upload
-  const handleFileUpload = async (file: File) => {
-    if (!file) return;
-
-    // Validate file type
+  // File validation
+  const validateFile = (file: File): string | null => {
     const allowedTypes = [
       'text/csv',
       'application/vnd.ms-excel',
@@ -89,100 +107,94 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
       'text/plain'
     ];
 
-    if (!allowedTypes.includes(file.type)) {
-      toast.error('Unsupported file type. Please use CSV, Excel, or TXT files.');
+    const allowedExtensions = ['.csv', '.xlsx', '.xls', '.txt'];
+    const hasValidType = allowedTypes.includes(file.type);
+    const hasValidExtension = allowedExtensions.some(ext => file.name.toLowerCase().endsWith(ext));
+
+    if (!hasValidType && !hasValidExtension) {
+      return t('magicInput.errors.unsupportedFileType', 'Unsupported file type. Please use CSV, Excel, or TXT files.');
+    }
+
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      return t('magicInput.errors.fileTooLarge', 'File too large. Maximum size is 5MB.');
+    }
+
+    return null;
+  };
+
+  // File upload handler
+  const handleFileUpload = async (file: File) => {
+    const validationError = validateFile(file);
+    if (validationError) {
+      dispatch({ type: 'SET_ERROR', payload: validationError });
+      toast.error(validationError);
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('File too large. Maximum size is 5MB.');
-      return;
-    }
-
-    setInputType('file');
-    setIsProcessing(true);
+    dispatch({ type: 'SET_INPUT_TYPE', payload: 'file' });
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'SET_ERROR', payload: null });
+    dispatch({ type: 'SET_FILE_PROGRESS', payload: 0 });
 
     try {
-      const text = await file.text();
-      const products = parseFileContent(text, file.type);
-      setParsedData(products);
-      setSelectedProducts(new Set(products.map((_, index) => index)));
-      setShowPreview(true);
-      toast.success(`Parsed ${products.length} products from file`);
-    } catch (error) {
-      toast.error('Failed to parse file. Please check the format.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+      let products: ParsedProduct[] = [];
 
-  // Parse file content
-  const parseFileContent = (content: string, fileType: string): ParsedProduct[] => {
-    const lines = content.split('\n').filter(line => line.trim());
-    
-    if (fileType === 'text/csv' || fileType === 'application/vnd.ms-excel') {
-      // CSV parsing
-      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-      const nameIndex = headers.findIndex(h => h.includes('name') || h.includes('title') || h.includes('product'));
-      const priceIndex = headers.findIndex(h => h.includes('price') || h.includes('cost'));
-      const descIndex = headers.findIndex(h => h.includes('description') || h.includes('desc'));
-      const urlIndex = headers.findIndex(h => h.includes('url') || h.includes('link'));
+      // Progress simulation
+      const progressInterval = setInterval(() => {
+        dispatch({ type: 'SET_FILE_PROGRESS', payload: prev => Math.min(prev + 10, 90) });
+      }, 100);
 
-      return lines.slice(1).map(line => {
-        const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
-        return {
-          name: values[nameIndex] || `Product ${Math.random().toString(36).substr(2, 9)}`,
-          price: values[priceIndex] || undefined,
-          description: values[descIndex] || undefined,
-          url: values[urlIndex] || undefined,
-        };
-      });
-    } else {
-      // Plain text - each line is a product name
-      return lines.map(line => ({
-        name: line.trim(),
-      }));
-    }
-  };
+      if (file.type === 'text/csv' || file.name.toLowerCase().endsWith('.csv')) {
+        products = await parseCsv(file);
+      } else if (file.type.includes('spreadsheet') || file.name.match(/\.(xlsx|xls)$/i)) {
+        products = await parseExcel(file);
+      } else if (file.type === 'text/plain' || file.name.toLowerCase().endsWith('.txt')) {
+        products = await parseTxt(file);
+      }
 
-  // Handle URL parsing
-  const handleUrlParsing = async (url: string) => {
-    setIsProcessing(true);
-    
-    try {
-      // Detect platform
-      let platform = 'unknown';
-      if (url.includes('amazon.')) platform = 'Amazon';
-      else if (url.includes('aliexpress.')) platform = 'AliExpress';
-      else if (url.includes('shopify')) platform = 'Shopify';
-      else if (url.includes('etsy.')) platform = 'Etsy';
-      else if (url.includes('rozetka.com.ua')) platform = 'Rozetka';
-      else if (url.includes('prom.ua')) platform = 'Prom.ua';
+      clearInterval(progressInterval);
+      dispatch({ type: 'SET_FILE_PROGRESS', payload: 100 });
 
-      // Simulate URL parsing (in production, this would call a real API)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (products.length === 0) {
+        throw new Error(t('magicInput.errors.noProductsFound', 'No products found in file'));
+      }
+
+      dispatch({ type: 'SET_PARSED_DATA', payload: products });
+      dispatch({ type: 'SET_SELECTED_PRODUCTS', payload: new Set(products.map((_, index) => index)) });
+      dispatch({ type: 'SET_SHOW_PREVIEW', payload: true });
       
-      const mockProduct: ParsedProduct = {
-        name: `Product from ${platform}`,
-        price: '$29.99',
-        description: `High-quality product imported from ${platform}`,
-        url: url,
-        image: 'https://via.placeholder.com/150'
-      };
-
-      setParsedData([mockProduct]);
-      setSelectedProducts(new Set([0]));
-      setShowPreview(true);
-      toast.success(`Successfully parsed product from ${platform}`);
+      toast.success(t('magicInput.success.fileParsed', `Parsed ${products.length} products from file`));
     } catch (error) {
-      toast.error('Failed to parse URL. Please check if the URL is accessible.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      dispatch({ type: 'SET_ERROR', payload: errorMessage });
+      toast.error(errorMessage);
     } finally {
-      setIsProcessing(false);
+      dispatch({ type: 'SET_PROCESSING', payload: false });
     }
   };
 
-  // Handle text input
+  // URL parsing handler
+  const handleUrlParsing = async (url: string) => {
+    dispatch({ type: 'SET_PROCESSING', payload: true });
+    dispatch({ type: 'SET_ERROR', payload: null });
+
+    try {
+      const product = await parseUrl(url);
+      dispatch({ type: 'SET_PARSED_DATA', payload: [product] });
+      dispatch({ type: 'SET_SELECTED_PRODUCTS', payload: new Set([0]) });
+      dispatch({ type: 'SET_SHOW_PREVIEW', payload: true });
+      
+      toast.success(t('magicInput.success.urlParsed', 'Successfully parsed product from URL'));
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to parse URL';
+      dispatch({ type: 'SET_ERROR', payload: errorMessage });
+      toast.error(errorMessage);
+    } finally {
+      dispatch({ type: 'SET_PROCESSING', payload: false });
+    }
+  };
+
+  // Text input handler
   const handleTextInput = (text: string) => {
     const products = text.split('\n')
       .filter(line => line.trim())
@@ -190,75 +202,94 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
         name: line.trim()
       }));
     
-    setParsedData(products);
-    setSelectedProducts(new Set(products.map((_, index) => index)));
-    setShowPreview(true);
+    dispatch({ type: 'SET_PARSED_DATA', payload: products });
+    dispatch({ type: 'SET_SELECTED_PRODUCTS', payload: new Set(products.map((_, index) => index)) });
+    dispatch({ type: 'SET_SHOW_PREVIEW', payload: true });
+    
+    toast.success(t('magicInput.success.textParsed', `Parsed ${products.length} products from text`));
   };
 
-  // Process input
+  // Process input based on type
   const handleProcess = () => {
-    if (!inputValue.trim()) return;
+    if (!state.inputValue.trim()) return;
 
-    if (inputType === 'url') {
-      handleUrlParsing(inputValue);
-    } else if (inputType === 'text') {
-      handleTextInput(inputValue);
+    if (state.inputType === 'url') {
+      handleUrlParsing(state.inputValue);
+    } else if (state.inputType === 'text') {
+      handleTextInput(state.inputValue);
     }
   };
 
   // Generate content for selected products
   const handleGenerate = () => {
-    const selectedData = parsedData.filter((_, index) => selectedProducts.has(index));
+    const selectedData = state.parsedData.filter((_, index) => state.selectedProducts.has(index));
     onDataExtracted(selectedData);
-    setShowPreview(false);
-    setParsedData([]);
-    setInputValue('');
-    setInputType(null);
+    
+    // Reset state after generation
+    dispatch({ type: 'RESET_STATE' });
+    toast.success(t('magicInput.success.generated', `Generating content for ${selectedData.length} products`));
   };
 
   // Toggle product selection
   const toggleProductSelection = (index: number) => {
-    const newSelected = new Set(selectedProducts);
+    const newSelected = new Set(state.selectedProducts);
     if (newSelected.has(index)) {
       newSelected.delete(index);
     } else {
       newSelected.add(index);
     }
-    setSelectedProducts(newSelected);
+    dispatch({ type: 'SET_SELECTED_PRODUCTS', payload: newSelected });
+  };
+
+  // Select/deselect all products
+  const toggleSelectAll = () => {
+    const allSelected = state.selectedProducts.size === state.parsedData.length;
+    if (allSelected) {
+      dispatch({ type: 'SET_SELECTED_PRODUCTS', payload: new Set() });
+    } else {
+      dispatch({ type: 'SET_SELECTED_PRODUCTS', payload: new Set(state.parsedData.map((_, i) => i)) });
+    }
   };
 
   return (
     <div className={className}>
       <Card className="border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors">
         <CardContent className="p-6">
+          {/* Platform Selector */}
+          <div className="mb-6">
+            <PlatformSelector
+              value={state.platform}
+              onChange={(value) => dispatch({ type: 'SET_PLATFORM', payload: value })}
+            />
+          </div>
+
           {/* Main Input Area */}
           <div
-            className={`relative ${dragActive ? 'bg-primary/5' : ''}`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
+            className="relative"
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
             onDragOver={handleDrag}
             onDrop={handleDrop}
           >
-            <Label className="text-base font-medium mb-4 block">
-              ✨ Magic Input - Paste text, URL, or drop files
+            <Label className="text-base font-medium mb-4 block flex items-center gap-2">
+              <span className="text-2xl">✨</span>
+              {t('magicInput.label', 'Magic Input - Paste text, URL, or drop files')}
             </Label>
 
             <div className="space-y-4">
               {/* Text/URL Input */}
               <div className="relative">
-                <Input
-                  placeholder="Paste product names, URLs, or drop CSV/Excel files here..."
-                  value={inputValue}
-                  onChange={(e) => {
-                    setInputValue(e.target.value);
-                    detectInputType(e.target.value);
-                  }}
-                  className="min-h-[100px] resize-none"
+                <Textarea
+                  placeholder={t('magicInput.placeholder', 'Paste product names, URLs, or drop CSV/Excel files here...')}
+                  value={state.inputValue}
+                  onChange={(e) => dispatch({ type: 'SET_INPUT_VALUE', payload: e.target.value })}
+                  className="min-h-[100px] resize-none pr-20"
+                  disabled={state.isProcessing}
                 />
                 
                 {/* Input Type Badge */}
                 <AnimatePresence>
-                  {inputType && (
+                  {state.inputType && (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -266,11 +297,12 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
                       className="absolute top-2 right-2"
                     >
                       <Badge variant="secondary" className="gap-1">
-                        {inputType === 'url' && <Link className="w-3 h-3" />}
-                        {inputType === 'text' && <FileText className="w-3 h-3" />}
-                        {inputType === 'file' && <Upload className="w-3 h-3" />}
-                        {inputType === 'url' ? 'URL Detected' : 
-                         inputType === 'text' ? 'Text Input' : 'File Upload'}
+                        {state.inputType === 'url' && <Link className="w-3 h-3" />}
+                        {state.inputType === 'text' && <FileText className="w-3 h-3" />}
+                        {state.inputType === 'file' && <Upload className="w-3 h-3" />}
+                        {state.inputType === 'url' ? t('magicInput.types.url', 'URL Detected') : 
+                         state.inputType === 'text' ? t('magicInput.types.text', 'Text Input') : 
+                         t('magicInput.types.file', 'File Upload')}
                       </Badge>
                     </motion.div>
                   )}
@@ -289,35 +321,63 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
                 
                 <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground mb-2">
-                  Drop files here or{' '}
+                  {t('magicInput.dropZone.text', 'Drop files here or')}{' '}
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     className="text-primary hover:underline"
+                    disabled={state.isProcessing}
                   >
-                    browse
+                    {t('magicInput.dropZone.browse', 'browse')}
                   </button>
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Supports CSV, Excel, TXT files (max 5MB)
+                  {t('magicInput.dropZone.formats', 'Supports CSV, Excel, TXT files (max 5MB)')}
                 </p>
+                
+                {/* File Progress */}
+                {state.isProcessing && state.inputType === 'file' && (
+                  <div className="mt-4">
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div 
+                        className="bg-primary h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${state.fileProgress}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {t('magicInput.processing', 'Processing...')} {state.fileProgress}%
+                    </p>
+                  </div>
+                )}
               </div>
 
+              {/* Error Display */}
+              {state.error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg"
+                >
+                  <AlertCircle className="w-4 h-4 text-destructive" />
+                  <span className="text-sm text-destructive">{state.error}</span>
+                </motion.div>
+              )}
+
               {/* Process Button */}
-              {inputValue.trim() && inputType && (
+              {state.inputValue.trim() && state.inputType && state.inputType !== 'file' && !state.showPreview && (
                 <Button
                   onClick={handleProcess}
-                  disabled={isProcessing}
+                  disabled={state.isProcessing}
                   className="w-full"
                 >
-                  {isProcessing ? (
+                  {state.isProcessing ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Processing...
+                      {t('magicInput.processing', 'Processing...')}
                     </>
                   ) : (
                     <>
-                      {inputType === 'url' ? <Link className="w-4 h-4 mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
-                      Process {inputType === 'url' ? 'URL' : 'Text'}
+                      {state.inputType === 'url' ? <Link className="w-4 h-4 mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+                      {t('magicInput.process', 'Process')} {state.inputType === 'url' ? 'URL' : 'Text'}
                     </>
                   )}
                 </Button>
@@ -327,7 +387,7 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
 
           {/* Preview Section */}
           <AnimatePresence>
-            {showPreview && parsedData.length > 0 && (
+            {state.showPreview && state.parsedData.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
@@ -338,46 +398,41 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
                   <div className="flex items-center gap-2">
                     <Eye className="w-4 h-4" />
                     <span className="font-medium">
-                      Preview ({selectedProducts.size}/{parsedData.length} selected)
+                      {t('filePreview.title', 'Preview')} ({state.selectedProducts.size}/{state.parsedData.length} {t('filePreview.selected', 'selected')})
                     </span>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => {
-                      const allSelected = selectedProducts.size === parsedData.length;
-                      if (allSelected) {
-                        setSelectedProducts(new Set());
-                      } else {
-                        setSelectedProducts(new Set(parsedData.map((_, i) => i)));
-                      }
-                    }}
+                    onClick={toggleSelectAll}
                   >
-                    {selectedProducts.size === parsedData.length ? 'Deselect All' : 'Select All'}
+                    {state.selectedProducts.size === state.parsedData.length 
+                      ? t('filePreview.deselectAll', 'Deselect All') 
+                      : t('filePreview.selectAll', 'Select All')
+                    }
                   </Button>
                 </div>
 
-                <div className="space-y-2 max-h-60 overflow-y-auto">
-                  {parsedData.slice(0, 10).map((product, index) => (
+                <div className="space-y-2 max-h-60 overflow-y-auto border rounded-lg">
+                  {state.parsedData.slice(0, 10).map((product, index) => (
                     <div
                       key={index}
-                      className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${
-                        selectedProducts.has(index) ? 'bg-primary/5 border-primary' : 'hover:bg-muted/50'
+                      className={`flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors ${
+                        state.selectedProducts.has(index) ? 'bg-primary/5 border-l-2 border-l-primary' : ''
                       }`}
-                      onClick={() => toggleProductSelection(index)}
                     >
-                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                        selectedProducts.has(index) ? 'bg-primary border-primary' : 'border-muted-foreground'
-                      }`}>
-                        {selectedProducts.has(index) && (
-                          <CheckCircle className="w-3 h-3 text-white" />
-                        )}
-                      </div>
+                      <Checkbox
+                        checked={state.selectedProducts.has(index)}
+                        onCheckedChange={() => toggleProductSelection(index)}
+                      />
                       
                       <div className="flex-1 min-w-0">
                         <p className="font-medium truncate">{product.name}</p>
                         {product.price && (
                           <p className="text-sm text-muted-foreground">{product.price}</p>
+                        )}
+                        {product.description && (
+                          <p className="text-xs text-muted-foreground truncate">{product.description}</p>
                         )}
                       </div>
                       
@@ -390,9 +445,9 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
                     </div>
                   ))}
                   
-                  {parsedData.length > 10 && (
+                  {state.parsedData.length > 10 && (
                     <p className="text-sm text-muted-foreground text-center py-2">
-                      ... and {parsedData.length - 10} more products
+                      {t('filePreview.moreItems', '... and {{count}} more products', { count: state.parsedData.length - 10 })}
                     </p>
                   )}
                 </div>
@@ -400,16 +455,16 @@ export function MagicInput({ onDataExtracted, className }: MagicInputProps) {
                 <div className="flex gap-2 mt-4">
                   <Button
                     onClick={handleGenerate}
-                    disabled={selectedProducts.size === 0}
+                    disabled={state.selectedProducts.size === 0}
                     className="flex-1"
                   >
-                    Generate Content ({selectedProducts.size} products)
+                    {t('filePreview.generateSelected', 'Generate Content ({{count}} products)', { count: state.selectedProducts.size })}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => {
-                      setShowPreview(false);
-                      setParsedData([]);
+                      dispatch({ type: 'SET_SHOW_PREVIEW', payload: false });
+                      dispatch({ type: 'SET_PARSED_DATA', payload: [] });
                     }}
                   >
                     <X className="w-4 h-4" />

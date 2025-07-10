@@ -15,7 +15,7 @@ export function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarPro
   return (
     <>
       {/* Mobile backdrop */}
-      {isOpen && (
+      {isOpen && onClose && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
           onClick={onClose}
@@ -26,7 +26,7 @@ export function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarPro
       <aside className={cn(
         "fixed md:static inset-y-0 left-0 z-50 w-64 bg-card border-r flex flex-col transition-transform duration-300 ease-in-out",
         "md:translate-x-0", // Always visible on desktop
-        isOpen ? "translate-x-0" : "-translate-x-full" // Mobile: slide in/out
+        isOpen || !onClose ? "translate-x-0" : "-translate-x-full" // Mobile: slide in/out, always visible on desktop when onClose is not provided
       )}>
         <div className="p-6">
           <div className="flex items-center space-x-2">
